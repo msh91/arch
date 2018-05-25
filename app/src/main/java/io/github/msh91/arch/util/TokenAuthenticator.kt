@@ -1,0 +1,43 @@
+package io.github.msh91.arch.util
+
+import dagger.Lazy
+import io.github.msh91.arch.data.local.AppPreferencesHelper
+import io.github.msh91.arch.data.restful.APIs
+import okhttp3.Authenticator
+import okhttp3.Request
+import okhttp3.Response
+import okhttp3.Route
+
+
+class TokenAuthenticator(val apis: Lazy<APIs>, val appPref: Lazy<AppPreferencesHelper>) : Authenticator {
+
+
+    override fun authenticate(route: Route?, response: Response?): Request?
+    {
+        val refreshApi = apis.get().refreshToken(appPref.get().refreshToken)
+        val refreshResponse = refreshApi.execute()
+
+        if(refreshResponse.isSuccessful)
+        {
+            val body = refreshResponse.body()
+
+            /*appPref.get().token = body!!.accessToken
+            appPref.get().tokenType = body.tokenType
+            appPref.get().refreshToken = body.refreshToken*/
+
+            return response?.
+                    request()?.
+                    newBuilder()?.
+                    header("Authorization", /*body.tokenType + */" " /*+ body.accessToken*/)?.
+                    build()
+        }
+        else
+        {
+            appPref.get().token = ""
+            appPref.get().tokenType = ""
+            appPref.get().refreshToken = ""
+
+            return null
+        }
+    }
+}
