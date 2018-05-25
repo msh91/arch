@@ -6,14 +6,25 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
 
-abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatActivity(), BaseView<V, B> {
+
+
+
+
+abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatActivity(), BaseView<V, B>, HasSupportFragmentInjector {
     override lateinit var binding: B
+
+    @Inject
+    lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -34,5 +45,7 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
         viewModel.uiActionLiveData.observe(this, Observer { it?.invoke(this) })
         onViewInitialized(binding)
     }
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentDispatchingAndroidInjector
 }
 
