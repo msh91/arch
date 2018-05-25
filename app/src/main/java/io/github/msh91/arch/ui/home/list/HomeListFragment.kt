@@ -5,7 +5,6 @@ import io.github.msh91.arch.databinding.FragmentHomeListBinding
 import io.github.msh91.arch.ui.base.BaseFragment
 
 class HomeListFragment : BaseFragment<HomeListViewModel, FragmentHomeListBinding>() {
-
     companion object {
         fun newInstance() = HomeListFragment().apply {
 //            setArguments(Pair("key", value))
