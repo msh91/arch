@@ -2,9 +2,12 @@ package io.github.msh91.arch.data.repository.user
 
 import io.github.msh91.arch.data.model.user.TestUserModel
 import io.reactivex.Single
+import javax.inject.Inject
 
-class TestUserRepositoryImpl : TestUserRepository {
+class TestUserRepositoryImpl
+@Inject constructor(private val testUserRepositoryFactory: TestUserRepositoryFactory) : TestUserRepository {
+
     override fun requestUser(testUserModel: TestUserModel): Single<TestUserModel> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return testUserRepositoryFactory.requestUser(testUserModel)
     }
 }
