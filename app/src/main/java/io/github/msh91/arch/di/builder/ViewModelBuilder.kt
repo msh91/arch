@@ -10,7 +10,7 @@ import io.github.msh91.arch.ui.home.HomeViewModel
 import io.github.msh91.arch.ui.home.list.HomeListViewModel
 import io.github.msh91.arch.viewmodel.ArchViewModelFactory
 
-@Module(/*includes = [ActivityBuilder::class]*/)
+@Module(includes = [RepositoryBuilder::class])
 abstract class ViewModelBuilder {
     @Binds
     @IntoMap
