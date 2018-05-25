@@ -1,5 +1,6 @@
 package io.github.msh91.arch.ui.base
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
@@ -30,6 +31,7 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
         binding.setLifecycleOwner(this)
         lifecycle.addObserver(viewModel)
         //todo:  viewModel.checkConnection()
+        viewModel.uiActionLiveData.observe(this, Observer { it?.invoke(this) })
         onViewInitialized(binding)
     }
 }
