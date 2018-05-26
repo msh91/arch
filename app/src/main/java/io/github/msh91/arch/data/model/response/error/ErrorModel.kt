@@ -1,4 +1,4 @@
-package io.github.msh91.arch.data.model.error
+package io.github.msh91.arch.data.model.response.error
 
 import com.google.gson.annotations.SerializedName
 

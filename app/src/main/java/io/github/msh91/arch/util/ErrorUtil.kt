@@ -2,8 +2,8 @@ package io.github.msh91.arch.util
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import io.github.msh91.arch.data.model.error.ErrorModel
-import io.github.msh91.arch.data.model.error.ErrorStatus
+import io.github.msh91.arch.data.model.response.error.ErrorModel
+import io.github.msh91.arch.data.model.response.error.ErrorStatus
 import okhttp3.ResponseBody
 import retrofit2.HttpException
 import java.io.IOException
