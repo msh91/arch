@@ -9,8 +9,6 @@ class HomeViewModel @Inject constructor(
         connectionManager: BaseConnectionManager
 ) : BaseViewModel(connectionManager) {
 
-    override fun clearUseCaseDisposables() {}
-
     override fun onStart() {
         super.onStart()
         uiActionLiveData { homeNavigator.openListFragment(it) }
