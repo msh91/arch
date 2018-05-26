@@ -1,4 +1,4 @@
-package io.github.msh91.arch.data.model.error
+package io.github.msh91.arch.data.model.response.error
 
 
 enum class ErrorStatus {
@@ -7,7 +7,7 @@ enum class ErrorStatus {
      */
     NO_CONNECTION,
     /**
-     * error in getting response (Json Error, Server Error, etc)
+     * error in getting value (Json Error, Server Error, etc)
      */
     BAD_RESPONSE,
     /**

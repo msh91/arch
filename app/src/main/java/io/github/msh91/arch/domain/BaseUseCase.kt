@@ -1,7 +1,10 @@
 package io.github.msh91.arch.domain
 
 import android.support.annotation.VisibleForTesting
-import io.github.msh91.arch.data.model.error.ErrorModel
+import io.github.msh91.arch.data.model.response.APIResponse
+import io.github.msh91.arch.data.model.response.ErrorResponse
+import io.github.msh91.arch.data.model.response.SuccessResponse
+import io.github.msh91.arch.data.model.response.error.ErrorStatus
 import io.github.msh91.arch.util.ErrorUtil
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,21 +25,19 @@ abstract class BaseUseCase<T>(
 
     abstract fun buildUseCaseObservable(): Flowable<T>
 
-    fun execute(onResponse: (model: T?, errorModel: ErrorModel?) -> Unit, onTokenExpire: (() -> Unit)? = null): Disposable {
+    fun execute(onResponse: (APIResponse<T>) -> Unit, onTokenExpire: (() -> Unit)? = null): Disposable {
         return this.buildUseCaseObservable()
                 .onBackpressureLatest()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ onResponse(it, null) },
+                .subscribe({ onResponse(SuccessResponse(it)) },
                         {
                             val error = errorUtil.getErrorModel(it)
 
-                            /*if (error.errorStatus == ErrorStatus.UNAUTHORIZED)
-                                onTokenExpire()
-                            else {
-                            }*/
+                            if (error.errorStatus == ErrorStatus.UNAUTHORIZED)
+                                onTokenExpire?.invoke()
 
-                            onResponse(null, error)
+                            onResponse(ErrorResponse(error))
                         }).also { addDisposable(it) }
     }
 
