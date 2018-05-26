@@ -13,7 +13,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.google.gson.Gson
 import com.google.gson.JsonElement
-import io.github.msh91.arch.util.NonNullLiveData
+import io.github.msh91.arch.util.livedata.NonNullLiveData
 import io.reactivex.Flowable
 import java.io.Serializable
 import java.text.SimpleDateFormat

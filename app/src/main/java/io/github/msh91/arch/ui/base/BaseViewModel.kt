@@ -5,7 +5,7 @@ import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import io.github.msh91.arch.ui.base.comman.UiActionLiveData
+import io.github.msh91.arch.util.livedata.UiActionLiveData
 import io.github.msh91.arch.util.connectivity.BaseConnectionManager
 import io.reactivex.disposables.CompositeDisposable
 

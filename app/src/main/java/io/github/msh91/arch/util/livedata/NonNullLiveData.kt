@@ -1,4 +1,4 @@
-package io.github.msh91.arch.util
+package io.github.msh91.arch.util.livedata
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.MutableLiveData
