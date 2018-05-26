@@ -4,7 +4,7 @@ import io.github.msh91.arch.data.model.user.TestUserModel
 import io.github.msh91.arch.data.repository.user.TestUserRepository
 import io.github.msh91.arch.domain.BaseUseCase
 import io.github.msh91.arch.util.ErrorUtil
-import io.reactivex.Single
+import io.reactivex.Flowable
 import javax.inject.Inject
 
 class CreateUserUseCase @Inject constructor(
@@ -19,7 +19,7 @@ class CreateUserUseCase @Inject constructor(
         return this
     }
 
-    override fun buildUseCaseObservable(): Single<TestUserModel> {
+    override fun buildUseCaseObservable(): Flowable<TestUserModel> {
         return userRepository.requestUser(userModel)
     }
 }
