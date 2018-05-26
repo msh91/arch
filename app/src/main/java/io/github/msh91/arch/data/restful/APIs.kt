@@ -1,7 +1,7 @@
 package io.github.msh91.arch.data.restful
 
 import io.github.msh91.arch.data.model.user.TestUserModel
-import io.reactivex.Single
+import io.reactivex.Flowable
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -13,7 +13,7 @@ interface APIs {
 
 
     @POST("api/v1/users")
-    fun requestUser(@Body model: TestUserModel): Single<TestUserModel>
+    fun requestUser(@Body model: TestUserModel): Flowable<TestUserModel>
 
     @FormUrlEncoded
     @POST("/oauth/token")

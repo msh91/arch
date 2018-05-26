@@ -3,7 +3,7 @@ package io.github.msh91.arch.domain
 import android.support.annotation.VisibleForTesting
 import io.github.msh91.arch.data.model.error.ErrorModel
 import io.github.msh91.arch.util.ErrorUtil
-import io.reactivex.Single
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -20,10 +20,11 @@ abstract class BaseUseCase<T>(
 
     val disposables: CompositeDisposable = CompositeDisposable()
 
-    abstract fun buildUseCaseObservable(): Single<T>
+    abstract fun buildUseCaseObservable(): Flowable<T>
 
     fun execute(onResponse: (model: T?, errorModel: ErrorModel?) -> Unit, onTokenExpire: (() -> Unit)? = null): Disposable {
         return this.buildUseCaseObservable()
+                .onBackpressureLatest()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ onResponse(it, null) },

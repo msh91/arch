@@ -1,7 +1,7 @@
 package io.github.msh91.arch.data.repository
 
 import io.reactivex.Completable
-import io.reactivex.Single
+import io.reactivex.Flowable
 
 /**
  * Interface defining methods for the caching of APIs data. This is to be implemented by the
@@ -14,7 +14,7 @@ interface CacheContract<T> {
     /**
      * Retrieve a list of data, from the cache
      */
-    fun data(): Single<T>? = if (model != null && isCached() && !isExpired) Single.just(model) else null
+    fun data(): Flowable<T>? = if (model != null && isCached() && !isExpired) Flowable.just(model) else null
 
     /**
      * Checks if an element (Specific T) exists in the cache.
