@@ -25,7 +25,11 @@ abstract class BaseUseCase<T>(
 
     abstract fun buildUseCaseObservable(): Flowable<T>
 
-    fun execute(onResponse: (APIResponse<T>) -> Unit, onTokenExpire: (() -> Unit)? = null): Disposable {
+    fun execute(
+            compositeDisposable: CompositeDisposable,
+            onResponse: (APIResponse<T>) -> Unit,
+            onTokenExpire: (() -> Unit)? = null
+    ): Disposable {
         return this.buildUseCaseObservable()
                 .onBackpressureLatest()
                 .subscribeOn(Schedulers.io())
@@ -38,7 +42,7 @@ abstract class BaseUseCase<T>(
                                 onTokenExpire?.invoke()
 
                             onResponse(ErrorResponse(error))
-                        }).also { addDisposable(it) }
+                        }).also { compositeDisposable.add(it) }
     }
 
     fun dispose(disposable: Disposable) {

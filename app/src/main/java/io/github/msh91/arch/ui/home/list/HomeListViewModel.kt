@@ -15,12 +15,11 @@ class HomeListViewModel @Inject constructor(
         connectionManager: BaseConnectionManager
 ) : BaseViewModel(connectionManager) {
     private val TAG = HomeListViewModel::class.java.simpleName
-    override fun clearUseCaseDisposables() {}
 
     override fun onStart() {
         createUserUseCase
                 .setParameters(TestUserModel("name", "family"))
-                .execute(this::onResponse)
+                .execute(compositeDisposable, this::onResponse)
     }
 
     private fun onResponse(apiResponse: APIResponse<TestUserModel>) {
