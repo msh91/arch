@@ -9,6 +9,12 @@ import io.github.msh91.arch.util.connectivity.BaseConnectionManager
 import io.github.msh91.arch.util.livedata.UiActionLiveData
 import io.reactivex.disposables.CompositeDisposable
 
+/**
+ * All of ViewModels should be inherited from [BaseViewModel]
+ *
+ * @param connectionManager an instance of provided [BaseConnectionManager] to check connection status
+ * before api calls
+ */
 abstract class BaseViewModel(private val connectionManager: BaseConnectionManager)
     : ViewModel(), LifecycleObserver {
 
