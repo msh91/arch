@@ -1,6 +1,5 @@
 package io.github.msh91.arch.domain
 
-import android.support.annotation.VisibleForTesting
 import io.github.msh91.arch.data.model.response.APIResponse
 import io.github.msh91.arch.data.model.response.ErrorResponse
 import io.github.msh91.arch.data.model.response.SuccessResponse
@@ -14,17 +13,25 @@ import io.reactivex.schedulers.Schedulers
 
 
 /**
- * Created by m.aghajani on 2/15/2018.
+ * Should be used as parent class of all UseCases.
+ * it will execute provided [Flowable] by child UseCase, subscribe to it and invoke the callback
  */
-abstract class BaseUseCase<T>(
-        private val errorUtil: ErrorUtil
-) {
+abstract class BaseUseCase<T>(private val errorUtil: ErrorUtil) {
 
-
-    val disposables: CompositeDisposable = CompositeDisposable()
-
+    /**
+     * should be override by child UseCase and will return desired [Flowable] created by repositories
+     */
     abstract fun buildUseCaseObservable(): Flowable<T>
 
+    /**
+     * subscribed to [Flowable] that returns from [buildUseCaseObservable] and send response via lambda callback.
+     *
+     * @param compositeDisposable an instance of [compositeDisposable] to add created disposable to it
+     * @param onResponse a lambda function that receives a [APIResponse] in order to invoke when result is available or an error occurred
+     * @param onTokenExpire a nullable lambda function to invoke when token expired and server returned UNAUTHORIZED
+     *
+     * @return returns created disposable
+     */
     fun execute(
             compositeDisposable: CompositeDisposable,
             onResponse: (APIResponse<T>) -> Unit,
@@ -43,18 +50,5 @@ abstract class BaseUseCase<T>(
 
                             onResponse(ErrorResponse(error))
                         }).also { compositeDisposable.add(it) }
-    }
-
-    fun dispose(disposable: Disposable) {
-        disposables.remove(disposable)
-    }
-
-    fun dispose() {
-        disposables.dispose()
-    }
-
-    @VisibleForTesting
-    fun addDisposable(disposable: Disposable) {
-        disposables.add(disposable)
     }
 }
