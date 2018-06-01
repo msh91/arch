@@ -63,9 +63,18 @@ interface BaseResourceProvider {
      */
     fun getContentInputStream(uri: Uri): InputStream
 
+    /**
+     * Get MimType of given [Uri]
+     */
     fun getMimType(uri: Uri): String
 
+    /**
+     * get an instance of [ContentResolver]
+     */
     fun getContentResolver(): ContentResolver
 
+    /**
+     * get an instance of [Bitmap] from given vector resource
+     */
     fun getBitmapFromVectorDrawable(@DrawableRes drawableId: Int): Bitmap
 }

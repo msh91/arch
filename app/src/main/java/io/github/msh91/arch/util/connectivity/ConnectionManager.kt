@@ -7,6 +7,10 @@ import java.net.InetAddress
 import java.net.NetworkInterface
 import java.util.*
 
+/**
+ * The main implementation of [BaseConnectionManager], and will be provided through RELEASE mode
+ * @see  io.github.msh91.arch.di.module.AppModule
+ */
 class ConnectionManager(context: Context): BaseConnectionManager {
 
     companion object {
@@ -56,7 +60,7 @@ class ConnectionManager(context: Context): BaseConnectionManager {
         return result
     }
 
-    override fun iSWifi(): Boolean? {
+    override fun isWifi(): Boolean? {
         val activeNetwork = connectivityManager.activeNetworkInfo
         return activeNetwork?.run { this.type == ConnectivityManager.TYPE_WIFI }
     }

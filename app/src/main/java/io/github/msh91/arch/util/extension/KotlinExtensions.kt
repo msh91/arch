@@ -19,12 +19,23 @@ import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Observe [LiveData] on an instance of [LifecycleOwner] like [Fragment] or [Activity]
+ * @param l instance of [L]
+ * @param observer a lambda function that receives a nullable [T] and will be invoked when data is available
+ */
 fun <T, L : LiveData<T>> LifecycleOwner.observe(l: L, observer: (T?) -> Unit) {
     l.observe(this, Observer {
         observer(it)
     })
 }
 
+/**
+ * Observe [NonNullLiveData] on an instance of [LifecycleOwner] like [Fragment] or [Activity]
+ *
+ * @param l instance of [NonNullLiveData]
+ * @param observer a lambda function that receives a non-null [T] and will be invoked when data is available
+ */
 fun <T> LifecycleOwner.observe(l: NonNullLiveData<T>, observer: (T) -> Unit) {
     l.observe(this, { observer(it) })
 }
@@ -34,6 +45,10 @@ inline fun <reified T> Gson.fromJson(jsonElement: JsonElement): T? = this.fromJs
 inline fun <reified T> Gson.fromJson(jsonStr: String): T? = this.fromJson<T>(jsonStr, object : com.google.gson.reflect.TypeToken<T>() {}.type)
 
 
+/**
+ * Add all given values to fragment bundle arguments
+ * @param params list of [Pair]s that include key, value for each argument
+ */
 fun <T : Fragment> T.setArguments(vararg params: Pair<String, Any?>): T {
     val args = Bundle()
     if (params.isNotEmpty()) args.fill(*params)
@@ -41,8 +56,16 @@ fun <T : Fragment> T.setArguments(vararg params: Pair<String, Any?>): T {
     return this
 }
 
+/**
+ * get [Serializable] from [Bundle] without need to class casting using kotlin 'reified' feature
+ */
 inline fun <reified T> Bundle.getGenericSerializable(key: String) = getSerializable(key) as T
 
+/**
+ * put values into bundle based on their types.
+ *
+ * @param params list of [Pair]s that include key, value for each argument
+ */
 fun Bundle.fill(vararg params: Pair<String, Any?>) = apply {
     params.forEach {
         val value = it.second
@@ -81,12 +104,14 @@ fun Bundle.fill(vararg params: Pair<String, Any?>) = apply {
 
 */
 /**
- * Converts LiveData into a Flowable
+ * Converts [LiveData] into a [Flowable]
  */
-
 fun <T> LiveData<T>.toFlowable(lifecycleOwner: LifecycleOwner): Flowable<T> =
         Flowable.fromPublisher(LiveDataReactiveStreams.toPublisher(lifecycleOwner, this))
 
+/**
+ * close keyboard on [Activity.getCurrentFocus] view
+ */
 fun Activity.closeKeyboard() {
     val view = currentFocus
     if (view != null) {
@@ -95,15 +120,16 @@ fun Activity.closeKeyboard() {
     }
 }
 
+/**
+ * close keyboard on this view
+ */
 fun View.closeKeyboard() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(windowToken, 0)
 }
 
+/**
+ * @return returns formatted time in 'HH:mm:ss' format and in 'fa' locale
+ */
 fun Date.timeString() = SimpleDateFormat("HH:mm:ss", Locale("fa", "IR"))
         .let { it.format(this)!! }
-/**
- * Converts a Flowable into LiveData
- *//*
-
-fun <T> Flowable<T>.toLiveData(): LiveData<T> = LiveDataReactiveStreams.fromPublisher(this)*/

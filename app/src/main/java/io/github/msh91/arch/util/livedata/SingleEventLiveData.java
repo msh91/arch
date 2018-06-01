@@ -6,11 +6,6 @@ import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-
-/**
- * Created by sharifi on 3/10/18.
- */
-
 /**
  * Custom wrapper for {@link MutableLiveData} that calls observer only one time
  * @param <T>
