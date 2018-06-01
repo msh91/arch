@@ -22,6 +22,10 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    /**
+     * viewModel will be created by the first time it's called via [viewModelFactory] and it's class type
+     * will be found by Java Reflection
+     */
     override val viewModel: V by lazy {
         @Suppress("UNCHECKED_CAST")
         ViewModelProviders.of(this, viewModelFactory).get((javaClass
@@ -29,19 +33,25 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
     }
 
     override fun onAttach(context: Context?) {
+        // we should inject fragment dependencies before invoking super.onAttach()
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // initialize binding
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         binding.setLifecycleOwner(this)
+
+        // set viewModel as an observer to this activity lifecycle events
         lifecycle.addObserver(viewModel)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // observe viewModel uiActions in order to pass parent activity as argument of uiAction
         viewModel.uiActionLiveData.observe(this, Observer { it?.invoke(requireActivity()) })
         onViewInitialized(binding)
     }

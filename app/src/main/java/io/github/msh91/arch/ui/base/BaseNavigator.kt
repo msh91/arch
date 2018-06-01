@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 
 /**
- * Handles navigation between Activities in the app.
+ * Handles navigation between Activities and fragments in the app.
  */
 interface BaseNavigator {
     /**
