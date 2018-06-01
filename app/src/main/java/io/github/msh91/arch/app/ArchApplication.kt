@@ -10,6 +10,9 @@ import io.github.msh91.arch.BuildConfig
 import io.github.msh91.arch.di.component.DaggerAppComponent
 import javax.inject.Inject
 
+/**
+ * Custom [Application] class for app that prepare app for running
+ */
 class ArchApplication: Application(), HasActivityInjector {
     @Inject
     lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
@@ -30,6 +33,9 @@ class ArchApplication: Application(), HasActivityInjector {
         }
     }
 
+    /**
+     * @return android dispatching injector for providing dependencies in android activities
+     */
     override fun activityInjector(): AndroidInjector<Activity>? {
         return activityDispatchingAndroidInjector
     }

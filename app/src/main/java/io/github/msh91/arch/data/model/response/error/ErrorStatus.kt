@@ -1,6 +1,8 @@
 package io.github.msh91.arch.data.model.response.error
 
-
+/**
+ * various error status to know what happened if something goes wrong with an api call
+ */
 enum class ErrorStatus {
     /**
      * error in connecting to repository (Server or Database)

@@ -6,7 +6,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 /**
- * Delegation for the caching of APIs data.
+ * Delegation for the caching APIs data.
  *
  * @param expirationTimeMillis set expiration time in milliseconds if you need to have a time expiration factor. Default value is 0L
  * @param predicateExpired a predicate lambda function in order to specify if data is expired or not. Default value is null
@@ -21,7 +21,7 @@ class CacheDelegate<T>(private val expirationTimeMillis: Long = 0, private val p
     private var lastSavedTime: Long = 0
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T? {
-        return (if (isCached()) cached else null).also {
+        return (if (dataIsCachedAndNotExpired()) cached else null).also {
             Log.d("delegate", "getValue: cached: $it")
 
         }
@@ -35,57 +35,19 @@ class CacheDelegate<T>(private val expirationTimeMillis: Long = 0, private val p
     /**
      * Checks if an element (Specific T) exists in the cache and not expired yet.
      */
-    private fun isCached(): Boolean = cached != null && !isExpired() && !timeExpired()
+    private fun dataIsCachedAndNotExpired(): Boolean = cached != null && !isExpired() && !timeExpired()
 
+    /**
+     * check to ensure if data is expired or not, based on [predicateExpired] action
+     */
     private fun isExpired(): Boolean = (predicateExpired?.invoke(cached!!) ?: false)
 
+    /**
+     * check to ensure if data is expired or not, based on expiration time
+     */
     private fun timeExpired(): Boolean = if (expirationTimeMillis != 0L)
         (Date().time - lastSavedTime) > expirationTimeMillis
     else
         false
 
 }
-
-
-/*interface CacheContract<T> {
-
-    var model: T?
-
-    */
-/**
- * Retrieve a list of data, from the cache
- *//*
-    fun data(): Flowable<T>? = if (model != null && isCached() && !isExpired) Flowable.just(model) else null
-
-    */
-/**
- * Checks if the cache is expired.
- *
- * @return true, the cache is expired, otherwise false.
- *//*
-    val isExpired: Boolean
-
-    */
-/**
- * Clear all data from the cache
- *//*
-    fun clearData(): Completable {
-        model = null
-        return Completable.complete()
-    }
-
-    */
-/**
- * Save a given list of data to the cache
- *//*
-    fun saveData(data: T): Completable {
-        model = data
-
-        return Completable.complete()
-    }
-
-    */
-/**
- *//*
-    fun setLastCacheTime(lastCache: Long?)
-}*/
