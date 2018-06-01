@@ -10,6 +10,9 @@ import io.github.msh91.arch.di.module.AppModule
 import io.github.msh91.arch.di.module.NetworkModule
 import javax.inject.Singleton
 
+/**
+ * Main Application [Component] that included all of modules and sub components.
+ */
 @Singleton
 @Component(modules = [
     (AppModule::class),

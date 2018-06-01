@@ -10,6 +10,14 @@ import io.github.msh91.arch.ui.home.HomeViewModel
 import io.github.msh91.arch.ui.home.list.HomeListViewModel
 import io.github.msh91.arch.viewmodel.ArchViewModelFactory
 
+/**
+ * With this module all of ViewModels binds into generated Map<Class, ViewModel> and the map
+ * will be injected in [ArchViewModelFactory].
+ * And finally [ArchViewModelFactory] will be provided as [ViewModelProvider.Factory].
+ *
+ * Module [RepositoryBuilder] should be installed in this module because some of ViewModels depends
+ * of UseCases and Repositories
+ */
 @Module(includes = [RepositoryBuilder::class])
 abstract class ViewModelBuilder {
     @Binds
