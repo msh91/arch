@@ -2,6 +2,10 @@ package io.github.msh91.arch.data.local
 
 import android.content.Context
 
+/**
+ * With this helper we can access all shared preferences.
+ * Every field uses [PreferenceDelegate] for managing get and set value
+ */
 class AppPreferencesHelper(context: Context) {
 
     val prefs by lazy { context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE) }
@@ -14,11 +18,23 @@ class AppPreferencesHelper(context: Context) {
         private const val UNIQUE_ID = "UniqueId"
     }
 
+    /**
+     * provide saving and getting access token from preferences in order to use in with-token api services
+     */
     var token: String by PreferenceDelegate(prefs, ACCESS_TOKEN, "")
 
+    /**
+     * provide saving and getting token type from preferences in order to use in with-token api services
+     */
     var tokenType: String by PreferenceDelegate(prefs, TOKEN_TYPE, "")
 
+    /**
+     * provide saving and getting refresh token from preferences in order to use in [TokenAuthenticator]
+     */
     var refreshToken: String by PreferenceDelegate(prefs, REFRESH_TOKEN, "")
 
+    /**
+     * provide saving and getting device unique id from preferences in order to use in [DeviceUtil]
+     */
     var uniqueId: String by PreferenceDelegate(prefs, UNIQUE_ID, "")
 }

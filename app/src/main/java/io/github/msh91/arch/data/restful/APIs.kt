@@ -9,6 +9,9 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
+/**
+ * The without-token apis should be defined here
+ */
 interface APIs {
 
 
