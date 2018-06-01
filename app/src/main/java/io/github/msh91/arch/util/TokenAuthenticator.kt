@@ -8,7 +8,12 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
 
-
+/**
+ * A Helper class that attempts to refresh api token if server returns UNAUTHORIZED error
+ * @param apis An instance of [APIs] to call [APIs.refreshToken] api
+ * @param appPref An instance of [AppPreferencesHelper] to save refreshed access token, token type,
+ * and newly refresh token into preference.
+ */
 class TokenAuthenticator(val apis: Lazy<APIs>, val appPref: Lazy<AppPreferencesHelper>) : Authenticator {
 
 

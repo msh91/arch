@@ -2,6 +2,9 @@ package io.github.msh91.arch.util
 
 import io.github.msh91.arch.BuildConfig
 
+/**
+ * Helper class to save and get secret data using NDK
+ */
 class SecretFields
 {
     companion object {
