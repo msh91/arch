@@ -50,8 +50,8 @@ class AppModule {
      */
     @Provides
     @Singleton
-    fun provideDeviceUtil(context: Context, appPreferencesHelper: AppPreferencesHelper): BaseDeviceUtil {
-        return DeviceUtilImpl(context, appPreferencesHelper)
+    fun provideDeviceUtil(appPreferencesHelper: AppPreferencesHelper): BaseDeviceUtil {
+        return DeviceUtilImpl(appPreferencesHelper)
     }
 
 }

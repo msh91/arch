@@ -1,14 +1,10 @@
 package io.github.msh91.arch.util.device
 
-import android.content.Context
+import digital.github.msh91.arch.BuildConfig
 import io.github.msh91.arch.data.local.AppPreferencesHelper
 import java.util.*
 
-/**
- * Created by m.aghajani on 2/22/2018.
- */
 class DeviceUtilImpl(
-        val context: Context,
         private val appPreferencesHelper: AppPreferencesHelper) : BaseDeviceUtil {
 
     override fun getAndroidVersion(): Int {
@@ -23,7 +19,6 @@ class DeviceUtilImpl(
     }
 
     override fun getAppVersion(): Int {
-        val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-        return pInfo.versionCode
+        return BuildConfig.VERSION_CODE
     }
 }
