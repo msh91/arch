@@ -1,6 +1,6 @@
 package io.github.msh91.arch.util.device
 
-import digital.github.msh91.arch.BuildConfig
+import io.github.msh91.arch.BuildConfig
 import io.github.msh91.arch.data.local.AppPreferencesHelper
 import java.util.*
 
