@@ -7,9 +7,9 @@ import dagger.Module
 import dagger.Provides
 import io.github.msh91.arch.BuildConfig
 import io.github.msh91.arch.data.source.preference.AppPreferencesHelper
-import io.github.msh91.arch.data.repository.BaseCloudRepository
-import io.github.msh91.arch.data.repository.CloudMockRepository
-import io.github.msh91.arch.data.repository.CloudRepository
+import io.github.msh91.arch.data.source.cloud.BaseCloudRepository
+import io.github.msh91.arch.data.source.cloud.CloudMockRepository
+import io.github.msh91.arch.data.source.cloud.CloudRepository
 import io.github.msh91.arch.data.restful.APIs
 import io.github.msh91.arch.data.restful.APIsWithToken
 import io.github.msh91.arch.di.qualifier.WithToken
