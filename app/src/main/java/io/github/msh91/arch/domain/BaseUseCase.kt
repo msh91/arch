@@ -51,4 +51,34 @@ abstract class BaseUseCase<T>(private val errorUtil: ErrorUtil) {
                             onResponse(ErrorResponse(error))
                         }).also { compositeDisposable.add(it) }
     }
+
+    /**
+     * Same as [execute] but also will receive an object as requestModel, and pass it to callback
+     * via result.
+     *
+     * It can be used in situations that you want to call execute multiple times, so you can specify
+     * each execution with a requestModel, e.g you can send an [Int] as requestModel and use it
+     * as a request id.
+     */
+    fun <R> executeAndKeepRequest(
+            compositeDisposable: CompositeDisposable,
+            requestModel: R,
+            onResponse: (response: APIResponse<T>, request: R) -> Unit,
+            onTokenExpire: () -> Unit
+    ): Disposable {
+        return this.buildUseCaseObservable()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ onResponse(SuccessResponse(it), requestModel) },
+                        {
+                            val error = errorUtil.getErrorModel(it)
+
+                            if (error.errorStatus == ErrorStatus.UNAUTHORIZED)
+                                onTokenExpire()
+                            else {
+                                onResponse(ErrorResponse(error), requestModel)
+                            }
+                        })
+                .also { compositeDisposable.add(it) }
+    }
 }
