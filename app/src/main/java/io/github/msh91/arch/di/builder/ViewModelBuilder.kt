@@ -15,6 +15,7 @@ import io.github.msh91.arch.viewmodel.ArchViewModelFactory
  *
  */
 @Module(includes = [
+    (RepositoryBuilder::class),
     (HomeViewModelBuilder::class)
 ])
 abstract class ViewModelBuilder {
