@@ -7,12 +7,12 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
 /**
@@ -31,14 +31,13 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
     override lateinit var viewModelFactory: ViewModelProvider.Factory
 
     /**
-     * viewModel will be created by the first time it's called via [viewModelFactory] and it's class type
-     * will be found by Java Reflection
+     * Attempt to get viewModel lazily from [viewModelFactory] with the scope of given activity.
+     *
+     * @param activity given scope.
+     * @return T an instance of requested ViewModel.
      */
-    override val viewModel: V by lazy {
-        @Suppress("UNCHECKED_CAST")
-        ViewModelProviders.of(this, viewModelFactory).get((javaClass
-                    .genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<V>)
-    }
+    inline fun <reified T : BaseViewModel> getLazyViewModel(activity: FragmentActivity): Lazy<T> =
+            lazy { ViewModelProviders.of(activity, viewModelFactory)[T::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // we should inject dependencies before invoking super.onCreate()
