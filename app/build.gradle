@@ -51,6 +51,11 @@ dependencies {
     implementation appDependencies.ArchLifeCycle
     implementation appDependencies.ArchReactiveStreams
 
+    // Room
+    implementation appDependencies.Room
+    implementation appDependencies.RxRoom
+    kapt appDependencies.RoomCompiler
+
     // Support
     implementation appDependencies.support
     implementation appDependencies.supportAppCompat
