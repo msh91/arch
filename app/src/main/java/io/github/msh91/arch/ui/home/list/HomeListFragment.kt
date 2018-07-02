@@ -11,6 +11,7 @@ class HomeListFragment : BaseFragment<HomeListViewModel, FragmentHomeListBinding
         }
     }
 
+    override val viewModel: HomeListViewModel by getLazyViewModel(this)
     override val layoutId: Int = R.layout.fragment_home_list
 
 }
