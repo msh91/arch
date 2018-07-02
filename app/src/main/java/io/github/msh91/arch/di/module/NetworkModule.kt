@@ -6,7 +6,7 @@ import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import io.github.msh91.arch.BuildConfig
-import io.github.msh91.arch.data.local.AppPreferencesHelper
+import io.github.msh91.arch.data.source.preference.AppPreferencesHelper
 import io.github.msh91.arch.data.repository.BaseCloudRepository
 import io.github.msh91.arch.data.repository.CloudMockRepository
 import io.github.msh91.arch.data.repository.CloudRepository

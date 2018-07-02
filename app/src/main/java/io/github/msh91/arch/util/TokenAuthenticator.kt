@@ -1,7 +1,7 @@
 package io.github.msh91.arch.util
 
 import dagger.Lazy
-import io.github.msh91.arch.data.local.AppPreferencesHelper
+import io.github.msh91.arch.data.source.preference.AppPreferencesHelper
 import io.github.msh91.arch.data.restful.APIs
 import okhttp3.Authenticator
 import okhttp3.Request

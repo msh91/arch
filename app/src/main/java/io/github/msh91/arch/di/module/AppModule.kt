@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import io.github.msh91.arch.data.local.AppPreferencesHelper
+import io.github.msh91.arch.data.source.preference.AppPreferencesHelper
 import io.github.msh91.arch.di.builder.ViewModelBuilder
 import io.github.msh91.arch.util.connectivity.BaseConnectionManager
 import io.github.msh91.arch.util.connectivity.ConnectionManager

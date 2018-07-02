@@ -1,4 +1,4 @@
-package io.github.msh91.arch.data.local
+package io.github.msh91.arch.data.source.preference
 
 import android.content.Context
 
