@@ -8,11 +8,12 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.AndroidSupportInjection
+import io.github.msh91.arch.ui.base.ViewModelScope.ACTIVITY
+import io.github.msh91.arch.ui.base.ViewModelScope.FRAGMENT
 import javax.inject.Inject
 
 abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment(), BaseView<V, B> {
@@ -28,17 +29,13 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
      * @param activity given scope.
      * @return T an instance of requested ViewModel.
      */
-    inline fun <reified T : BaseViewModel> getLazyViewModel(activity: FragmentActivity): Lazy<T> =
-            lazy { ViewModelProviders.of(activity, viewModelFactory)[T::class.java] }
-
-    /**
-     * Attempt to get viewModel lazily from [viewModelFactory] with the scope of given fragment.
-     *
-     * @param fragment given scope.
-     * @return T an instance of requested ViewModel.
-     */
-    inline fun <reified T : BaseViewModel> getLazyViewModel(fragment: Fragment): Lazy<T> =
-            lazy { ViewModelProviders.of(fragment, viewModelFactory)[T::class.java] }
+    inline fun <reified T : BaseViewModel> getLazyViewModel(scope: ViewModelScope): Lazy<T> =
+            lazy {
+                when (scope) {
+                    ACTIVITY -> ViewModelProviders.of(requireActivity(), viewModelFactory)[T::class.java]
+                    FRAGMENT -> ViewModelProviders.of(this, viewModelFactory)[T::class.java]
+                }
+            }
 
     override fun onAttach(context: Context?) {
         // we should inject fragment dependencies before invoking super.onAttach()
