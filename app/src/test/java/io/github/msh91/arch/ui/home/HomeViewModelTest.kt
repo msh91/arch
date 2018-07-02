@@ -32,7 +32,7 @@ class HomeViewModelTest {
         // WHEN
         homeViewModel.onStart()
 
-        homeViewModel.uiActionLiveData.observeForever { it?.invoke(mock()) }
+        homeViewModel.activityAction.observeForever { it?.invoke(mock()) }
 
         // THEN
         verify(homeNavigator).openListFragment(any())

@@ -60,7 +60,8 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // observe viewModel uiActions in order to pass parent activity as argument of uiAction
-        viewModel.uiActionLiveData.observe(this, Observer { it?.invoke(requireActivity()) })
+        viewModel.activityAction.observe(this, Observer { it?.invoke(requireActivity()) })
+        viewModel.fragmentAction.observe(this, Observer { it?.invoke(this) })
         onViewInitialized(binding)
     }
 }

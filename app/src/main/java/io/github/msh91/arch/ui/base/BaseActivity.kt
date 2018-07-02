@@ -51,7 +51,7 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
         lifecycle.addObserver(viewModel)
         //todo:  viewModel.checkConnection()
         // observe viewModel uiActions in order to pass this activity as argument of uiAction
-        viewModel.uiActionLiveData.observe(this, Observer { it?.invoke(this) })
+        viewModel.activityAction.observe(this, Observer { it?.invoke(this) })
 
         onViewInitialized(binding)
     }

@@ -11,6 +11,6 @@ class HomeViewModel @Inject constructor(
 
     override fun onStart() {
         super.onStart()
-        uiActionLiveData { homeNavigator.openListFragment(it) }
+        activityAction { homeNavigator.openListFragment(it) }
     }
 }
