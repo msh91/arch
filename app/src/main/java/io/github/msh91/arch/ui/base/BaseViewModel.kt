@@ -6,7 +6,8 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.arch.lifecycle.ViewModel
 import android.util.Log
 import io.github.msh91.arch.util.connectivity.BaseConnectionManager
-import io.github.msh91.arch.util.livedata.UiActionLiveData
+import io.github.msh91.arch.util.livedata.ActivityActionLiveData
+import io.github.msh91.arch.util.livedata.FragmentActionLiveData
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -19,7 +20,8 @@ abstract class BaseViewModel(private val connectionManager: BaseConnectionManage
     : ViewModel(), LifecycleObserver {
 
     val compositeDisposable: CompositeDisposable = CompositeDisposable()
-    val uiActionLiveData = UiActionLiveData()
+    val activityAction = ActivityActionLiveData()
+    val fragmentAction = FragmentActionLiveData()
 
     override fun onCleared() {
         super.onCleared()
