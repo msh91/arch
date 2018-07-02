@@ -10,7 +10,7 @@ ext {
     androidCompileSdkVersion = 27
 
     final archVersion = '1.1.1'
-    final androidDatabinding = '3.0.1'
+    final roomVersion = '1.0.0'
     final supportVersion = '27.1.1'
     final constraintVersion = '1.0.2'
     final daggerVersion = '2.14.1'
@@ -41,6 +41,11 @@ ext {
             ArchLifeCycle        : "android.arch.lifecycle:extensions:$archVersion",
             ArchReactiveStreams  : "android.arch.lifecycle:reactivestreams:$archVersion",
             ArchJava8            : "android.arch.lifecycle:common-java8:$archVersion",
+
+            // ROOM
+            Room                 : "android.arch.persistence.room:runtime:$roomVersion",
+            RoomCompiler         : "android.arch.persistence.room:compiler:$roomVersion",
+            RxRoom               : "android.arch.persistence.room:rxjava2:$roomVersion",
 
             //AndroidDataBinding
 //            dataBindingCompiler  : "com.android.databinding:compiler:$androidDatabinding",
