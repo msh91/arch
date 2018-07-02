@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
@@ -36,8 +35,8 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
      * @param activity given scope.
      * @return T an instance of requested ViewModel.
      */
-    inline fun <reified T : BaseViewModel> getLazyViewModel(activity: FragmentActivity): Lazy<T> =
-            lazy { ViewModelProviders.of(activity, viewModelFactory)[T::class.java] }
+    inline fun <reified T : BaseViewModel> getLazyViewModel(): Lazy<T> =
+            lazy { ViewModelProviders.of(this, viewModelFactory)[T::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // we should inject dependencies before invoking super.onCreate()
