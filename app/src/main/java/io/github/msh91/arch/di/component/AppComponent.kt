@@ -7,6 +7,7 @@ import dagger.android.AndroidInjectionModule
 import io.github.msh91.arch.app.ArchApplication
 import io.github.msh91.arch.di.builder.ActivityBuilder
 import io.github.msh91.arch.di.module.AppModule
+import io.github.msh91.arch.di.module.DatabaseModule
 import io.github.msh91.arch.di.module.NetworkModule
 import javax.inject.Singleton
 
@@ -18,6 +19,7 @@ import javax.inject.Singleton
     (AppModule::class),
     (NetworkModule::class),
     (AndroidInjectionModule::class),
+    (DatabaseModule::class),
     (ActivityBuilder::class)])
 interface AppComponent {
     @Component.Builder
