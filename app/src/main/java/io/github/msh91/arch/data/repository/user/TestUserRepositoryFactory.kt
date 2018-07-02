@@ -1,7 +1,7 @@
 package io.github.msh91.arch.data.repository.user
 
 import io.github.msh91.arch.data.model.user.TestUserModel
-import io.github.msh91.arch.data.repository.BaseCloudRepository
+import io.github.msh91.arch.data.source.cloud.BaseCloudRepository
 import io.github.msh91.arch.data.repository.CacheDelegate
 import io.github.msh91.arch.di.qualifier.network.Mock
 import io.reactivex.Flowable
