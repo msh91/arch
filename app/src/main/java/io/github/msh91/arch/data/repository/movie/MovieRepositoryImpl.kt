@@ -14,11 +14,14 @@ class MovieRepositoryImpl @Inject constructor(
 ) : MovieRepository {
 
     override fun getAllMovies(): Flowable<List<Movie>> {
+        // at first step we will check if any movie exists on db or not
         return Flowable.fromCallable { movieDao.getCount() }
                 .flatMap {
                     if (it == 0)
+                        // nothing exists on database, so get them from cloud
                         getMoviesFromCloud()
                     else
+                        // there are some movies in db, so attempt to get them
                         movieDao.getAllMovies()
                 }
     }
@@ -29,6 +32,9 @@ class MovieRepositoryImpl @Inject constructor(
                 .map(this::insertMoviesToDb)
     }
 
+    /**
+     * Attempts to insert fetched movies to database and returns the given list
+     */
     private fun insertMoviesToDb(movies: List<Movie>): List<Movie> {
         movieDao.insertMovies(movies)
         return movies
