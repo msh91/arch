@@ -3,7 +3,7 @@ package io.github.msh91.arch.data.source.db.dao
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import io.github.msh91.arch.data.model.movie.Movie
+import io.github.msh91.arch.domain.model.movie.Movie
 import io.reactivex.Flowable
 
 @Dao

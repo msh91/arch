@@ -1,7 +1,7 @@
-package io.github.msh91.arch.data.model.response.error
+package io.github.msh91.arch.domain.model.response
 
 /**
- * various error status to know what happened if something goes wrong with an api call
+ * various error status to know what happened if something goes wrong with a repository call
  */
 enum class ErrorStatus {
     /**

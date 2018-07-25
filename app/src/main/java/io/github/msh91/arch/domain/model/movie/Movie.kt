@@ -1,4 +1,4 @@
-package io.github.msh91.arch.data.model.movie
+package io.github.msh91.arch.domain.model.movie
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
