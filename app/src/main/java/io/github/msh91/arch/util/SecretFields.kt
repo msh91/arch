@@ -5,24 +5,24 @@ import io.github.msh91.arch.BuildConfig
 /**
  * Helper class to save and get secret data using NDK
  */
-class SecretFields
-{
-    companion object {
-        init {
-            System.loadLibrary("native-lib")
-        }
+class SecretFields {
+
+    private fun debugBaseURI(): String {
+        return "http://io.github.msh91"
     }
 
-    private external fun debugBaseURI(): String
+    private fun releaseBaseURI(): String {
+        return "http://io.github.msh91"
+    }
 
-    private external fun releaseBaseURI(): String
+    fun authorizationKey(): String {
+        return "authorization"
+    }
 
-    external fun authorizationKey(): String
-
-    fun getBaseURI(): String{
-        if(BuildConfig.BUILD_TYPE == "debug")
+    fun getBaseURI(): String {
+        if (BuildConfig.BUILD_TYPE == "debug")
             return debugBaseURI()
-        else if(BuildConfig.BUILD_TYPE == "release")
+        else if (BuildConfig.BUILD_TYPE == "release")
             return releaseBaseURI()
         else
             return ""
