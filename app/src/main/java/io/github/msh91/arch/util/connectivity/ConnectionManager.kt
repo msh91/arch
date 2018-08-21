@@ -6,12 +6,13 @@ import android.os.Build
 import java.net.InetAddress
 import java.net.NetworkInterface
 import java.util.*
+import javax.inject.Inject
 
 /**
  * The main implementation of [BaseConnectionManager], and will be provided through RELEASE mode
  * @see  io.github.msh91.arch.di.module.AppModule
  */
-class ConnectionManager(context: Context): BaseConnectionManager {
+class ConnectionManager @Inject constructor(context: Context): BaseConnectionManager {
 
     companion object {
         private const val CONNECTION_TIMEOUT = 500

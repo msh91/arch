@@ -13,12 +13,13 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.webkit.MimeTypeMap
 import java.io.InputStream
+import javax.inject.Inject
 
 
 /**
  * Concrete implementation of the [BaseResourceProvider] interface.
  */
-class ResourceProvider(context: Context) : BaseResourceProvider {
+class ResourceProvider @Inject constructor(context: Context) : BaseResourceProvider {
 
     private val mContext: Context
 
