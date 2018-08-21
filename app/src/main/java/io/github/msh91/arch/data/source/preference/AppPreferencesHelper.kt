@@ -1,12 +1,13 @@
 package io.github.msh91.arch.data.source.preference
 
 import android.content.Context
+import javax.inject.Inject
 
 /**
  * With this helper we can access all shared preferences.
  * Every field uses [PreferenceDelegate] for managing get and set value
  */
-class AppPreferencesHelper(context: Context) {
+class AppPreferencesHelper @Inject constructor(context: Context) {
 
     val prefs by lazy { context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE) }
 
