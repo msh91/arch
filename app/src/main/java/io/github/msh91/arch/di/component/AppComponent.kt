@@ -9,6 +9,7 @@ import io.github.msh91.arch.di.builder.ActivityBuilder
 import io.github.msh91.arch.di.module.AppModule
 import io.github.msh91.arch.di.module.DatabaseModule
 import io.github.msh91.arch.di.module.NetworkModule
+import io.github.msh91.arch.di.module.UtilModule
 import javax.inject.Singleton
 
 /**
@@ -18,6 +19,7 @@ import javax.inject.Singleton
 @Component(modules = [
     (AppModule::class),
     (NetworkModule::class),
+    (UtilModule::class),
     (AndroidInjectionModule::class),
     (DatabaseModule::class),
     (ActivityBuilder::class)])
