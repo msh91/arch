@@ -6,18 +6,20 @@ import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import io.github.msh91.arch.BuildConfig
-import io.github.msh91.arch.data.source.preference.AppPreferencesHelper
+import io.github.msh91.arch.data.restful.APIs
+import io.github.msh91.arch.data.restful.APIsWithToken
 import io.github.msh91.arch.data.source.cloud.BaseCloudRepository
 import io.github.msh91.arch.data.source.cloud.CloudMockRepository
 import io.github.msh91.arch.data.source.cloud.CloudRepository
-import io.github.msh91.arch.data.restful.APIs
-import io.github.msh91.arch.data.restful.APIsWithToken
+import io.github.msh91.arch.data.source.preference.AppPreferencesHelper
 import io.github.msh91.arch.di.qualifier.WithToken
 import io.github.msh91.arch.di.qualifier.WithoutToken
 import io.github.msh91.arch.di.qualifier.network.Cloud
 import io.github.msh91.arch.di.qualifier.network.Mock
 import io.github.msh91.arch.util.SecretFields
 import io.github.msh91.arch.util.TokenAuthenticator
+import io.github.msh91.arch.util.providers.BaseResourceProvider
+import io.github.msh91.arch.util.providers.file.BaseFileProvider
 import okhttp3.Authenticator
 import okhttp3.Headers
 import okhttp3.Interceptor
@@ -243,7 +245,10 @@ class NetworkModule {
      */
     @Mock
     @Provides
-    fun provideCloudMockRepository(): BaseCloudRepository {
-        return CloudMockRepository()
+    fun provideCloudMockRepository(apIs: APIs, apIsWithToken: APIsWithToken, resourceProvider: BaseResourceProvider, gson: Gson, fileProvider: BaseFileProvider): BaseCloudRepository {
+        return if (BuildConfig.DEBUG)
+            CloudMockRepository(resourceProvider, gson, fileProvider)
+        else
+            CloudRepository(apIs, apIsWithToken)
     }
 }
