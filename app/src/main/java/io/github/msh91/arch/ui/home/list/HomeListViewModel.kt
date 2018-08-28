@@ -3,7 +3,7 @@ package io.github.msh91.arch.ui.home.list
 import android.util.Log
 import io.github.msh91.arch.domain.model.movie.Movie
 import io.github.msh91.arch.domain.model.response.UseCaseResponse
-import io.github.msh91.arch.domain.usecase.GetAllMoviesUseCase
+import io.github.msh91.arch.domain.usecase.movie.GetAllMoviesUseCase
 import io.github.msh91.arch.ui.base.BaseViewModel
 import io.github.msh91.arch.util.connectivity.BaseConnectionManager
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package io.github.msh91.arch.domain.usecase
+package io.github.msh91.arch.domain.usecase.movie
 
 import io.github.msh91.arch.domain.BaseUseCase
 import io.github.msh91.arch.domain.mapper.DomainErrorUtil
