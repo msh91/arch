@@ -5,6 +5,7 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity
 data class Movie(
-        @PrimaryKey val id: Int,
-        val name: String
+        @PrimaryKey val id: String,
+        val name: String,
+        val avatar: String
 )
