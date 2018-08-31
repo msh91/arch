@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="io.github.msh91.arch.domain.model.movie.Movie" />
+
+        <variable
+            name="viewModel"
+            type="io.github.msh91.arch.ui.home.list.HomeListViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/item_movie_background"
+        android:onClick="@{() -> viewModel.onItemClicked(item)}"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/img_avatar"
+            srcImageUrl="@{item.avatar}"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="#c3c3c3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="@{item.id}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@id/img_avatar"
+            app:layout_constraintTop_toTopOf="@id/img_avatar"
+            tools:text="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{item.name}"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/txt_number"
+            app:layout_constraintTop_toBottomOf="@id/txt_number"
+            tools:text="Movie Title" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
