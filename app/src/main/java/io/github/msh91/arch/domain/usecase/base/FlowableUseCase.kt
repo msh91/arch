@@ -11,7 +11,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-abstract class FlowableUseCase<T>(private val errorUtil: DomainErrorUtil) : UseCase<Flowable<T>>() {
+abstract class FlowableUseCase<T>(val errorUtil: DomainErrorUtil) : UseCase<Flowable<T>>() {
 
     /**
      * subscribed to [Flowable] instance that returns from [execute] and send response via a lambda callback.
