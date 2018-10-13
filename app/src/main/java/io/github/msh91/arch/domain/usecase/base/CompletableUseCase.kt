@@ -9,7 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-abstract class CompletableUseCase(private val errorUtil: DomainErrorUtil) : UseCase<Completable>() {
+abstract class CompletableUseCase(val errorUtil: DomainErrorUtil) : UseCase<Completable>() {
     /**
      * subscribed to [Completable] instance that returns from [execute] and notify caller via a lambda callback.
      *
