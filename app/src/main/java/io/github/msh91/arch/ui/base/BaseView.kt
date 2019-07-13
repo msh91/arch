@@ -1,7 +1,7 @@
 package io.github.msh91.arch.ui.base
 
-import android.arch.lifecycle.ViewModelProvider
-import android.databinding.ViewDataBinding
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModelProvider
 
 /**
  * Base interaction for every View such as activities, fragments, dialogs

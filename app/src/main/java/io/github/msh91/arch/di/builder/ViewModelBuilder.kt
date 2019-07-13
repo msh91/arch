@@ -1,6 +1,6 @@
 package io.github.msh91.arch.di.builder
 
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import io.github.msh91.arch.ui.home.HomeViewModelBuilder

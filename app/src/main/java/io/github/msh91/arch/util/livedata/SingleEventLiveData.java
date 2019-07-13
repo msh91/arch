@@ -1,9 +1,9 @@
 package io.github.msh91.arch.util.livedata;
 
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Observer;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.annotation.NonNull;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 /**
@@ -19,8 +19,10 @@ public class SingleEventLiveData<T> extends MutableLiveData<T> {
         super.setValue(value);
     }
 
+
+
     @Override
-    public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<T> observer) {
+    public void observe(@NonNull LifecycleOwner owner, @NonNull Observer<? super T> observer) {
         super.observe(owner, t -> {
             if (mPending.compareAndSet(true, false)) {
                 observer.onChanged(t);

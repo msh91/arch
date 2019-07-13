@@ -2,7 +2,7 @@ package io.github.msh91.arch.ui.base
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.FragmentActivity
 
 /**
  * Handles navigation between Activities and fragments in the app.

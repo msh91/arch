@@ -1,7 +1,7 @@
 package io.github.msh91.arch.data.source.db
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import io.github.msh91.arch.data.source.db.dao.MovieDao
 import io.github.msh91.arch.domain.model.movie.Movie
 

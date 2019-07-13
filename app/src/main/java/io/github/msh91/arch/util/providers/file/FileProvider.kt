@@ -3,7 +3,7 @@ package io.github.msh91.arch.util.providers.file
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
-import android.support.v4.content.FileProvider
+import androidx.core.content.FileProvider
 import java.io.File
 import java.io.InputStream
 import javax.inject.Inject

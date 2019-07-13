@@ -1,7 +1,7 @@
 package io.github.msh91.arch.util.livedata
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
 /**
  * A lambda function that receives a [FragmentActivity]
@@ -34,7 +34,7 @@ class ActivityActionLiveData: SingleEventLiveData<ActivityAction>() {
 /**
  * A lambda function that receives a [Fragment]
  */
-typealias FragmentAction = (Fragment) -> Unit
+typealias FragmentAction = (androidx.fragment.app.Fragment) -> Unit
 
 /**
  * A custom wrapper for [SingleEventLiveData] that only works with [FragmentAction]

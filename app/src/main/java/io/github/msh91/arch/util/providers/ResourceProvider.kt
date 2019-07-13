@@ -7,11 +7,11 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
-import android.support.annotation.DrawableRes
-import android.support.annotation.StringRes
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.webkit.MimeTypeMap
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -21,15 +21,7 @@ import javax.inject.Inject
  */
 class ResourceProvider @Inject constructor(context: Context) : BaseResourceProvider {
 
-    private val mContext: Context
-
-    init {
-        if (context == null) {
-            throw NullPointerException("context cannot be null")
-        } else {
-            mContext = context
-        }
-    }
+    private val mContext: Context = context
 
     override fun getString(@StringRes id: Int): String {
         return mContext.getString(id)
