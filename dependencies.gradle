@@ -6,8 +6,8 @@ allprojects {
 
 ext {
     androidMinSdkVersion = 18
-    androidTargetSdkVersion = 27
-    androidCompileSdkVersion = 27
+    androidTargetSdkVersion = 28
+    androidCompileSdkVersion = 28
 
     final archVersion = '1.1.1'
     final roomVersion = '1.0.0'
@@ -19,15 +19,12 @@ ext {
     final rxJava = '2.1.9'
     final rxAndroid = '2.0.1'
     final stetho = '1.4.2'
-    final roundedImageView = '2.3.0'
     final glide = '4.7.1'
-    final MPAndroidChart = 'v3.0.3'
-    final QrGenerator = '2.4.0'
 
     //Test
     final junitVersion = '4.12'
     final testRunnerVersion = '1.0.1'
-    final esperessoVersion = '3.0.1'
+    final espressoVersion = '3.0.1'
     final mockitoKotlinVersion = '1.5.0'
 
 
@@ -82,21 +79,9 @@ ext {
             //RXAndroid
             rxAndroid            : "io.reactivex.rxjava2:rxandroid:$rxAndroid",
 
-            //RoundedImageView
-            roundedImageView     : "com.makeramen:roundedimageview:$roundedImageView",
-
             //Glide
             glide                : "com.github.bumptech.glide:glide:$glide",
             glideCompiler        : "com.github.bumptech.glide:compiler:$glide",
-
-            // Persian Date Picker
-            datePicker           : ":datepicker",
-
-            // MP Android Chart
-            MPAndroidChart       : "com.github.PhilJay:MPAndroidChart:$MPAndroidChart",
-
-            // Qr Generator
-            QrGenerator          : "com.github.kenglxn.QRGen:android:$QrGenerator",
     ]
 
     testDependencies = [
@@ -108,7 +93,7 @@ ext {
             testRunner   : "com.android.support.test:runner:$testRunnerVersion",
 
             //Esperesso
-            esperesso    : "com.android.support.test.espresso:espresso-core:$esperessoVersion",
+            esperesso    : "com.android.support.test.espresso:espresso-core:$espressoVersion",
 
             //Mockito
             mockitoKotlin: "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlinVersion",
