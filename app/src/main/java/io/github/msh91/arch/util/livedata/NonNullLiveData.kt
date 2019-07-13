@@ -1,8 +1,8 @@
 package io.github.msh91.arch.util.livedata
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 
 /**
  * A wrapper class for [MutableLiveData] that does not accept or return null values.

@@ -1,7 +1,7 @@
 package io.github.msh91.arch.domain.model.movie
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity
 data class Movie(

@@ -1,16 +1,16 @@
 package io.github.msh91.arch.util
 
-import android.arch.lifecycle.MutableLiveData
-import android.databinding.BindingAdapter
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.support.annotation.DrawableRes
-import android.support.v7.widget.AppCompatImageView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.databinding.BindingAdapter
+import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.Target
 import io.github.msh91.arch.app.GlideApp

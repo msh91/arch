@@ -1,6 +1,6 @@
 package io.github.msh91.arch.ui.base.adapter
 
-import android.databinding.ViewDataBinding
+import androidx.databinding.ViewDataBinding
 import io.github.msh91.arch.ui.base.BaseViewModel
 
 /**

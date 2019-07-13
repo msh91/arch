@@ -1,6 +1,6 @@
 package io.github.msh91.arch.di.qualifier.viewmodel
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import dagger.MapKey
 import kotlin.reflect.KClass
 
