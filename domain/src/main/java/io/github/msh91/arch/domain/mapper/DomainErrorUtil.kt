@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import io.github.msh91.arch.domain.model.response.DomainErrorException
 import io.github.msh91.arch.domain.model.response.ErrorModel
 import io.github.msh91.arch.domain.model.response.ErrorStatus
-import okhttp3.ResponseBody
 import javax.inject.Inject
 
 /**
