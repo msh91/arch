@@ -47,6 +47,9 @@ dependencies {
 
     implementation appDependencies.kotlin
 
+    // Project Submodules
+    implementation project(':domain')
+
     // Arch
     implementation appDependencies.ArchLifeCycle
     implementation appDependencies.ArchReactiveStreams

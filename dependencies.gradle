@@ -13,6 +13,7 @@ ext {
     final roomVersion = '2.0.0'
     final daggerVersion = '2.23.2'
     final okHttp = '3.8.1'
+    final gson = '2.7'
     final retrofit = '2.3.0'
     final rxJava = '2.1.9'
     final rxAndroid = '2.0.1'
@@ -36,6 +37,7 @@ ext {
             ArchLifeCycle        : "androidx.lifecycle:lifecycle-extensions:$archVersion",
             ArchReactiveStreams  : "androidx.lifecycle:lifecycle-reactivestreams:$archVersion",
 
+
             // ROOM
             Room                 : "androidx.room:room-runtime:$roomVersion",
             RoomCompiler         : "androidx.room:room-compiler:$roomVersion",
@@ -46,7 +48,7 @@ ext {
 
             //Android Support
             support              : 'androidx.legacy:legacy-support-v4:1.0.0',
-            supportAppCompat     : 'androidx.appcompat:appcompat:1.0.0',
+            supportAppCompat     : 'androidx.appcompat:appcompat:1.0.2',
             supportDesign        : 'com.google.android.material:material:1.0.0',
             constraintLayout     : 'androidx.constraintlayout:constraintlayout:1.1.3',
             supportCardView      : 'androidx.cardview:cardview:1.0.0',
@@ -59,6 +61,7 @@ ext {
             daggerAndroidCompiler: "com.google.dagger:dagger-android-processor:$daggerVersion",
 
             //Retrofit
+            gson                 : "com.google.code.gson:gson:$gson",
             retrofit             : "com.squareup.retrofit2:retrofit:$retrofit",
             retrofitGson         : "com.squareup.retrofit2:converter-gson:$retrofit",
             retrofitRx           : "com.squareup.retrofit2:adapter-rxjava2:$retrofit",
