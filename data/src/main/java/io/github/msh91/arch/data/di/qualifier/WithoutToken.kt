@@ -1,4 +1,4 @@
-package io.github.msh91.arch.di.qualifier
+package io.github.msh91.arch.data.di.qualifier
 
 import javax.inject.Qualifier
 

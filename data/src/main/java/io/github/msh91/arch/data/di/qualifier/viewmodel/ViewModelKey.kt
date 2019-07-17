@@ -1,4 +1,4 @@
-package io.github.msh91.arch.di.qualifier.viewmodel
+package io.github.msh91.arch.data.di.qualifier.viewmodel
 
 import androidx.lifecycle.ViewModel
 import dagger.MapKey

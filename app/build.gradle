@@ -49,6 +49,7 @@ dependencies {
 
     // Project Submodules
     implementation project(':domain')
+    implementation project(':data')
 
     // Arch
     implementation appDependencies.ArchLifeCycle
@@ -56,8 +57,6 @@ dependencies {
 
     // Room
     implementation appDependencies.Room
-    implementation appDependencies.RxRoom
-    kapt appDependencies.RoomCompiler
 
     // Support
     implementation appDependencies.support

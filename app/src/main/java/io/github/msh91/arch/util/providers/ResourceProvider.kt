@@ -1,18 +1,14 @@
 package io.github.msh91.arch.util.providers
 
-import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Build
-import android.webkit.MimeTypeMap
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import java.io.InputStream
 import javax.inject.Inject
 
 
@@ -38,24 +34,6 @@ class ResourceProvider @Inject constructor(context: Context) : BaseResourceProvi
     override fun getDrawable(resId: Int): Drawable? {
         return ContextCompat.getDrawable(mContext, resId)
     }
-
-    override fun getAsset(fileName: String): InputStream {
-        return mContext.assets.open(fileName)
-    }
-
-    override fun getContentInputStream(uri: Uri): InputStream {
-        return mContext.contentResolver.openInputStream(uri)
-    }
-
-    override fun getMimType(uri: Uri): String {
-        return if (uri.scheme?.contentEquals("content") == true)
-            return mContext.contentResolver.getType(uri)
-        else
-            MimeTypeMap.getFileExtensionFromUrl(uri.path)
-                    ?: MimeTypeMap.getSingleton().getMimeTypeFromExtension(uri.path)
-    }
-
-    override fun getContentResolver(): ContentResolver = mContext.contentResolver
 
     override fun getBitmapFromVectorDrawable(@DrawableRes drawableId: Int): Bitmap {
         var drawable = ContextCompat.getDrawable(mContext, drawableId)!!

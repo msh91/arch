@@ -11,8 +11,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.Observer
-import com.google.gson.Gson
-import com.google.gson.JsonElement
 import io.github.msh91.arch.util.livedata.NonNullLiveData
 import io.reactivex.Flowable
 import java.io.Serializable
@@ -39,10 +37,6 @@ fun <T, L : LiveData<T>> LifecycleOwner.observe(l: L, observer: (T?) -> Unit) {
 fun <T> LifecycleOwner.observe(l: NonNullLiveData<T>, observer: (T) -> Unit) {
     l.observe(this, { observer(it) })
 }
-
-inline fun <reified T> Gson.fromJson(jsonElement: JsonElement): T? = this.fromJson<T>(jsonElement, object : com.google.gson.reflect.TypeToken<T>() {}.type)
-
-inline fun <reified T> Gson.fromJson(jsonStr: String): T? = this.fromJson<T>(jsonStr, object : com.google.gson.reflect.TypeToken<T>() {}.type)
 
 
 /**
