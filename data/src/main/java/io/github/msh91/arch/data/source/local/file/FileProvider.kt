@@ -1,8 +1,10 @@
-package io.github.msh91.arch.util.providers.file
+package io.github.msh91.arch.data.source.local.file
 
+import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.webkit.MimeTypeMap
 import androidx.core.content.FileProvider
 import java.io.File
 import java.io.InputStream
@@ -35,4 +37,23 @@ class FileProvider @Inject constructor(private val context: Context) : BaseFileP
             inputStream.close()
         }
     }
+
+    override fun getAsset(fileName: String): InputStream {
+        return context.assets.open(fileName)
+    }
+
+    override fun getContentInputStream(uri: Uri): InputStream {
+        return context.contentResolver.openInputStream(uri)
+    }
+
+    override fun getMimType(uri: Uri): String {
+        return if (uri.scheme?.contentEquals("content") == true)
+            return context.contentResolver.getType(uri)
+        else
+            MimeTypeMap.getFileExtensionFromUrl(uri.path)
+                    ?: MimeTypeMap.getSingleton().getMimeTypeFromExtension(uri.path)
+    }
+
+    override fun getContentResolver(): ContentResolver = context.contentResolver
+
 }

@@ -1,4 +1,4 @@
-package io.github.msh91.arch.di.qualifier.network
+package io.github.msh91.arch.data.di.qualifier.network
 
 import javax.inject.Qualifier
 

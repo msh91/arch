@@ -8,8 +8,8 @@ import io.github.msh91.arch.util.device.BaseDeviceUtil
 import io.github.msh91.arch.util.device.DeviceUtilImpl
 import io.github.msh91.arch.util.providers.BaseResourceProvider
 import io.github.msh91.arch.util.providers.ResourceProvider
-import io.github.msh91.arch.util.providers.file.BaseFileProvider
-import io.github.msh91.arch.util.providers.file.FileProvider
+import io.github.msh91.arch.data.source.local.file.BaseFileProvider
+import io.github.msh91.arch.data.source.local.file.FileProvider
 import javax.inject.Singleton
 
 @Module

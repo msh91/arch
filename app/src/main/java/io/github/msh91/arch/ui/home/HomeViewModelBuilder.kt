@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import io.github.msh91.arch.di.qualifier.viewmodel.ViewModelKey
+import io.github.msh91.arch.data.di.qualifier.viewmodel.ViewModelKey
 import io.github.msh91.arch.ui.home.list.HomeListViewModel
 
 @Module
