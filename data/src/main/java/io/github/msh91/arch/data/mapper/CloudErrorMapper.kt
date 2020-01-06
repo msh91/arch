@@ -1,9 +1,9 @@
 package io.github.msh91.arch.data.mapper
 
 import com.google.gson.Gson
-import io.github.msh91.arch.domain.model.response.DomainErrorException
-import io.github.msh91.arch.domain.model.response.ErrorModel
-import io.github.msh91.arch.domain.model.response.ErrorStatus
+import io.github.msh91.arch.data.model.response.DomainErrorException
+import io.github.msh91.arch.data.model.response.ErrorModel
+import io.github.msh91.arch.data.model.response.ErrorStatus
 import okhttp3.ResponseBody
 import retrofit2.HttpException
 import java.io.IOException
@@ -20,7 +20,7 @@ class CloudErrorMapper @Inject constructor(private val gson: Gson) {
             is HttpException -> {
                 // handle UNAUTHORIZED situation (when token expired)
                 if (throwable.code() == 401) {
-                    ErrorModel(ErrorStatus.UNAUTHORIZED)
+                  ErrorModel(ErrorStatus.UNAUTHORIZED)
                 } else {
                     getHttpError(throwable.response()?.errorBody())
                 }
@@ -28,12 +28,12 @@ class CloudErrorMapper @Inject constructor(private val gson: Gson) {
 
         // handle api call timeout error
             is SocketTimeoutException -> {
-                ErrorModel(ErrorStatus.TIMEOUT)
+              ErrorModel(ErrorStatus.TIMEOUT)
             }
 
         // handle connection error
             is IOException -> {
-                ErrorModel(ErrorStatus.NO_CONNECTION)
+              ErrorModel(ErrorStatus.NO_CONNECTION)
             }
             else -> null
         }
@@ -49,10 +49,10 @@ class CloudErrorMapper @Inject constructor(private val gson: Gson) {
     private fun getHttpError(body: ResponseBody?): ErrorModel {
         return try {
             // use response body to get error detail
-            ErrorModel("error detail", 400, ErrorStatus.BAD_RESPONSE)
+          ErrorModel("error detail", 400, ErrorStatus.BAD_RESPONSE)
         } catch (e: Throwable) {
             e.printStackTrace()
-            ErrorModel(ErrorStatus.NOT_DEFINED)
+          ErrorModel(ErrorStatus.NOT_DEFINED)
         }
 
     }

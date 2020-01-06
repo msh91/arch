@@ -38,7 +38,6 @@ kapt {
 }
 
 dependencies {
-    implementation project(Libs.Modules.domain)
     implementation Libs.Common.kotlin
     implementation Libs.Jetpack.lifecycleExtensions
     implementation Libs.Common.dagger
