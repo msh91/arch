@@ -48,7 +48,6 @@ dependencies {
     implementation Libs.Common.kotlin
 
     // Project Submodules
-    implementation project(Libs.Modules.domain)
     implementation project(Libs.Modules.data)
 
     // Jetpack

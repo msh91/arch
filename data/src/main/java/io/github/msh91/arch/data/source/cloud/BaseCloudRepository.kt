@@ -1,6 +1,6 @@
 package io.github.msh91.arch.data.source.cloud
 
-import io.github.msh91.arch.domain.model.movie.Movie
+import io.github.msh91.arch.data.model.movie.Movie
 import io.reactivex.Flowable
 
 /**

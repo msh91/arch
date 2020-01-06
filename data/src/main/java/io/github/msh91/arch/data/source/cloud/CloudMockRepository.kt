@@ -3,7 +3,7 @@ package io.github.msh91.arch.data.source.cloud
 import com.google.gson.Gson
 import io.github.msh91.arch.data.source.local.file.BaseFileProvider
 import io.github.msh91.arch.data.util.fromJson
-import io.github.msh91.arch.domain.model.movie.Movie
+import io.github.msh91.arch.data.model.movie.Movie
 import io.reactivex.Flowable
 
 /**

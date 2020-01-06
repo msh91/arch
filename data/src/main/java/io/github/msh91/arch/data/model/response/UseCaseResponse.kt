@@ -1,4 +1,4 @@
-package io.github.msh91.arch.domain.model.response
+package io.github.msh91.arch.data.model.response
 
 /**
  * base sealed class for handling UseCase responses in [BaseUseCase]
