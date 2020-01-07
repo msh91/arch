@@ -1,3 +1,5 @@
+import io.github.msh91.arch.Libs
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
@@ -5,7 +7,6 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "29.0.1"
 
 
     defaultConfig {
@@ -36,20 +37,16 @@ kapt {
 }
 
 dependencies {
-    def appDependencies = rootProject.ext.dependencies
-    def testDependencies = rootProject.ext.testDependencies
-
-    implementation appDependencies.kotlin
-    implementation appDependencies.ArchLifeCycle
-    implementation appDependencies.dagger
-    kapt appDependencies.daggerCompiler
-    implementation appDependencies.Room
-    implementation appDependencies.gson
-    implementation appDependencies.rxJava
-    implementation appDependencies.rxAndroid
-
-    testImplementation testDependencies.junit
-    testImplementation testDependencies.mockitoKotlin
-    androidTestImplementation testDependencies.testRunner
-    androidTestImplementation testDependencies.esperesso
+    implementation Libs.Common.kotlin
+    implementation Libs.Jetpack.lifecycleExtensions
+    implementation Libs.Common.dagger
+    kapt Libs.Common.daggerCompiler
+    implementation Libs.Jetpack.room
+    implementation Libs.Common.gson
+    implementation Libs.Common.rxJava
+    implementation Libs.Common.rxAndroid
+    testImplementation Libs.Testing.junit
+    testImplementation Libs.Testing.mockitoKotlin
+    androidTestImplementation Libs.Testing.testRunner
+    androidTestImplementation Libs.Testing.esperesso
 }
