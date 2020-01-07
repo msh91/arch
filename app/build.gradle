@@ -1,16 +1,19 @@
+import io.github.msh91.arch.Android
+import io.github.msh91.arch.Libs
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion rootProject.ext.androidCompileSdkVersion
+    compileSdkVersion Android.compileSdkVersion
     defaultConfig {
-        applicationId "io.github.msh91.arch"
-        minSdkVersion rootProject.ext.androidMinSdkVersion
-        targetSdkVersion rootProject.ext.androidTargetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        applicationId Android.applicationId
+        minSdkVersion Android.minSdkVersion
+        targetSdkVersion Android.targetSdkVersion
+        versionCode Android.versionCode
+        versionName Android.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true
     }
@@ -41,58 +44,51 @@ kapt {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    def appDependencies = rootProject.ext.dependencies
-    def testDependencies = rootProject.ext.testDependencies
 
-    implementation appDependencies.kotlin
+    implementation Libs.Common.kotlin
 
     // Project Submodules
-    implementation project(':domain')
-    implementation project(':data')
+    implementation project(Libs.Modules.domain)
+    implementation project(Libs.Modules.data)
 
-    // Arch
-    implementation appDependencies.ArchLifeCycle
-    implementation appDependencies.ArchReactiveStreams
-
-    // Room
-    implementation appDependencies.Room
-
-    // Support
-    implementation appDependencies.support
-    implementation appDependencies.supportAppCompat
-    implementation appDependencies.supportDesign
-    implementation appDependencies.supportCardView
-    implementation appDependencies.constraintLayout
+    // Jetpack
+    implementation Libs.Jetpack.lifecycleExtensions
+    implementation Libs.Jetpack.reactiveStreams
+    implementation Libs.Jetpack.room
+    implementation Libs.Jetpack.support
+    implementation Libs.Jetpack.supportAppCompat
+    implementation Libs.Jetpack.supportDesign
+    implementation Libs.Jetpack.supportCardView
+    implementation Libs.Jetpack.constraintLayout
 
     // Dagger
-    implementation appDependencies.dagger
-    implementation appDependencies.daggerAndroid
-    kapt appDependencies.daggerCompiler
-    kapt appDependencies.daggerAndroidCompiler
+    implementation Libs.Common.dagger
+    implementation Libs.Common.daggerAndroid
+    kapt Libs.Common.daggerCompiler
+    kapt Libs.Common.daggerAndroidCompiler
 
     // Rx
-    implementation appDependencies.rxJava
-    implementation appDependencies.rxAndroid
+    implementation Libs.Common.rxJava
+    implementation Libs.Common.rxAndroid
 
     // Retrofit - OkHttp
-    implementation appDependencies.retrofit
-    implementation appDependencies.retrofitGson
-    implementation appDependencies.retrofitRx
-    implementation appDependencies.okHttpInterceptor
-    implementation appDependencies.stetho
-    implementation appDependencies.stetho_OkHttp
+    implementation Libs.Common.retrofit
+    implementation Libs.Common.retrofitGson
+    implementation Libs.Common.retrofitRx
+    implementation Libs.Common.okHttpInterceptor
+    implementation Libs.Common.stetho
+    implementation Libs.Common.stetho_OkHttp
 
     // Glide
-    implementation appDependencies.glide
-    kapt appDependencies.glideCompiler
+    implementation Libs.Common.glide
+    kapt Libs.Common.glideCompiler
 
     // Test Dependencies
-    testImplementation testDependencies.junit
-    testImplementation testDependencies.mockitoKotlin
-    testImplementation testDependencies.archTesting
-    androidTestImplementation testDependencies.testRunner
-    androidTestImplementation testDependencies.esperesso
+    testImplementation Libs.Testing.junit
+    testImplementation Libs.Testing.mockitoKotlin
+    testImplementation Libs.Testing.archTesting
+    androidTestImplementation Libs.Testing.testRunner
+    androidTestImplementation Libs.Testing.esperesso
 }
 repositories {
     mavenCentral()
