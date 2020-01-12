@@ -12,12 +12,11 @@ object Libs {
     }
 
     object Jetpack {
-
         const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.arch}"
         const val reactiveStreams = "androidx.lifecycle:lifecycle-reactivestreams:${Versions.arch}"
-        const val room = "androidx.room:room-runtime:${Versions.arch}"
-        const val roomCompiler = "androidx.room:room-compiler:${Versions.arch}"
-        const val roomRx = "androidx.room:room-rxjava2:${Versions.arch}"
+        const val room = "androidx.room:room-runtime:${Versions.room}"
+        const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+        const val roomRx = "androidx.room:room-rxjava2:${Versions.room}"
         const val material = "com.google.android.material:material:${Versions.material}"
         const val annotations = "androidx.annotation:annotation:${Versions.material}"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
@@ -33,7 +32,6 @@ object Libs {
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
         const val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
         const val retrofitRx = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
-
         const val okHttpInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
         const val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"
         const val stetho_OkHttp = "com.facebook.stetho:stetho-okhttp3:${Versions.stetho}"
