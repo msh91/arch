@@ -39,6 +39,7 @@ kapt {
 
 dependencies {
     implementation Libs.Common.kotlin
+    implementation Libs.Common.coroutines
     implementation Libs.Jetpack.lifecycleExtensions
     implementation Libs.Common.dagger
     kapt Libs.Common.daggerCompiler

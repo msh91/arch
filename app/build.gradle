@@ -46,6 +46,7 @@ kapt {
 dependencies {
 
     implementation Libs.Common.kotlin
+    implementation Libs.Common.coroutines
 
     // Project Submodules
     implementation project(Libs.Modules.data)
