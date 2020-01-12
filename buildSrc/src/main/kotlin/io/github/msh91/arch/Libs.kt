@@ -18,12 +18,9 @@ object Libs {
         const val room = "androidx.room:room-runtime:${Versions.arch}"
         const val roomCompiler = "androidx.room:room-compiler:${Versions.arch}"
         const val roomRx = "androidx.room:room-rxjava2:${Versions.arch}"
-        const val support = "androidx.legacy:legacy-support-v4:${Versions.material}"
-        const val supportAppCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
-        const val supportDesign = "com.google.android.material:material:${Versions.material}"
+        const val material = "com.google.android.material:material:${Versions.material}"
+        const val annotations = "androidx.annotation:annotation:${Versions.material}"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
-        const val supportCardView = "androidx.cardview:cardview:${Versions.material}"
-        const val supportAnnotations = "androidx.annotation:annotation:${Versions.material}"
     }
 
     object Common {
