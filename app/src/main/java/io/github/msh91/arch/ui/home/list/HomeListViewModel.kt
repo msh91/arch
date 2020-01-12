@@ -3,10 +3,10 @@ package io.github.msh91.arch.ui.home.list
 import android.util.Log
 import io.github.msh91.arch.data.mapper.ErrorMapper
 import io.github.msh91.arch.data.model.movie.Movie
-import io.github.msh91.arch.data.model.response.ErrorResponse
+import io.github.msh91.arch.data.model.response.Error
 import io.github.msh91.arch.data.model.response.ErrorStatus
-import io.github.msh91.arch.data.model.response.SuccessResponse
-import io.github.msh91.arch.data.model.response.UseCaseResponse
+import io.github.msh91.arch.data.model.response.Result
+import io.github.msh91.arch.data.model.response.Success
 import io.github.msh91.arch.data.repository.movie.MovieRepository
 import io.github.msh91.arch.ui.base.BaseViewModel
 import io.github.msh91.arch.util.connectivity.BaseConnectionManager
@@ -32,7 +32,7 @@ class HomeListViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    getAllMoviesResponse(SuccessResponse(it))
+                    getAllMoviesResponse(Success(it))
                 },
                 {
                     val error = errorMapper.getErrorModel(it)
@@ -40,15 +40,15 @@ class HomeListViewModel @Inject constructor(
                     if (error.errorStatus == ErrorStatus.UNAUTHORIZED) {
                         onTokenExpired()
                     }
-                    getAllMoviesResponse(ErrorResponse(error))
+                    getAllMoviesResponse(Error(error))
 
                 }).also { compositeDisposable.add(it) }
     }
 
-    private fun getAllMoviesResponse(response: UseCaseResponse<List<Movie>>) {
+    private fun getAllMoviesResponse(response: Result<List<Movie>>) {
         Log.d(TAG, "getAllMoviesResponse() called  with: response = [$response]")
         when (response) {
-            is SuccessResponse -> movies.value = response.value
+            is Success -> movies.value = response.value
         }
     }
 
