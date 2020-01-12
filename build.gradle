@@ -10,7 +10,7 @@ buildscript {
     dependencies {
         classpath Libs.Plugins.gradle
         classpath Libs.Plugins.kotlin
-        classpath "com.github.ben-manes:gradle-versions-plugin:0.27.0"
+        classpath Libs.Plugins.gradleVersions
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

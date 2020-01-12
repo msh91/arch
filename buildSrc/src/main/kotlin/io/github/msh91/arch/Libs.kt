@@ -3,7 +3,8 @@ package io.github.msh91.arch
 object Libs {
     object Plugins {
         const val gradle = "com.android.tools.build:gradle:${Versions.gradle}"
-        const val kotlin =  "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+        const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+        const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersions}"
     }
 
     object Modules {
