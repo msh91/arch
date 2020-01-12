@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="io.github.msh91.arch.domain.model.movie.Movie" />
+            type="io.github.msh91.arch.data.model.movie.Movie" />
 
         <variable
             name="viewModel"

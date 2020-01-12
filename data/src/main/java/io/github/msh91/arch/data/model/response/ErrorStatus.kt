@@ -1,4 +1,4 @@
-package io.github.msh91.arch.domain.model.response
+package io.github.msh91.arch.data.model.response
 
 /**
  * various error status to know what happened if something goes wrong with a repository call
