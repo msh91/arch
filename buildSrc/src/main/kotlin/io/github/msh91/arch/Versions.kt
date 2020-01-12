@@ -16,7 +16,7 @@ object Versions {
     const val stetho = "1.5.1"
     const val glide = "4.11.0"
     const val junit = "4.12"
-    const val testRunner = "1.1.0"
-    const val espresso = "3.1.0"
-    const val mockitoKotlin = "1.5.0"
+    const val testRunner = "1.2.0"
+    const val espresso = "3.2.0"
+    const val mockitoKotlin = "1.6.0"
 }
