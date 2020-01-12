@@ -55,10 +55,7 @@ dependencies {
     implementation Libs.Jetpack.lifecycleExtensions
     implementation Libs.Jetpack.reactiveStreams
     implementation Libs.Jetpack.room
-    implementation Libs.Jetpack.support
-    implementation Libs.Jetpack.supportAppCompat
-    implementation Libs.Jetpack.supportDesign
-    implementation Libs.Jetpack.supportCardView
+    implementation Libs.Jetpack.material
     implementation Libs.Jetpack.constraintLayout
 
     // Dagger

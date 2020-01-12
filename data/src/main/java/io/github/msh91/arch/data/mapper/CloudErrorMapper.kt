@@ -22,7 +22,7 @@ class CloudErrorMapper @Inject constructor(private val gson: Gson) {
                 if (throwable.code() == 401) {
                     ErrorModel(ErrorStatus.UNAUTHORIZED)
                 } else {
-                    getHttpError(throwable.response().errorBody())
+                    getHttpError(throwable.response()?.errorBody())
                 }
             }
 
