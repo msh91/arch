@@ -1,16 +1,16 @@
-package io.github.msh91.arch.domain.mapper
+package io.github.msh91.arch.data.mapper
 
 import com.google.gson.Gson
-import io.github.msh91.arch.domain.model.response.DomainErrorException
-import io.github.msh91.arch.domain.model.response.ErrorModel
-import io.github.msh91.arch.domain.model.response.ErrorStatus
+import io.github.msh91.arch.data.model.response.DomainErrorException
+import io.github.msh91.arch.data.model.response.ErrorModel
+import io.github.msh91.arch.data.model.response.ErrorStatus
 import javax.inject.Inject
 
 /**
  * A util class that generate an instance of [ErrorModel] with happened [Throwable]
  * @param gson an instance of [Gson] to parse error body from [ResponseBody]
  */
-class DomainErrorUtil @Inject constructor(val gson: Gson) {
+class ErrorMapper @Inject constructor(val gson: Gson) {
 
     /**
      * Generate an instance of [ErrorModel] with happened [Throwable]

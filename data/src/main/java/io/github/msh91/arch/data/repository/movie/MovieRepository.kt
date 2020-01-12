@@ -1,19 +1,18 @@
 package io.github.msh91.arch.data.repository.movie
 
 import io.github.msh91.arch.data.di.qualifier.network.Mock
+import io.github.msh91.arch.data.model.movie.Movie
 import io.github.msh91.arch.data.source.cloud.BaseCloudRepository
 import io.github.msh91.arch.data.source.db.dao.MovieDao
-import io.github.msh91.arch.domain.model.movie.Movie
-import io.github.msh91.arch.domain.repository.MovieRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class MovieRepositoryImpl @Inject constructor(
+class MovieRepository @Inject constructor(
         @Mock private val cloudRepository: BaseCloudRepository,
         private val movieDao: MovieDao
-) : MovieRepository {
+) {
 
-    override fun getAllMovies(): Flowable<List<Movie>> {
+    fun getAllMovies(): Flowable<List<Movie>> {
         // at first step we will check if any movie exists on db or not
         return Flowable.fromCallable { movieDao.getCount() }
                 .flatMap {
