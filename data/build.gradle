@@ -44,14 +44,11 @@ dependencies {
     implementation Libs.Common.dagger
     kapt Libs.Common.daggerCompiler
     implementation Libs.Jetpack.room
-    implementation Libs.Jetpack.roomRx
+    implementation Libs.Jetpack.roomKtx
     kapt Libs.Jetpack.roomCompiler
-    implementation Libs.Common.rxJava
-    implementation Libs.Common.rxAndroid
     implementation Libs.Common.gson
     implementation Libs.Common.retrofit
     implementation Libs.Common.retrofitGson
-    implementation Libs.Common.retrofitRx
     testImplementation Libs.Testing.junit
     testImplementation Libs.Testing.mockitoKotlin
 }
