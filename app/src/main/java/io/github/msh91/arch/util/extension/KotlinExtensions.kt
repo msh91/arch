@@ -9,10 +9,8 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.Observer
 import io.github.msh91.arch.util.livedata.NonNullLiveData
-import io.reactivex.Flowable
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
@@ -94,14 +92,6 @@ fun Bundle.fill(vararg params: Pair<String, Any?>) = apply {
         }
     }
 }
-/*
-
-*/
-/**
- * Converts [LiveData] into a [Flowable]
- */
-fun <T> LiveData<T>.toFlowable(lifecycleOwner: LifecycleOwner): Flowable<T> =
-        Flowable.fromPublisher(LiveDataReactiveStreams.toPublisher(lifecycleOwner, this))
 
 /**
  * close keyboard on [Activity.getCurrentFocus] view

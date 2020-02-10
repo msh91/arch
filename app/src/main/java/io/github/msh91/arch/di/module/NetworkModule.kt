@@ -25,7 +25,6 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import javax.inject.Singleton
@@ -167,8 +166,6 @@ class NetworkModule {
         return Retrofit.Builder().client(okHttpClient)
                 // create gson converter factory
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                // create call adapter factory for RxJava
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 // get base url from SecretFields interface
                 .baseUrl(SecretFields().getBaseURI())
                 .build()
@@ -189,8 +186,6 @@ class NetworkModule {
         return Retrofit.Builder().client(okHttpClient)
                 // create gson converter factory
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                // create call adapter factory for RxJava
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 // get base url from SecretFields interface
                 .baseUrl(SecretFields().getBaseURI())
                 .build()

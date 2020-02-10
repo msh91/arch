@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import io.github.msh91.arch.util.connectivity.BaseConnectionManager
 import io.github.msh91.arch.util.livedata.ActivityActionLiveData
 import io.github.msh91.arch.util.livedata.FragmentActionLiveData
-import io.reactivex.disposables.CompositeDisposable
 
 /**
  * All of ViewModels should be inherited from [BaseViewModel]
@@ -19,14 +18,8 @@ import io.reactivex.disposables.CompositeDisposable
 abstract class BaseViewModel(private val connectionManager: BaseConnectionManager)
     : ViewModel(), LifecycleObserver {
 
-    val compositeDisposable: CompositeDisposable = CompositeDisposable()
     val activityAction = ActivityActionLiveData()
     val fragmentAction = FragmentActionLiveData()
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
-    }
 
     fun checkConnection() {
         if (connectionManager.isVPNConnected() == true)
