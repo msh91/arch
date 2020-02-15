@@ -42,14 +42,11 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
         super.onCreate(savedInstanceState)
         // initialize binding
         binding = DataBindingUtil.setContentView(this, layoutId)
-        binding.setLifecycleOwner(this)
-
+        binding.lifecycleOwner = this
         // set viewModel as an observer to this activity lifecycle events
         lifecycle.addObserver(viewModel)
-        //todo:  viewModel.checkConnection()
         // observe viewModel uiActions in order to pass this activity as argument of uiAction
         viewModel.activityAction.observe(this, Observer { it?.invoke(this) })
-
         onViewInitialized(binding)
     }
 
