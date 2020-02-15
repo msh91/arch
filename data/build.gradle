@@ -32,11 +32,6 @@ android {
 
 }
 
-kapt {
-    generateStubs true
-    correctErrorTypes true
-}
-
 dependencies {
     implementation Libs.Common.kotlin
     implementation Libs.Common.coroutines
