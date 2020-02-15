@@ -1,19 +1,14 @@
 package io.github.msh91.arch.data.repository
 
-import io.github.msh91.arch.data.model.response.Result
-import io.github.msh91.arch.data.model.response.Success
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.withContext
 
 abstract class BaseRepository(
-        private val dispatcher: CoroutineDispatcher,
-        private val exceptionHandler: CoroutineExceptionHandler
+        private val dispatcher: CoroutineDispatcher
 ) {
-    suspend fun <T> safeCall(call: suspend () -> T): Result<T> {
-        return withContext(dispatcher + exceptionHandler) {
-            Success(call.invoke())
+    protected suspend fun <T : Any> safeCall(call: suspend () -> T): T {
+        return withContext(dispatcher) {
+            call.invoke()
         }
-
     }
 }
