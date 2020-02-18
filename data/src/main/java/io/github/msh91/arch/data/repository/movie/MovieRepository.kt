@@ -17,26 +17,12 @@ class MovieRepository @Inject constructor(
         // at first step we will check if any movie exists on db or not
         return if (movieDao.getCount() == 0) {
             // nothing exists on database, so get them from cloud
-            safeCall(this::getMoviesFromCloud)
-            // there are some movies in db, so attempt to get them
+            val movies = safeCall(cloudRepository::getAllMovies)
+            movieDao.insertMovies(movies)
+            movies
         } else {
-            // nothing exists on database, so get them from cloud
             // there are some movies in db, so attempt to get them
-            safeCall(movieDao::getAllMovies)
+            movieDao.getAllMovies()
         }
-    }
-
-    private suspend fun getMoviesFromCloud(): List<Movie> {
-        val movies = cloudRepository.getAllMovies()
-        insertMoviesToDb(movies)
-        return movies
-    }
-
-    /**
-     * Attempts to insert fetched movies to database and returns the given list
-     */
-    private suspend fun insertMoviesToDb(movies: List<Movie>): List<Movie> {
-        movieDao.insertMovies(movies)
-        return movies
     }
 }
