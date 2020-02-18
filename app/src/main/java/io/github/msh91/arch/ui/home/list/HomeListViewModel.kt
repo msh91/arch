@@ -1,55 +1,36 @@
 package io.github.msh91.arch.ui.home.list
 
 import android.util.Log
+import androidx.lifecycle.viewModelScope
 import io.github.msh91.arch.data.mapper.ErrorMapper
 import io.github.msh91.arch.data.model.movie.Movie
-import io.github.msh91.arch.data.model.response.Error
-import io.github.msh91.arch.data.model.response.ErrorStatus
-import io.github.msh91.arch.data.model.response.Result
-import io.github.msh91.arch.data.model.response.Success
+import io.github.msh91.arch.data.model.response.ErrorModel
 import io.github.msh91.arch.data.repository.movie.MovieRepository
 import io.github.msh91.arch.ui.base.BaseViewModel
-import io.github.msh91.arch.util.connectivity.BaseConnectionManager
 import io.github.msh91.arch.util.livedata.NonNullLiveData
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class HomeListViewModel @Inject constructor(
-        connectionManager: BaseConnectionManager,
         private val movieRepository: MovieRepository,
-        private val errorMapper: ErrorMapper
-) : BaseViewModel(connectionManager) {
+        errorMapper: ErrorMapper
+) : BaseViewModel(errorMapper) {
     private val TAG = HomeListViewModel::class.java.simpleName
 
     val movies = NonNullLiveData<List<Movie>>(emptyList())
 
     init {
-        movieRepository
-            .getAllMovies()
-            .onBackpressureLatest()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    getAllMoviesResponse(Success(it))
-                },
-                {
-                    val error = errorMapper.getErrorModel(it)
-
-                    if (error.errorStatus == ErrorStatus.UNAUTHORIZED) {
-                        onTokenExpired()
-                    }
-                    getAllMoviesResponse(Error(error))
-
-                }).also { compositeDisposable.add(it) }
+        getAllMovies()
     }
 
-    private fun getAllMoviesResponse(response: Result<List<Movie>>) {
-        Log.d(TAG, "getAllMoviesResponse() called  with: response = [$response]")
-        when (response) {
-            is Success -> movies.value = response.value
+    private fun getAllMovies() {
+        viewModelScope.launch(handleException(this::showError)) {
+            movies.value = movieRepository.getAllMovies()
         }
+    }
+
+    private fun showError(errorModel: ErrorModel) {
+        Log.d(TAG, "showError() called  with: errorModel = [$errorModel]")
     }
 
     fun onItemClicked(movie: Movie) {

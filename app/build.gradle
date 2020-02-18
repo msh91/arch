@@ -39,20 +39,18 @@ android {
     }
 }
 
-kapt {
-    generateStubs = true
-}
-
 dependencies {
 
     implementation Libs.Common.kotlin
+    implementation Libs.Common.coroutines
+    implementation Libs.Common.coroutinesAndroid
 
     // Project Submodules
     implementation project(Libs.Modules.data)
 
     // Jetpack
     implementation Libs.Jetpack.lifecycleExtensions
-    implementation Libs.Jetpack.reactiveStreams
+    implementation Libs.Jetpack.lifecycleViewModelKtx
     implementation Libs.Jetpack.room
     implementation Libs.Jetpack.material
     implementation Libs.Jetpack.constraintLayout
@@ -63,14 +61,9 @@ dependencies {
     kapt Libs.Common.daggerCompiler
     kapt Libs.Common.daggerAndroidCompiler
 
-    // Rx
-    implementation Libs.Common.rxJava
-    implementation Libs.Common.rxAndroid
-
     // Retrofit - OkHttp
     implementation Libs.Common.retrofit
     implementation Libs.Common.retrofitGson
-    implementation Libs.Common.retrofitRx
     implementation Libs.Common.okHttpInterceptor
     implementation Libs.Common.stetho
     implementation Libs.Common.stetho_OkHttp
