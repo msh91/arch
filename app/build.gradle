@@ -16,6 +16,7 @@ android {
         versionName Android.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true
+        multiDexEnabled true
     }
     dataBinding {
         enabled = true
