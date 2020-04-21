@@ -1,31 +1,30 @@
 package io.github.msh91.arch.data.mapper
 
-import io.github.msh91.arch.data.model.response.ErrorModel
-import io.github.msh91.arch.data.model.response.ErrorStatus
+import io.github.msh91.arch.data.model.response.Error
 import javax.inject.Inject
 
 /**
- * A util class that generate an instance of [ErrorModel] with happened [Throwable]
+ * A util class that generate an instance of [Error] with happened [Throwable]
  */
-class ErrorMapper @Inject constructor(private val cloudErrorMapper: CloudErrorMapper) {
+class ErrorMapper @Inject constructor(private val httpErrorMapper: HttpErrorMapper) {
 
     /**
-     * Generate an instance of [ErrorModel] with happened [Throwable]
-     * @param t happened [Throwable]
+     * Generate an instance of [Error] from happened [Throwable]
+     * @param t Raised [Throwable]
      *
-     * @return rentuns an instance of [ErrorModel]
+     * @return returns an instance of [Error]
      */
-    fun getErrorModel(t: Throwable): ErrorModel {
-        // if response was successful but no data received
+    fun getError(t: Throwable): Error {
+        // if connection was successful but no data received
         if (t is NullPointerException) {
-            return ErrorModel(ErrorStatus.EMPTY_RESPONSE)
+            return Error.Null
         }
-        val cloudError = cloudErrorMapper.mapToErrorModel(t)
-        if (cloudError != null) {
-            return cloudError
+        val httpError = httpErrorMapper.mapToErrorModel(t)
+        if (httpError != null) {
+            return httpError
         }
         // something happened that we did not make our self ready for it
-        return ErrorModel(ErrorStatus.NOT_DEFINED)
+        return Error.NotDefined(t)
     }
 }
 
