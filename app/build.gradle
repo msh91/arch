@@ -40,10 +40,12 @@ android {
 }
 
 dependencies {
-
     implementation Libs.Common.kotlin
     implementation Libs.Common.coroutines
     implementation Libs.Common.coroutinesAndroid
+    implementation Libs.Common.arrowCore
+    implementation Libs.Common.arrowSyntax
+    kapt Libs.Common.arrowMeta
 
     // Project Submodules
     implementation project(Libs.Modules.data)

@@ -1,6 +1,7 @@
 package io.github.msh91.arch
 
 object Versions {
+    const val arrow = "0.10.4"
     const val gradle = "3.5.3"
     const val kotlin = "1.3.61"
     const val coroutines = "1.3.3"

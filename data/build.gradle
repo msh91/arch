@@ -35,6 +35,9 @@ android {
 dependencies {
     implementation Libs.Common.kotlin
     implementation Libs.Common.coroutines
+    implementation Libs.Common.arrowCore
+    implementation Libs.Common.arrowSyntax
+    kapt Libs.Common.arrowMeta
     implementation Libs.Jetpack.lifecycleExtensions
     implementation Libs.Common.dagger
     kapt Libs.Common.daggerCompiler
