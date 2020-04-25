@@ -6,7 +6,7 @@ import io.github.msh91.arch.data.source.local.file.BaseFileProvider
 import io.github.msh91.arch.data.util.fromJson
 
 /**
- * Mock implementation of [MovieDataSource].
+ * Stub implementation of [MovieDataSource].
  *
  * <b>CAUTION : this implementation should be used only in debug mode</b>
  */

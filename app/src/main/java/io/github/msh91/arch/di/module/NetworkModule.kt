@@ -2,14 +2,13 @@ package io.github.msh91.arch.di.module
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.*
-import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import io.github.msh91.arch.BuildConfig
 import io.github.msh91.arch.data.di.qualifier.WithToken
 import io.github.msh91.arch.data.di.qualifier.WithoutToken
-import io.github.msh91.arch.data.di.qualifier.network.Cloud
-import io.github.msh91.arch.data.di.qualifier.network.Mock
+import io.github.msh91.arch.data.di.qualifier.network.Concrete
+import io.github.msh91.arch.data.di.qualifier.network.Stub
 import io.github.msh91.arch.data.source.cloud.MovieDataSource
 import io.github.msh91.arch.data.source.cloud.StubMovieDataSource
 import io.github.msh91.arch.data.source.local.file.BaseFileProvider
@@ -179,18 +178,18 @@ class NetworkModule {
      *
      * @return returns an instance of [MovieDataSource] provided by retrofit
      */
-    @Cloud
+    @Concrete
     @Provides
     fun provideConcreteMovieDataSource(@WithoutToken retrofit: Retrofit): MovieDataSource {
         return retrofit.create(MovieDataSource::class.java)
     }
 
     /**
-     * provides mock implementation of [MovieDataSource] to access mock api services
+     * provides stub implementation of [MovieDataSource] to access mock api services
      *
      * @return returns an instance of [StubMovieDataSource]
      */
-    @Mock
+    @Stub
     @Provides
     fun provideStubMovieDataSource(@WithoutToken retrofit: Retrofit, gson: Gson, fileProvider: BaseFileProvider): MovieDataSource {
         return if (BuildConfig.DEBUG)
