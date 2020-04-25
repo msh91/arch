@@ -3,7 +3,7 @@ package io.github.msh91.arch.data.repository.movie
 import arrow.core.Either
 import arrow.core.Either.Companion
 import arrow.core.Either.Right
-import io.github.msh91.arch.data.di.qualifier.network.Mock
+import io.github.msh91.arch.data.di.qualifier.network.Stub
 import io.github.msh91.arch.data.mapper.ErrorMapper
 import io.github.msh91.arch.data.model.movie.Movie
 import io.github.msh91.arch.data.model.response.Error
@@ -13,7 +13,7 @@ import io.github.msh91.arch.data.source.db.dao.MovieDao
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
-        @Mock private val movieDataSource: MovieDataSource,
+        @Stub private val movieDataSource: MovieDataSource,
         private val movieDao: MovieDao,
         private val errorMapper: ErrorMapper
 ) : BaseRepository(errorMapper) {
