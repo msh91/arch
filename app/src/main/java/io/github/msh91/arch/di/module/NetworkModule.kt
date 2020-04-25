@@ -7,8 +7,8 @@ import dagger.Provides
 import io.github.msh91.arch.BuildConfig
 import io.github.msh91.arch.data.di.qualifier.WithToken
 import io.github.msh91.arch.data.di.qualifier.WithoutToken
-import io.github.msh91.arch.data.di.qualifier.network.Concrete
-import io.github.msh91.arch.data.di.qualifier.network.Stub
+import io.github.msh91.arch.data.di.qualifier.Concrete
+import io.github.msh91.arch.data.di.qualifier.Stub
 import io.github.msh91.arch.data.source.cloud.MovieDataSource
 import io.github.msh91.arch.data.source.cloud.StubMovieDataSource
 import io.github.msh91.arch.data.source.local.file.BaseFileProvider
