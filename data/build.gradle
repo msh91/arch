@@ -39,6 +39,7 @@ dependencies {
     implementation Libs.Common.arrowSyntax
     kapt Libs.Common.arrowMeta
     implementation Libs.Jetpack.lifecycleExtensions
+    implementation Libs.Jetpack.livedataKtx
     implementation Libs.Common.dagger
     kapt Libs.Common.daggerCompiler
     implementation Libs.Jetpack.room

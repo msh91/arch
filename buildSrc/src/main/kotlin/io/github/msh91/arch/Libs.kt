@@ -13,7 +13,9 @@ object Libs {
 
     object Jetpack {
         const val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:${Versions.arch}"
-        const val lifecycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.arch}"
+        const val lifecycleKtx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.arch}"
+        const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.arch}"
+        const val livedataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.arch}"
         const val room = "androidx.room:room-runtime:${Versions.room}"
         const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
         const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
@@ -48,6 +50,6 @@ object Libs {
         const val testRunner = "androidx.test:runner:${Versions.testRunner}"
         const val esperesso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
         const val mockitoKotlin = "com.nhaarman:mockito-kotlin-kt1.1:${Versions.mockitoKotlin}"
-        const val archTesting = "androidx.arch.core:core-testing:${Versions.arch}"
+        const val archTesting = "androidx.arch.core:core-testing:${Versions.archTest}"
     }
 }
