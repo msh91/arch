@@ -8,6 +8,7 @@ import io.github.msh91.arch.ui.base.BaseFragment
 import io.github.msh91.arch.ui.base.ViewModelScope
 import io.github.msh91.arch.ui.base.adapter.SingleLayoutAdapter
 import io.github.msh91.arch.util.extension.observe
+import io.github.msh91.arch.util.extension.observeSafe
 
 class HomeListFragment : BaseFragment<HomeListViewModel, FragmentHomeListBinding>() {
     companion object {
@@ -28,6 +29,6 @@ class HomeListFragment : BaseFragment<HomeListViewModel, FragmentHomeListBinding
                 viewModel
         )
 
-        observe(viewModel.movies) { binding.adapter?.swapItems(it) }
+        viewModel.movies.observeSafe(viewLifecycleOwner) { binding.adapter?.swapItems(it) }
     }
 }

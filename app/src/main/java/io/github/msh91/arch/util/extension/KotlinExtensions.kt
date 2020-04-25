@@ -17,25 +17,23 @@ import java.util.*
 
 /**
  * Observe [LiveData] on an instance of [LifecycleOwner] like [Fragment] or [Activity]
- * @param l instance of [L]
+ * @param lifecycleOwner
  * @param observer a lambda function that receives a nullable [T] and will be invoked when data is available
  */
-fun <T, L : LiveData<T>> LifecycleOwner.observe(l: L, observer: (T?) -> Unit) {
-    l.observe(this, Observer {
-        observer(it)
-    })
+fun <T> LiveData<T>.observe(lifecycleOwner: LifecycleOwner, observer: (T?) -> Unit) {
+    this.observe(lifecycleOwner, Observer { observer.invoke(it) })
 }
 
 /**
- * Observe [NonNullLiveData] on an instance of [LifecycleOwner] like [Fragment] or [Activity]
+ * Observe [LiveData] on an instance of [LifecycleOwner] like [Fragment] or [Activity] and observer
+ * will be invoked  only if emitted value is not null.
  *
- * @param l instance of [NonNullLiveData]
- * @param observer a lambda function that receives a non-null [T] and will be invoked when data is available
+ * @param lifecycleOwner
+ * @param observer a lambda function that receives a nonnull [T] and will be invoked when data is available
  */
-fun <T> LifecycleOwner.observe(l: NonNullLiveData<T>, observer: (T) -> Unit) {
-    l.observe(this, { observer(it) })
+fun <T> LiveData<T>.observeSafe(lifecycleOwner: LifecycleOwner, observer: (T) -> Unit) {
+    this.observe(lifecycleOwner, Observer { if (it != null) observer.invoke(it) })
 }
-
 
 /**
  * Add all given values to fragment bundle arguments
