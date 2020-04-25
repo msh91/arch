@@ -36,7 +36,7 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : androidx.f
                 }
             }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         // we should inject fragment dependencies before invoking super.onAttach()
         AndroidSupportInjection.inject(this)
         super.onAttach(context)
