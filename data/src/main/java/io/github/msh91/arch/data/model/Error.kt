@@ -1,4 +1,4 @@
-package io.github.msh91.arch.data.model.response
+package io.github.msh91.arch.data.model
 
 sealed class Error {
     /**

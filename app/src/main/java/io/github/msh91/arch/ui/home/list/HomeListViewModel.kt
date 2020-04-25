@@ -6,7 +6,7 @@ import arrow.core.Either.Left
 import arrow.core.Either.Right
 import io.github.msh91.arch.data.mapper.ErrorMapper
 import io.github.msh91.arch.data.model.movie.Movie
-import io.github.msh91.arch.data.model.response.Error
+import io.github.msh91.arch.data.model.Error
 import io.github.msh91.arch.data.repository.movie.MovieRepository
 import io.github.msh91.arch.ui.base.BaseViewModel
 import io.github.msh91.arch.util.livedata.NonNullLiveData

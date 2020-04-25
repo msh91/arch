@@ -1,8 +1,8 @@
 package io.github.msh91.arch.data.mapper
 
 import com.google.gson.Gson
-import io.github.msh91.arch.data.model.response.Error
-import io.github.msh91.arch.data.model.response.HttpError
+import io.github.msh91.arch.data.model.Error
+import io.github.msh91.arch.data.model.HttpError
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException

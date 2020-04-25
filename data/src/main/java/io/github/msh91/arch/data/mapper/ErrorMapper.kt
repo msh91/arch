@@ -1,6 +1,6 @@
 package io.github.msh91.arch.data.mapper
 
-import io.github.msh91.arch.data.model.response.Error
+import io.github.msh91.arch.data.model.Error
 import javax.inject.Inject
 
 /**
