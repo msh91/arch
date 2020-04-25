@@ -53,7 +53,8 @@ dependencies {
 
     // Jetpack
     implementation Libs.Jetpack.lifecycleExtensions
-    implementation Libs.Jetpack.lifecycleViewModelKtx
+    implementation Libs.Jetpack.viewModelKtx
+    implementation Libs.Jetpack.livedataKtx
     implementation Libs.Jetpack.room
     implementation Libs.Jetpack.material
     implementation Libs.Jetpack.constraintLayout
