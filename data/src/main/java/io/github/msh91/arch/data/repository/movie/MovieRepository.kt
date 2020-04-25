@@ -8,12 +8,12 @@ import io.github.msh91.arch.data.mapper.ErrorMapper
 import io.github.msh91.arch.data.model.movie.Movie
 import io.github.msh91.arch.data.model.response.Error
 import io.github.msh91.arch.data.repository.BaseRepository
-import io.github.msh91.arch.data.source.cloud.BaseCloudRepository
+import io.github.msh91.arch.data.source.cloud.MovieDataSource
 import io.github.msh91.arch.data.source.db.dao.MovieDao
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
-        @Mock private val cloudRepository: BaseCloudRepository,
+        @Mock private val movieDataSource: MovieDataSource,
         private val movieDao: MovieDao,
         private val errorMapper: ErrorMapper
 ) : BaseRepository(errorMapper) {
@@ -22,7 +22,7 @@ class MovieRepository @Inject constructor(
         // at first step we will check if any movie exists on db or not
         return if (movieDao.getCount() == 0) {
             // nothing exists on database, so get them from cloud
-            val either = safeApiCall(cloudRepository::getAllMovies)
+            val either = safeApiCall(movieDataSource::getAllMovies)
             if (either is Right) {
                 movieDao.insertMovies(either.b)
             }

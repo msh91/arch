@@ -6,14 +6,14 @@ import io.github.msh91.arch.data.source.local.file.BaseFileProvider
 import io.github.msh91.arch.data.util.fromJson
 
 /**
- * Mock implementation of [BaseCloudRepository].
+ * Mock implementation of [MovieDataSource].
  *
  * <b>CAUTION : this implementation should be used only in debug mode</b>
  */
-class CloudMockRepository(
+class StubMovieDataSource(
         private val gson: Gson,
         private val fileProvider: BaseFileProvider
-) : BaseCloudRepository {
+) : MovieDataSource {
 
     override suspend fun getAllMovies(): List<Movie> {
         val inputStream = fileProvider.getAsset("movies.json")
