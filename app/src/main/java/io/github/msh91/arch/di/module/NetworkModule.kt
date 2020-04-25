@@ -10,15 +10,11 @@ import io.github.msh91.arch.data.di.qualifier.WithToken
 import io.github.msh91.arch.data.di.qualifier.WithoutToken
 import io.github.msh91.arch.data.di.qualifier.network.Cloud
 import io.github.msh91.arch.data.di.qualifier.network.Mock
-import io.github.msh91.arch.data.restful.APIs
-import io.github.msh91.arch.data.restful.APIsWithToken
-import io.github.msh91.arch.data.source.cloud.BaseCloudRepository
-import io.github.msh91.arch.data.source.cloud.CloudMockRepository
-import io.github.msh91.arch.data.source.cloud.CloudRepository
+import io.github.msh91.arch.data.source.cloud.MovieDataSource
+import io.github.msh91.arch.data.source.cloud.StubMovieDataSource
 import io.github.msh91.arch.data.source.local.file.BaseFileProvider
 import io.github.msh91.arch.data.source.preference.AppPreferencesHelper
 import io.github.msh91.arch.util.SecretFields
-import io.github.msh91.arch.util.TokenAuthenticator
 import okhttp3.Authenticator
 import okhttp3.Headers
 import okhttp3.Interceptor
@@ -60,19 +56,6 @@ class NetworkModule {
                 .add("Accept", "*/*")
                 .add("User-Agent", "mobile")
                 .build()
-    }
-
-    /**
-     * Provides [TokenAuthenticator] for refreshing tokens
-     * @param apis api service instance for requesting refresh token api
-     * @param appPref to save new token
-     *
-     * @return an instance of [TokenAuthenticator]
-     */
-    @Singleton
-    @Provides
-    fun provideAuthenticator(apis: Lazy<APIs>, appPref: Lazy<AppPreferencesHelper>): Authenticator {
-        return TokenAuthenticator(apis, appPref)
     }
 
     /**
@@ -192,57 +175,27 @@ class NetworkModule {
     }
 
     /**
-     * provides [APIs] service to use for without-token api calls
+     * provides concrete implementation of [MovieDataSource] to access real api services
      *
-     * @param retrofit an instance of without-token [Retrofit]
-     *
-     * @return returns an instance of [APIs]
-     */
-    @Singleton
-    @Provides
-    fun provideService(@WithoutToken retrofit: Retrofit): APIs {
-        return retrofit.create(APIs::class.java)
-    }
-
-
-    /**
-     * provides [APIsWithToken] service to use for with-token api calls
-     *
-     * @param retrofit an instance of with-token [Retrofit]
-     *
-     * @return returns an instance of [APIsWithToken]
-     */
-    @Singleton
-    @Provides
-    fun provideServiceWithToken(@WithToken retrofit: Retrofit): APIsWithToken {
-        return retrofit.create(APIsWithToken::class.java)
-    }
-
-    /**
-     * provides real implementation of [BaseCloudRepository] to access real api services
-     *
-     * @param apIs an instance of [APIs] to access all without-token apis
-     * @param apIsWithToken an instance of [APIsWithToken] to access all with-token apis
-     *
-     * @return returns an instance of [CloudRepository]
+     * @return returns an instance of [MovieDataSource] provided by retrofit
      */
     @Cloud
     @Provides
-    fun provideCloudRepository(apIs: APIs, apIsWithToken: APIsWithToken): BaseCloudRepository {
-        return CloudRepository(apIs, apIsWithToken)
+    fun provideConcreteMovieDataSource(@WithoutToken retrofit: Retrofit): MovieDataSource {
+        return retrofit.create(MovieDataSource::class.java)
     }
 
     /**
-     * provides mock implementation of [BaseCloudRepository] to access mock api services
+     * provides mock implementation of [MovieDataSource] to access mock api services
      *
-     * @return returns an instance of [CloudMockRepository]
+     * @return returns an instance of [StubMovieDataSource]
      */
     @Mock
     @Provides
-    fun provideCloudMockRepository(apIs: APIs, apIsWithToken: APIsWithToken, gson: Gson, fileProvider: BaseFileProvider): BaseCloudRepository {
+    fun provideStubMovieDataSource(@WithoutToken retrofit: Retrofit, gson: Gson, fileProvider: BaseFileProvider): MovieDataSource {
         return if (BuildConfig.DEBUG)
-            CloudMockRepository(gson, fileProvider)
+            StubMovieDataSource(gson, fileProvider)
         else
-            CloudRepository(apIs, apIsWithToken)
+            retrofit.create(MovieDataSource::class.java)
     }
 }
