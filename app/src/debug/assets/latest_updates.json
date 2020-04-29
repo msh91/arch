@@ -1,0 +1,582 @@
+{
+  "status": {
+    "timestamp": "2020-04-29T07:51:29.609Z",
+    "error_code": 0,
+    "error_message": null,
+    "elapsed": 22,
+    "credit_count": 1,
+    "notice": null
+  },
+  "data": [
+    {
+      "id": 1,
+      "name": "Bitcoin",
+      "symbol": "BTC",
+      "slug": "bitcoin",
+      "num_market_pairs": 7894,
+      "date_added": "2013-04-28T00:00:00.000Z",
+      "tags": [
+        "mineable"
+      ],
+      "max_supply": 21000000,
+      "circulating_supply": 18351387,
+      "total_supply": 18351387,
+      "platform": null,
+      "cmc_rank": 1,
+      "last_updated": "2020-04-29T07:49:42.000Z",
+      "quote": {
+        "USD": {
+          "price": 7925.27479845,
+          "volume_24h": 36360392063.5167,
+          "percent_change_1h": 0.0463894,
+          "percent_change_24h": 2.12411,
+          "percent_change_7d": 14.1484,
+          "market_cap": 145439784907.70294,
+          "last_updated": "2020-04-29T07:49:42.000Z"
+        }
+      }
+    },
+    {
+      "id": 1027,
+      "name": "Ethereum",
+      "symbol": "ETH",
+      "slug": "ethereum",
+      "num_market_pairs": 5153,
+      "date_added": "2015-08-07T00:00:00.000Z",
+      "tags": [
+        "mineable"
+      ],
+      "max_supply": null,
+      "circulating_supply": 110716008.999,
+      "total_supply": 110716008.999,
+      "platform": null,
+      "cmc_rank": 2,
+      "last_updated": "2020-04-29T07:49:32.000Z",
+      "quote": {
+        "USD": {
+          "price": 204.961877188,
+          "volume_24h": 20499286179.6242,
+          "percent_change_1h": -0.098716,
+          "percent_change_24h": 4.30089,
+          "percent_change_7d": 17.1654,
+          "market_cap": 22692561039.19854,
+          "last_updated": "2020-04-29T07:49:32.000Z"
+        }
+      }
+    },
+    {
+      "id": 52,
+      "name": "XRP",
+      "symbol": "XRP",
+      "slug": "xrp",
+      "num_market_pairs": 536,
+      "date_added": "2013-08-04T00:00:00.000Z",
+      "tags": [],
+      "max_supply": 100000000000,
+      "circulating_supply": 44112853111,
+      "total_supply": 99990976125,
+      "platform": null,
+      "cmc_rank": 3,
+      "last_updated": "2020-04-29T07:49:05.000Z",
+      "quote": {
+        "USD": {
+          "price": 0.214551156082,
+          "volume_24h": 2708548982.00225,
+          "percent_change_1h": -0.625647,
+          "percent_change_24h": 8.19149,
+          "percent_change_7d": 15.5411,
+          "market_cap": 9464463633.0405,
+          "last_updated": "2020-04-29T07:49:05.000Z"
+        }
+      }
+    },
+    {
+      "id": 825,
+      "name": "Tether",
+      "symbol": "USDT",
+      "slug": "tether",
+      "num_market_pairs": 4694,
+      "date_added": "2015-02-25T00:00:00.000Z",
+      "tags": [],
+      "max_supply": null,
+      "circulating_supply": 6361032509,
+      "total_supply": 6998318752.17,
+      "platform": {
+        "id": 1027,
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum",
+        "token_address": "31"
+      },
+      "cmc_rank": 4,
+      "last_updated": "2020-04-29T07:49:27.000Z",
+      "quote": {
+        "USD": {
+          "price": 1.00040678974,
+          "volume_24h": 50788826311.9686,
+          "percent_change_1h": -0.00166865,
+          "percent_change_24h": -0.492072,
+          "percent_change_7d": -0.363892,
+          "market_cap": 6363620111.760468,
+          "last_updated": "2020-04-29T07:49:27.000Z"
+        }
+      }
+    },
+    {
+      "id": 1831,
+      "name": "Bitcoin Cash",
+      "symbol": "BCH",
+      "slug": "bitcoin-cash",
+      "num_market_pairs": 473,
+      "date_added": "2017-07-23T00:00:00.000Z",
+      "tags": [
+        "mineable"
+      ],
+      "max_supply": 21000000,
+      "circulating_supply": 18393050,
+      "total_supply": 18393050,
+      "platform": null,
+      "cmc_rank": 5,
+      "last_updated": "2020-04-29T07:49:05.000Z",
+      "quote": {
+        "USD": {
+          "price": 244.818361568,
+          "volume_24h": 3574829653.42285,
+          "percent_change_1h": -0.283782,
+          "percent_change_24h": 1.45437,
+          "percent_change_7d": 9.45776,
+          "market_cap": 4502956365.238302,
+          "last_updated": "2020-04-29T07:49:05.000Z"
+        }
+      }
+    },
+    {
+      "id": 3602,
+      "name": "Bitcoin SV",
+      "symbol": "BSV",
+      "slug": "bitcoin-sv",
+      "num_market_pairs": 182,
+      "date_added": "2018-11-09T00:00:00.000Z",
+      "tags": [
+        "mineable"
+      ],
+      "max_supply": 21000000,
+      "circulating_supply": 18391845.8319233,
+      "total_supply": 18391845.8319233,
+      "platform": null,
+      "cmc_rank": 6,
+      "last_updated": "2020-04-29T07:49:09.000Z",
+      "quote": {
+        "USD": {
+          "price": 197.5965316,
+          "volume_24h": 1909615147.71317,
+          "percent_change_1h": -0.0623798,
+          "percent_change_24h": 2.09046,
+          "percent_change_7d": 6.37809,
+          "market_cap": 3634164946.10996,
+          "last_updated": "2020-04-29T07:49:09.000Z"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Litecoin",
+      "symbol": "LTC",
+      "slug": "litecoin",
+      "num_market_pairs": 596,
+      "date_added": "2013-04-28T00:00:00.000Z",
+      "tags": [
+        "mineable"
+      ],
+      "max_supply": 84000000,
+      "circulating_supply": 64616805.7265572,
+      "total_supply": 64616805.7265572,
+      "platform": null,
+      "cmc_rank": 7,
+      "last_updated": "2020-04-29T07:49:05.000Z",
+      "quote": {
+        "USD": {
+          "price": 46.1534166094,
+          "volume_24h": 4522450641.41623,
+          "percent_change_1h": -0.529608,
+          "percent_change_24h": 3.89068,
+          "percent_change_7d": 12.1881,
+          "market_cap": 2982286354.666458,
+          "last_updated": "2020-04-29T07:49:05.000Z"
+        }
+      }
+    },
+    {
+      "id": 1839,
+      "name": "Binance Coin",
+      "symbol": "BNB",
+      "slug": "binance-coin",
+      "num_market_pairs": 308,
+      "date_added": "2017-07-25T00:00:00.000Z",
+      "tags": [],
+      "max_supply": 187536713,
+      "circulating_supply": 155536713,
+      "total_supply": 187536713,
+      "platform": null,
+      "cmc_rank": 8,
+      "last_updated": "2020-04-29T07:49:04.000Z",
+      "quote": {
+        "USD": {
+          "price": 16.6070802474,
+          "volume_24h": 373009500.398587,
+          "percent_change_1h": 0.38144,
+          "percent_change_24h": 1.19884,
+          "percent_change_7d": 8.24393,
+          "market_cap": 2583010674.207823,
+          "last_updated": "2020-04-29T07:49:04.000Z"
+        }
+      }
+    },
+    {
+      "id": 1765,
+      "name": "EOS",
+      "symbol": "EOS",
+      "slug": "eos",
+      "num_market_pairs": 369,
+      "date_added": "2017-07-01T00:00:00.000Z",
+      "tags": [],
+      "max_supply": null,
+      "circulating_supply": 922192982.1282,
+      "total_supply": 1018892994.1278,
+      "platform": null,
+      "cmc_rank": 9,
+      "last_updated": "2020-04-29T07:49:04.000Z",
+      "quote": {
+        "USD": {
+          "price": 2.79720409689,
+          "volume_24h": 3947133344.75431,
+          "percent_change_1h": -0.525352,
+          "percent_change_24h": 2.59923,
+          "percent_change_7d": 9.61102,
+          "market_cap": 2579561987.732208,
+          "last_updated": "2020-04-29T07:49:04.000Z"
+        }
+      }
+    },
+    {
+      "id": 2011,
+      "name": "Tezos",
+      "symbol": "XTZ",
+      "slug": "tezos",
+      "num_market_pairs": 90,
+      "date_added": "2017-10-06T00:00:00.000Z",
+      "tags": [],
+      "max_supply": null,
+      "circulating_supply": 708711180.832567,
+      "total_supply": 708711180.832567,
+      "platform": null,
+      "cmc_rank": 10,
+      "last_updated": "2020-04-29T07:49:03.000Z",
+      "quote": {
+        "USD": {
+          "price": 2.7785866255,
+          "volume_24h": 266872990.793017,
+          "percent_change_1h": -0.848458,
+          "percent_change_24h": 0.0486399,
+          "percent_change_7d": 25.0928,
+          "market_cap": 1969215408.4036825,
+          "last_updated": "2020-04-29T07:49:03.000Z"
+        }
+      }
+    },
+    {
+      "id": 512,
+      "name": "Stellar",
+      "symbol": "XLM",
+      "slug": "stellar",
+      "num_market_pairs": 296,
+      "date_added": "2014-08-05T00:00:00.000Z",
+      "tags": [],
+      "max_supply": null,
+      "circulating_supply": 20312370432.922,
+      "total_supply": 50001803868.8717,
+      "platform": null,
+      "cmc_rank": 11,
+      "last_updated": "2020-04-29T07:49:03.000Z",
+      "quote": {
+        "USD": {
+          "price": 0.0690248141814,
+          "volume_24h": 770777658.363532,
+          "percent_change_1h": -0.937884,
+          "percent_change_24h": -0.787583,
+          "percent_change_7d": 31.451,
+          "market_cap": 1402057594.7162044,
+          "last_updated": "2020-04-29T07:49:03.000Z"
+        }
+      }
+    },
+    {
+      "id": 1975,
+      "name": "Chainlink",
+      "symbol": "LINK",
+      "slug": "chainlink",
+      "num_market_pairs": 170,
+      "date_added": "2017-09-20T00:00:00.000Z",
+      "tags": [],
+      "max_supply": null,
+      "circulating_supply": 350000000,
+      "total_supply": 1000000000,
+      "platform": {
+        "id": 1027,
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum",
+        "token_address": "0x514910771af9ca656af840dff83e8264ecf986ca"
+      },
+      "cmc_rank": 12,
+      "last_updated": "2020-04-29T07:49:04.000Z",
+      "quote": {
+        "USD": {
+          "price": 3.6845110641,
+          "volume_24h": 343549104.221314,
+          "percent_change_1h": -0.0235662,
+          "percent_change_24h": 1.38668,
+          "percent_change_7d": 3.40987,
+          "market_cap": 1289578872.435,
+          "last_updated": "2020-04-29T07:49:04.000Z"
+        }
+      }
+    },
+    {
+      "id": 2010,
+      "name": "Cardano",
+      "symbol": "ADA",
+      "slug": "cardano",
+      "num_market_pairs": 131,
+      "date_added": "2017-10-01T00:00:00.000Z",
+      "tags": [
+        "mineable"
+      ],
+      "max_supply": 45000000000,
+      "circulating_supply": 25927070538,
+      "total_supply": 31112483745,
+      "platform": null,
+      "cmc_rank": 13,
+      "last_updated": "2020-04-29T07:49:03.000Z",
+      "quote": {
+        "USD": {
+          "price": 0.047783172324,
+          "volume_24h": 128753876.706164,
+          "percent_change_1h": 0.093554,
+          "percent_change_24h": 0.366841,
+          "percent_change_7d": 36.4027,
+          "market_cap": 1238877679.3737574,
+          "last_updated": "2020-04-29T07:49:03.000Z"
+        }
+      }
+    },
+    {
+      "id": 328,
+      "name": "Monero",
+      "symbol": "XMR",
+      "slug": "monero",
+      "num_market_pairs": 142,
+      "date_added": "2014-05-21T00:00:00.000Z",
+      "tags": [
+        "mineable"
+      ],
+      "max_supply": null,
+      "circulating_supply": 17541029.7529053,
+      "total_supply": 17541029.7529053,
+      "platform": null,
+      "cmc_rank": 14,
+      "last_updated": "2020-04-29T07:49:02.000Z",
+      "quote": {
+        "USD": {
+          "price": 63.2781420401,
+          "volume_24h": 111695412.237162,
+          "percent_change_1h": -0.315387,
+          "percent_change_24h": 0.525678,
+          "percent_change_7d": 13.3446,
+          "market_cap": 1109963772.2339618,
+          "last_updated": "2020-04-29T07:49:02.000Z"
+        }
+      }
+    },
+    {
+      "id": 3957,
+      "name": "UNUS SED LEO",
+      "symbol": "LEO",
+      "slug": "unus-sed-leo",
+      "num_market_pairs": 25,
+      "date_added": "2019-05-21T00:00:00.000Z",
+      "tags": [],
+      "max_supply": null,
+      "circulating_supply": 999498892.9,
+      "total_supply": 999498892.9,
+      "platform": {
+        "id": 1027,
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum",
+        "token_address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912ca3"
+      },
+      "cmc_rank": 15,
+      "last_updated": "2020-04-29T07:49:09.000Z",
+      "quote": {
+        "USD": {
+          "price": 1.04972436121,
+          "volume_24h": 11991248.7363918,
+          "percent_change_1h": -0.0036176,
+          "percent_change_24h": -0.355116,
+          "percent_change_7d": 0.545354,
+          "market_cap": 1049198336.8795547,
+          "last_updated": "2020-04-29T07:49:09.000Z"
+        }
+      }
+    },
+    {
+      "id": 1958,
+      "name": "TRON",
+      "symbol": "TRX",
+      "slug": "tron",
+      "num_market_pairs": 335,
+      "date_added": "2017-09-13T00:00:00.000Z",
+      "tags": [
+        "mineable"
+      ],
+      "max_supply": null,
+      "circulating_supply": 66682072191.4,
+      "total_supply": 99281283754.3,
+      "platform": null,
+      "cmc_rank": 16,
+      "last_updated": "2020-04-29T07:49:05.000Z",
+      "quote": {
+        "USD": {
+          "price": 0.0152482000013,
+          "volume_24h": 1543755205.26792,
+          "percent_change_1h": -0.419375,
+          "percent_change_24h": 4.11432,
+          "percent_change_7d": 20.1446,
+          "market_cap": 1016781573.2755922,
+          "last_updated": "2020-04-29T07:49:05.000Z"
+        }
+      }
+    },
+    {
+      "id": 2502,
+      "name": "Huobi Token",
+      "symbol": "HT",
+      "slug": "huobi-token",
+      "num_market_pairs": 137,
+      "date_added": "2018-02-03T00:00:00.000Z",
+      "tags": [],
+      "max_supply": null,
+      "circulating_supply": 222668092.971921,
+      "total_supply": 500000000,
+      "platform": {
+        "id": 1027,
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum",
+        "token_address": "0x6f259637dcd74c767781e37bc6133cd6a68aa161"
+      },
+      "cmc_rank": 17,
+      "last_updated": "2020-04-29T07:49:06.000Z",
+      "quote": {
+        "USD": {
+          "price": 4.10491729745,
+          "volume_24h": 120705361.842624,
+          "percent_change_1h": -0.0394906,
+          "percent_change_24h": 1.33627,
+          "percent_change_7d": 9.3842,
+          "market_cap": 914034106.4306433,
+          "last_updated": "2020-04-29T07:49:06.000Z"
+        }
+      }
+    },
+    {
+      "id": 3635,
+      "name": "Crypto.com Coin",
+      "symbol": "CRO",
+      "slug": "crypto-com-coin",
+      "num_market_pairs": 47,
+      "date_added": "2018-12-14T00:00:00.000Z",
+      "tags": [],
+      "max_supply": null,
+      "circulating_supply": 14231050228.3105,
+      "total_supply": 100000000000,
+      "platform": {
+        "id": 1027,
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum",
+        "token_address": "0xa0b73e1ff0b80914ab6fe0444e65848c4c34450b"
+      },
+      "cmc_rank": 18,
+      "last_updated": "2020-04-29T07:49:09.000Z",
+      "quote": {
+        "USD": {
+          "price": 0.0575613541082,
+          "volume_24h": 8499330.4925143,
+          "percent_change_1h": -0.722512,
+          "percent_change_24h": 2.9871,
+          "percent_change_7d": 17.342,
+          "market_cap": 819158521.5233611,
+          "last_updated": "2020-04-29T07:49:09.000Z"
+        }
+      }
+    },
+    {
+      "id": 131,
+      "name": "Dash",
+      "symbol": "DASH",
+      "slug": "dash",
+      "num_market_pairs": 290,
+      "date_added": "2014-02-14T00:00:00.000Z",
+      "tags": [
+        "mineable"
+      ],
+      "max_supply": 18900000,
+      "circulating_supply": 9463427.21425392,
+      "total_supply": 9463427.21425392,
+      "platform": null,
+      "cmc_rank": 19,
+      "last_updated": "2020-04-29T07:49:03.000Z",
+      "quote": {
+        "USD": {
+          "price": 82.9459443839,
+          "volume_24h": 730766582.370276,
+          "percent_change_1h": -0.302685,
+          "percent_change_24h": 1.22432,
+          "percent_change_7d": 6.9213,
+          "market_cap": 784952907.3945913,
+          "last_updated": "2020-04-29T07:49:03.000Z"
+        }
+      }
+    },
+    {
+      "id": 1321,
+      "name": "Ethereum Classic",
+      "symbol": "ETC",
+      "slug": "ethereum-classic",
+      "num_market_pairs": 246,
+      "date_added": "2016-07-24T00:00:00.000Z",
+      "tags": [
+        "mineable"
+      ],
+      "max_supply": 210700000,
+      "circulating_supply": 116313299,
+      "total_supply": 116313299,
+      "platform": null,
+      "cmc_rank": 20,
+      "last_updated": "2020-04-29T07:49:03.000Z",
+      "quote": {
+        "USD": {
+          "price": 6.35383851787,
+          "volume_24h": 2007728663.42299,
+          "percent_change_1h": -0.206201,
+          "percent_change_24h": 4.46416,
+          "percent_change_7d": 20.39,
+          "market_cap": 739035919.3267301,
+          "last_updated": "2020-04-29T07:49:03.000Z"
+        }
+      }
+    }
+  ]
+}

@@ -6,8 +6,11 @@ import dagger.Module
 import dagger.Provides
 import io.github.msh91.arch.BuildConfig
 import io.github.msh91.arch.data.di.qualifier.Concrete
+import io.github.msh91.arch.data.di.qualifier.Stub
 import io.github.msh91.arch.data.di.qualifier.WithToken
 import io.github.msh91.arch.data.di.qualifier.WithoutToken
+import io.github.msh91.arch.data.source.cloud.StubCryptoDataSource
+import io.github.msh91.arch.data.source.local.file.BaseFileProvider
 import io.github.msh91.arch.data.source.preference.AppPreferencesHelper
 import io.github.msh91.arch.data.source.remote.CryptoDataSource
 import io.github.msh91.arch.util.SecretFields
@@ -178,5 +181,11 @@ class NetworkModule {
     @Concrete
     fun provideConcreteCryptoDataSource(@WithoutToken retrofit: Retrofit): CryptoDataSource {
         return retrofit.create(CryptoDataSource::class.java)
+    }
+
+    @Provides
+    @Stub
+    fun provideStubCryptoDataSource(gson: Gson, fileProvider: BaseFileProvider): CryptoDataSource {
+        return StubCryptoDataSource(gson, fileProvider)
     }
 }
