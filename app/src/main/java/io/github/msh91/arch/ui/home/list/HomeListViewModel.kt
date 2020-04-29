@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import arrow.core.Either.Left
 import arrow.core.Either.Right
 import io.github.msh91.arch.R
-import io.github.msh91.arch.data.model.movie.Movie
 import io.github.msh91.arch.data.model.Error
 import io.github.msh91.arch.data.model.crypto.CryptoCurrency
 import io.github.msh91.arch.data.repository.crypto.CryptoRepository
@@ -23,10 +22,10 @@ class HomeListViewModel @Inject constructor(
     val cryptoCurrencies = NonNullLiveData<List<CryptoCurrencyItem>>(emptyList())
 
     init {
-        getAllMovies()
+        getLatestUpdates()
     }
 
-    private fun getAllMovies() {
+    private fun getLatestUpdates() {
         viewModelScope.launch {
             when (val either = cryptoRepository.getLatestUpdates()) {
                 is Right -> cryptoCurrencies.value = mapCurrenciesToItems(either.b)
