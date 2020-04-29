@@ -1,31 +1,24 @@
 package io.github.msh91.arch.util
 
 import io.github.msh91.arch.BuildConfig
+import javax.inject.Inject
 
 /**
  * Helper class to save and get secret data using NDK
  */
-class SecretFields {
+class SecretFields @Inject constructor() {
 
-    private fun debugBaseURI(): String {
-        return "http://io.github.msh91"
-    }
+    private val debugBaseUrl = "https://pro-api.coinmarketcap.com/"
 
-    private fun releaseBaseURI(): String {
-        return "http://io.github.msh91"
-    }
+    private val releaseBaseUrl = "https://pro-api.coinmarketcap.com/"
 
-    fun authorizationKey(): String {
-        return "authorization"
-    }
+    val apiKey: String = "d9714d48-05fb-494e-aa2c-e1113c178385"
 
-    fun getBaseURI(): String {
-        if (BuildConfig.BUILD_TYPE == "debug")
-            return debugBaseURI()
-        else if (BuildConfig.BUILD_TYPE == "release")
-            return releaseBaseURI()
+    fun getBaseUrl(): String {
+        return if (BuildConfig.DEBUG)
+            debugBaseUrl
         else
-            return ""
+            releaseBaseUrl
     }
 
 }

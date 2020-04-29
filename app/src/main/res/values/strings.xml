@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Arch</string>
+    <string name="holder_usd_price">$%.2f</string>
+    <string name="holder_percent">%%%.2f</string>
 </resources>
