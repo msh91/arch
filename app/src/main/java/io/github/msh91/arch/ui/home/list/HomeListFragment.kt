@@ -1,13 +1,11 @@
 package io.github.msh91.arch.ui.home.list
 
-import android.graphics.Movie
 import io.github.msh91.arch.R
 import io.github.msh91.arch.databinding.FragmentHomeListBinding
-import io.github.msh91.arch.databinding.ItemMovieBinding
+import io.github.msh91.arch.databinding.ItemCryptoCurrencyBinding
 import io.github.msh91.arch.ui.base.BaseFragment
 import io.github.msh91.arch.ui.base.ViewModelScope
 import io.github.msh91.arch.ui.base.adapter.SingleLayoutAdapter
-import io.github.msh91.arch.util.extension.observe
 import io.github.msh91.arch.util.extension.observeSafe
 
 class HomeListFragment : BaseFragment<HomeListViewModel, FragmentHomeListBinding>() {
@@ -23,12 +21,12 @@ class HomeListFragment : BaseFragment<HomeListViewModel, FragmentHomeListBinding
     override fun onViewInitialized(binding: FragmentHomeListBinding) {
         super.onViewInitialized(binding)
         binding.viewModel = viewModel
-        binding.adapter = SingleLayoutAdapter<Movie, ItemMovieBinding>(
-                R.layout.item_movie,
+        binding.adapter = SingleLayoutAdapter<CryptoCurrencyItem, ItemCryptoCurrencyBinding>(
+                R.layout.item_crypto_currency,
                 emptyList(),
                 viewModel
         )
 
-        viewModel.movies.observeSafe(viewLifecycleOwner) { binding.adapter?.swapItems(it) }
+        viewModel.cryptoCurrencies.observeSafe(viewLifecycleOwner) { binding.adapter?.swapItems(it) }
     }
 }

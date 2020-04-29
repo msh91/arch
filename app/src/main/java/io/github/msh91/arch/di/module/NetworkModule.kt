@@ -5,14 +5,14 @@ import com.google.gson.*
 import dagger.Module
 import dagger.Provides
 import io.github.msh91.arch.BuildConfig
-import io.github.msh91.arch.data.di.qualifier.WithToken
-import io.github.msh91.arch.data.di.qualifier.WithoutToken
 import io.github.msh91.arch.data.di.qualifier.Concrete
 import io.github.msh91.arch.data.di.qualifier.Stub
-import io.github.msh91.arch.data.source.cloud.MovieDataSource
-import io.github.msh91.arch.data.source.cloud.StubMovieDataSource
+import io.github.msh91.arch.data.di.qualifier.WithToken
+import io.github.msh91.arch.data.di.qualifier.WithoutToken
+import io.github.msh91.arch.data.source.cloud.StubCryptoDataSource
 import io.github.msh91.arch.data.source.local.file.BaseFileProvider
 import io.github.msh91.arch.data.source.preference.AppPreferencesHelper
+import io.github.msh91.arch.data.source.remote.CryptoDataSource
 import io.github.msh91.arch.util.SecretFields
 import okhttp3.Authenticator
 import okhttp3.Headers
@@ -69,7 +69,12 @@ class NetworkModule {
     @Singleton
     @Provides
     @WithToken
-    fun provideOkHttpClientWithToken(preferencesHelper: AppPreferencesHelper, headers: Headers, authenticator: Authenticator): OkHttpClient {
+    fun provideOkHttpClientWithToken(
+            preferencesHelper: AppPreferencesHelper,
+            headers: Headers,
+            authenticator: Authenticator,
+            secretFields: SecretFields
+    ): OkHttpClient {
         val builder = OkHttpClient.Builder()
 
         // if the app is in DEBUG mode OkHttp will show complete log in logcat and Stetho framework
@@ -87,6 +92,7 @@ class NetworkModule {
             val requestBuilder = request.newBuilder()
                     // add default shared headers to every http request
                     .headers(headers)
+                    .addHeader("X-CMC_PRO_API_KEY", secretFields.apiKey)
                     // add tokenType and token to Authorization header of request
                     .addHeader("Authorization",
                             preferencesHelper.tokenType + " " + preferencesHelper.token)
@@ -108,7 +114,7 @@ class NetworkModule {
     @Singleton
     @Provides
     @WithoutToken
-    fun provideOkHttpClient(headers: Headers): OkHttpClient {
+    fun provideOkHttpClient(headers: Headers, secretFields: SecretFields): OkHttpClient {
         val builder = OkHttpClient.Builder()
         if (BuildConfig.DEBUG) {
             val loggingInterceptor = HttpLoggingInterceptor()
@@ -122,9 +128,7 @@ class NetworkModule {
             val request = chain.request()
             val requestBuilder = request.newBuilder()
                     .headers(headers)
-                    //TODO it will temporary, we should find some solution
-                    .addHeader("Authorization", SecretFields().authorizationKey())
-
+                    .addHeader("X-CMC_PRO_API_KEY", secretFields.apiKey)
                     .method(request.method(), request.body())
             chain.proceed(requestBuilder.build())
         })
@@ -144,12 +148,12 @@ class NetworkModule {
     @Singleton
     @Provides
     @WithoutToken
-    fun provideRetrofit(@WithoutToken okHttpClient: OkHttpClient, gson: Gson): Retrofit {
+    fun provideRetrofit(@WithoutToken okHttpClient: OkHttpClient, gson: Gson, secretFields: SecretFields): Retrofit {
         return Retrofit.Builder().client(okHttpClient)
                 // create gson converter factory
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 // get base url from SecretFields interface
-                .baseUrl(SecretFields().getBaseURI())
+                .baseUrl(secretFields.getBaseUrl())
                 .build()
     }
 
@@ -169,32 +173,19 @@ class NetworkModule {
                 // create gson converter factory
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 // get base url from SecretFields interface
-                .baseUrl(SecretFields().getBaseURI())
+                .baseUrl(SecretFields().getBaseUrl())
                 .build()
     }
 
-    /**
-     * provides concrete implementation of [MovieDataSource] to access real api services
-     *
-     * @return returns an instance of [MovieDataSource] provided by retrofit
-     */
-    @Concrete
     @Provides
-    fun provideConcreteMovieDataSource(@WithoutToken retrofit: Retrofit): MovieDataSource {
-        return retrofit.create(MovieDataSource::class.java)
+    @Concrete
+    fun provideConcreteCryptoDataSource(@WithoutToken retrofit: Retrofit): CryptoDataSource {
+        return retrofit.create(CryptoDataSource::class.java)
     }
 
-    /**
-     * provides stub implementation of [MovieDataSource] to access mock api services
-     *
-     * @return returns an instance of [StubMovieDataSource]
-     */
-    @Stub
     @Provides
-    fun provideStubMovieDataSource(@WithoutToken retrofit: Retrofit, gson: Gson, fileProvider: BaseFileProvider): MovieDataSource {
-        return if (BuildConfig.DEBUG)
-            StubMovieDataSource(gson, fileProvider)
-        else
-            retrofit.create(MovieDataSource::class.java)
+    @Stub
+    fun provideStubCryptoDataSource(gson: Gson, fileProvider: BaseFileProvider): CryptoDataSource {
+        return StubCryptoDataSource(gson, fileProvider)
     }
 }
