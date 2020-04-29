@@ -69,7 +69,12 @@ class NetworkModule {
     @Singleton
     @Provides
     @WithToken
-    fun provideOkHttpClientWithToken(preferencesHelper: AppPreferencesHelper, headers: Headers, authenticator: Authenticator): OkHttpClient {
+    fun provideOkHttpClientWithToken(
+            preferencesHelper: AppPreferencesHelper,
+            headers: Headers,
+            authenticator: Authenticator,
+            secretFields: SecretFields
+    ): OkHttpClient {
         val builder = OkHttpClient.Builder()
 
         // if the app is in DEBUG mode OkHttp will show complete log in logcat and Stetho framework
@@ -87,6 +92,7 @@ class NetworkModule {
             val requestBuilder = request.newBuilder()
                     // add default shared headers to every http request
                     .headers(headers)
+                    .addHeader("X-CMC_PRO_API_KEY", secretFields.apiKey)
                     // add tokenType and token to Authorization header of request
                     .addHeader("Authorization",
                             preferencesHelper.tokenType + " " + preferencesHelper.token)
@@ -108,7 +114,7 @@ class NetworkModule {
     @Singleton
     @Provides
     @WithoutToken
-    fun provideOkHttpClient(headers: Headers): OkHttpClient {
+    fun provideOkHttpClient(headers: Headers, secretFields: SecretFields): OkHttpClient {
         val builder = OkHttpClient.Builder()
         if (BuildConfig.DEBUG) {
             val loggingInterceptor = HttpLoggingInterceptor()
@@ -122,9 +128,7 @@ class NetworkModule {
             val request = chain.request()
             val requestBuilder = request.newBuilder()
                     .headers(headers)
-                    //TODO it will temporary, we should find some solution
-                    .addHeader("Authorization", SecretFields().authorizationKey())
-
+                    .addHeader("X-CMC_PRO_API_KEY", secretFields.apiKey)
                     .method(request.method(), request.body())
             chain.proceed(requestBuilder.build())
         })
@@ -144,12 +148,12 @@ class NetworkModule {
     @Singleton
     @Provides
     @WithoutToken
-    fun provideRetrofit(@WithoutToken okHttpClient: OkHttpClient, gson: Gson): Retrofit {
+    fun provideRetrofit(@WithoutToken okHttpClient: OkHttpClient, gson: Gson, secretFields: SecretFields): Retrofit {
         return Retrofit.Builder().client(okHttpClient)
                 // create gson converter factory
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 // get base url from SecretFields interface
-                .baseUrl(SecretFields().getBaseURI())
+                .baseUrl(secretFields.getBaseUrl())
                 .build()
     }
 
@@ -169,7 +173,7 @@ class NetworkModule {
                 // create gson converter factory
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 // get base url from SecretFields interface
-                .baseUrl(SecretFields().getBaseURI())
+                .baseUrl(SecretFields().getBaseUrl())
                 .build()
     }
 
