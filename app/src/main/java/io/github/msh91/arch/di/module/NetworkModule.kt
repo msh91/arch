@@ -13,6 +13,7 @@ import io.github.msh91.arch.data.source.cloud.MovieDataSource
 import io.github.msh91.arch.data.source.cloud.StubMovieDataSource
 import io.github.msh91.arch.data.source.local.file.BaseFileProvider
 import io.github.msh91.arch.data.source.preference.AppPreferencesHelper
+import io.github.msh91.arch.data.source.remote.CryptoDataSource
 import io.github.msh91.arch.util.SecretFields
 import okhttp3.Authenticator
 import okhttp3.Headers
@@ -200,5 +201,11 @@ class NetworkModule {
             StubMovieDataSource(gson, fileProvider)
         else
             retrofit.create(MovieDataSource::class.java)
+    }
+
+    @Provides
+    @Concrete
+    fun provideConcreteCryptoDataSource(@WithoutToken retrofit: Retrofit): CryptoDataSource {
+        return retrofit.create(CryptoDataSource::class.java)
     }
 }
