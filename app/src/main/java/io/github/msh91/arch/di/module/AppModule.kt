@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import io.github.msh91.arch.app.ArchApplication
 import io.github.msh91.arch.di.builder.ViewModelBuilder
 import javax.inject.Singleton
 
@@ -18,7 +19,7 @@ class AppModule {
      */
     @Provides
     @Singleton
-    fun provideContext(application: Application): Context {
+    fun provideContext(application: ArchApplication): Context {
         return application
     }
 }
