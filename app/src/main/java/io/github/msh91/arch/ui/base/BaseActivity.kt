@@ -11,6 +11,7 @@ import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 /**
@@ -19,11 +20,9 @@ import javax.inject.Inject
  * @param V A ViewModel class that inherited from [BaseViewModel], will be used as default ViewModel of activity
  * @param B A Binding class that inherited from [ViewDataBinding], will be used for creating View of this activity
  */
-abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatActivity(), BaseView<V, B>, HasAndroidInjector {
+abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : DaggerAppCompatActivity(), BaseView<V, B> {
     override lateinit var binding: B
 
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -37,8 +36,6 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
             lazy { ViewModelProviders.of(this, viewModelFactory)[T::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // we should inject dependencies before invoking super.onCreate()
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         // initialize binding
         binding = DataBindingUtil.setContentView(this, layoutId)
@@ -50,8 +47,5 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : AppCompatA
         onViewInitialized(binding)
     }
 
-    override fun androidInjector(): AndroidInjector<Any> {
-        return dispatchingAndroidInjector
-    }
 }
 

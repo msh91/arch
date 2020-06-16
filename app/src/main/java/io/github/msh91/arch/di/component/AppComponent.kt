@@ -7,7 +7,6 @@ import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import io.github.msh91.arch.app.ArchApplication
 import io.github.msh91.arch.di.builder.ActivityBuilder
-import io.github.msh91.arch.di.builder.ViewModelBuilder
 import io.github.msh91.arch.di.module.AppModule
 import io.github.msh91.arch.di.module.DatabaseModule
 import io.github.msh91.arch.di.module.NetworkModule
