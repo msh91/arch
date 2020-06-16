@@ -1,6 +1,5 @@
 package io.github.msh91.arch.ui.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +9,12 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import io.github.msh91.arch.ui.base.ViewModelScope.ACTIVITY
 import io.github.msh91.arch.ui.base.ViewModelScope.FRAGMENT
 import javax.inject.Inject
 
-abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : androidx.fragment.app.Fragment(), BaseView<V, B> {
+abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : DaggerFragment(), BaseView<V, B> {
 
     override lateinit var binding: B
 
@@ -35,12 +34,6 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : androidx.f
                     FRAGMENT -> ViewModelProviders.of(this, viewModelFactory)[T::class.java]
                 }
             }
-
-    override fun onAttach(context: Context) {
-        // we should inject fragment dependencies before invoking super.onAttach()
-        AndroidSupportInjection.inject(this)
-        super.onAttach(context)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // initialize binding
