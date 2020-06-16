@@ -1,11 +1,13 @@
 package io.github.msh91.arch.di.component
 
-import android.app.Application
+import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
 import io.github.msh91.arch.app.ArchApplication
 import io.github.msh91.arch.di.builder.ActivityBuilder
+import io.github.msh91.arch.di.builder.ViewModelBuilder
 import io.github.msh91.arch.di.module.AppModule
 import io.github.msh91.arch.di.module.DatabaseModule
 import io.github.msh91.arch.di.module.NetworkModule
@@ -17,22 +19,21 @@ import javax.inject.Singleton
  */
 @Singleton
 @Component(modules = [
-    (AppModule::class),
     (NetworkModule::class),
+    (AppModule::class),
     (UtilModule::class),
     (AndroidInjectionModule::class),
     (DatabaseModule::class),
     (ActivityBuilder::class)])
-interface AppComponent {
-    @Component.Builder
-    interface Builder {
 
-        @BindsInstance
-        fun application(application: Application): Builder
+interface AppComponent : AndroidInjector<ArchApplication> {
 
-        fun build(): AppComponent
-
+    @Component.Factory
+    abstract class Factory : AndroidInjector.Factory<ArchApplication>{
+        interface Factory {
+            fun create(@BindsInstance application: Context): AppComponent
+        }
     }
-
-    fun inject(app: ArchApplication)
 }
+
+
