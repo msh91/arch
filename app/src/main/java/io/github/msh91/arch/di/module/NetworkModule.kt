@@ -29,7 +29,7 @@ import javax.inject.Singleton
  * The main [Module] for providing network-related classes
  */
 @Module
-class NetworkModule {
+object NetworkModule {
 
     /**
      * provides Gson with custom [Date] converter for [Long] epoch times
