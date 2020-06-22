@@ -8,7 +8,7 @@ import io.github.msh91.arch.data.source.db.AppDataBase
 import javax.inject.Singleton
 
 @Module
-class DatabaseModule {
+object DatabaseModule {
 
     @Provides
     @Singleton

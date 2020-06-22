@@ -12,7 +12,7 @@ import javax.inject.Singleton
  * Main App [Module] that provides default and public classes everywhere
  */
 @Module(includes = [ViewModelBuilder::class])
-class AppModule {
+object AppModule {
 
     /**
      * provides [Application] context as default context.
