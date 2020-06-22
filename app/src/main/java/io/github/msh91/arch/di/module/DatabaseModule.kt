@@ -1,6 +1,6 @@
 package io.github.msh91.arch.di.module
 
-import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
@@ -12,9 +12,9 @@ class DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideRoomDatabase(application: Application): AppDataBase {
+    fun provideRoomDatabase(context: Context): AppDataBase {
         return Room
-                .databaseBuilder(application, AppDataBase::class.java, AppDataBase.DB_NAME)
+                .databaseBuilder(context, AppDataBase::class.java, AppDataBase.DB_NAME)
                 .fallbackToDestructiveMigration()
                 .build()
     }
