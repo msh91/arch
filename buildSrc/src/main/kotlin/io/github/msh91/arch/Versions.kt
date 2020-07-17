@@ -2,15 +2,15 @@ package io.github.msh91.arch
 
 object Versions {
     const val arrow = "0.10.4"
-    const val gradle = "3.5.3"
-    const val kotlin = "1.3.61"
+    const val gradle = "4.0.1"
+    const val kotlin = "1.3.72"
     const val coroutines = "1.3.3"
     const val gradleVersions = "0.27.0"
     const val arch = "2.2.0"
     const val archTest = "2.1.0"
     const val material = "1.0.0"
     const val constraintLayout = "1.1.3"
-    const val room = "2.2.3"
+    const val room = "2.2.5"
     const val dagger = "2.25.4"
     const val okHttp = "3.8.1"
     const val gson = "2.8.6"
