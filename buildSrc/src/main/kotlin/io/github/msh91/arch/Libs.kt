@@ -5,6 +5,7 @@ object Libs {
         const val gradle = "com.android.tools.build:gradle:${Versions.gradle}"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersions}"
+        const val ktlint = "com.pinterest:ktlint:${Versions.ktlint}"
     }
 
     object Modules {
