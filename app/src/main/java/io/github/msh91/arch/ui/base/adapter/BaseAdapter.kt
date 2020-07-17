@@ -1,14 +1,12 @@
 package io.github.msh91.arch.ui.base.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.github.msh91.arch.BR
-import io.github.msh91.arch.ui.base.BaseViewModel
 
 /**
  * An abstract Adapter that extends [RecyclerView.Adapter] and can be used as base adapter in layouts provided by
@@ -18,18 +16,20 @@ import io.github.msh91.arch.ui.base.BaseViewModel
  * used in [BaseViewHolder.bind] method.
  *
  * @param items list of items to be shown. Can be changed later by calling [swapItems].
- *
+ * @param onItemClicked click listener to be invoked when user clicks on item
  * @param onBind an extension function on [B] that receives position of current item and allows us
  * to access binding class outside of [BaseAdapter].
  *
  */
-abstract class BaseAdapter<T, B : ViewDataBinding>(
-    private var itemBindingId: Int = BR.item,
-    private var viewModelBindingId: Int = BR.viewModel,
-    private var viewModel: BaseViewModel?,
-    var items: List<T>,
-    var onBind: B.(Int) -> Unit = {}
+abstract class BaseAdapter<T : Any, B : ViewDataBinding>(
+    private val itemBindingId: Int = BR.item,
+    items: List<T> = emptyList(),
+    private val onItemClicked: ((T) -> Unit)? = null,
+    private val onBind: B.(Int) -> Unit = {}
 ) : RecyclerView.Adapter<BaseViewHolder<T, B>>() {
+    private val items = mutableListOf<T>().apply {
+        addAll(items)
+    }
 
     /**
      * get item at given position
@@ -79,7 +79,7 @@ abstract class BaseAdapter<T, B : ViewDataBinding>(
      * @see [RecyclerView.Adapter.onBindViewHolder]
      */
     override fun onBindViewHolder(holder: BaseViewHolder<T, B>, position: Int) {
-        holder.bind(itemBindingId, getItem(position), viewModelBindingId, viewModel)
+        holder.bind(itemBindingId, getItem(position))
         holder.binding.onBind(position)
     }
 
@@ -102,16 +102,7 @@ abstract class BaseAdapter<T, B : ViewDataBinding>(
                 items[oldItemPosition] == newItems[newItemPosition]
         })
         diffResult.dispatchUpdatesTo(this)
-
-        // newItems.toList() provide a new instance of list with different reference in memory
-        // to prevent same instance of objects issues
-        items = newItems.toList()
-    }
-
-    /**
-     * A default interface that can be used as click listener of items
-     */
-    interface OnItemClickListener<T> {
-        fun onItemClick(view: View, item: T, position: Int = -1)
+        items.clear()
+        items.addAll(newItems)
     }
 }

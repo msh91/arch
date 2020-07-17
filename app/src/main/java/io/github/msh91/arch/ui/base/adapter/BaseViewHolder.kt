@@ -2,7 +2,6 @@ package io.github.msh91.arch.ui.base.adapter
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import io.github.msh91.arch.ui.base.BaseViewModel
 
 /**
  * A wrapper for [RecyclerView.ViewHolder] in order to use in [BaseAdapter]
@@ -11,8 +10,17 @@ import io.github.msh91.arch.ui.base.BaseViewModel
  *
  * @param binding an instance of [B] to get root view for [RecyclerView.ViewHolder] constructor and
  * display data model
+ * @param onItemClicked click listener to be invoked when user clicks on item
  */
-class BaseViewHolder<in T, out B : ViewDataBinding>(val binding: B) : RecyclerView.ViewHolder(binding.root) {
+class BaseViewHolder<in T : Any, out B : ViewDataBinding>(
+    val binding: B,
+    onItemClicked: ((T) -> Unit)? = null
+) : RecyclerView.ViewHolder(binding.root) {
+    private lateinit var item: T
+
+    init {
+        itemView.setOnClickListener { onItemClicked?.invoke(item) }
+    }
 
     /**
      * binding method that bind data model to [ViewDataBinding] class
@@ -20,11 +28,9 @@ class BaseViewHolder<in T, out B : ViewDataBinding>(val binding: B) : RecyclerVi
      * @param itemBindingId Generated item binding id that will should be founded in BR class.
      * @param item an instance of [T] to be shown in layout
      */
-    fun bind(itemBindingId: Int, item: T, viewModelBindingId: Int, viewModel: BaseViewModel?) {
+    fun bind(itemBindingId: Int, item: T) {
+        this.item = item
         binding.setVariable(itemBindingId, item)
-        if (viewModel != null) {
-            binding.setVariable(viewModelBindingId, viewModel)
-        }
         binding.executePendingBindings()
     }
 }
