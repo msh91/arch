@@ -27,4 +27,3 @@ class ErrorMapper @Inject constructor(private val httpErrorMapper: HttpErrorMapp
         return Error.NotDefined(t)
     }
 }
-

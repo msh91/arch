@@ -4,11 +4,15 @@ import android.content.SharedPreferences
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-class PreferenceDelegate<T>(val prefs: SharedPreferences, val name: String, val default: T) : ReadWriteProperty<Any?, T> {
+class PreferenceDelegate<T>(
+    val prefs: SharedPreferences,
+    val name: String,
+    val default: T
+) : ReadWriteProperty<Any?, T> {
     private var cachedT: T? = null
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T = cachedT
-            ?: findPreference(name, default)
+        ?: findPreference(name, default)
 
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
         putPreference(name, value)

@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import io.github.msh91.arch.util.livedata.NonNullLiveData
 import java.io.Serializable
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 /**
  * Observe [LiveData] on an instance of [LifecycleOwner] like [Fragment] or [Activity]
@@ -114,4 +114,4 @@ fun View.closeKeyboard() {
  * @return returns formatted time in 'HH:mm:ss' format and in 'fa' locale
  */
 fun Date.timeString() = SimpleDateFormat("HH:mm:ss", Locale("fa", "IR"))
-        .let { it.format(this)!! }
+    .let { it.format(this)!! }

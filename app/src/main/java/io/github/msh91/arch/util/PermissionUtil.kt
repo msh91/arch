@@ -6,7 +6,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import java.util.*
+import java.util.Random
 import javax.inject.Inject
 
 /**
@@ -23,7 +23,11 @@ class PermissionUtil @Inject constructor() {
      * @param permissions desired permissions to request grant
      * @param callback callback lambda function needed to send the result back through it
      */
-    fun request(activity: Activity, vararg permissions: String, callback: (grantedPermissions: List<String>, deniedPermissions: List<String>) -> Unit) {
+    fun request(
+        activity: Activity,
+        vararg permissions: String,
+        callback: (grantedPermissions: List<String>, deniedPermissions: List<String>) -> Unit
+    ) {
         if (permissions.isEmpty()) return
         this.callback = callback
         if (isAllPermissionsGranted(activity, *permissions)) {
@@ -39,7 +43,11 @@ class PermissionUtil @Inject constructor() {
      * @param permissions desired permissions to request grant
      * @param callback callback lambda function needed to send the result back through it
      */
-    fun request(fragment: Fragment, vararg permissions: String, callback: (grantedPermissions: List<String>, deniedPermissions: List<String>) -> Unit) {
+    fun request(
+        fragment: Fragment,
+        vararg permissions: String,
+        callback: (grantedPermissions: List<String>, deniedPermissions: List<String>) -> Unit
+    ) {
         if (permissions.isEmpty()) return
         this.callback = callback
 
@@ -58,15 +66,16 @@ class PermissionUtil @Inject constructor() {
      * @return returns true if all of permissions are granted
      */
     private fun isAllPermissionsGranted(context: Context, vararg permissions: String): Boolean =
-            permissions.all {
-                ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
-            }
+        permissions.all {
+            ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+        }
 
     /**
      * Get the result of permission request and send back the result through the given callback in
      * [request][.request] method.<br></br>
      *
-     * Should be called in your [Activity.onRequestPermissionsResult] or [Fragment.onRequestPermissionsResult].<br></br>
+     * Should be called in your [Activity.onRequestPermissionsResult] or [Fragment.onRequestPermissionsResult].
+     * <br></br>
      * The signature is exactly same as above methods
      *
      * @param requestCode
@@ -76,8 +85,12 @@ class PermissionUtil @Inject constructor() {
     fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (this.requestCode != requestCode) return
 
-        val grantedPermissions = permissions.filterIndexed { index, _ -> grantResults[index] == PackageManager.PERMISSION_GRANTED }
-        val deniedPermissions = permissions.filterIndexed { index, _ -> grantResults[index] != PackageManager.PERMISSION_GRANTED }
+        val grantedPermissions = permissions.filterIndexed { index, _ ->
+            grantResults[index] == PackageManager.PERMISSION_GRANTED
+        }
+        val deniedPermissions = permissions.filterIndexed { index, _ ->
+            grantResults[index] != PackageManager.PERMISSION_GRANTED
+        }
         callback(grantedPermissions, deniedPermissions)
     }
 }

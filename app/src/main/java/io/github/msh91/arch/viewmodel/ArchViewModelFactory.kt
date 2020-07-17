@@ -13,8 +13,9 @@ import javax.inject.Singleton
  * @param creators a [Map] of ViewModel classes and their providers
  */
 @Singleton
-class ArchViewModelFactory
-@Inject constructor(private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) : ViewModelProvider.Factory {
+class ArchViewModelFactory @Inject constructor(
+    private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
+) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         // get the ViewModel provider based on given class

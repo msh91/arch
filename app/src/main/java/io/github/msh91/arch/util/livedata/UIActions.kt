@@ -11,7 +11,7 @@ typealias ActivityAction = (FragmentActivity) -> Unit
 /**
  * A custom wrapper for [SingleEventLiveData] that only works with [ActivityAction]
  */
-class ActivityActionLiveData: SingleEventLiveData<ActivityAction>() {
+class ActivityActionLiveData : SingleEventLiveData<ActivityAction>() {
 
     /**
      * invoke operator function to save [action] to value of [SingleEventLiveData] instance.
@@ -39,7 +39,7 @@ typealias FragmentAction = (androidx.fragment.app.Fragment) -> Unit
 /**
  * A custom wrapper for [SingleEventLiveData] that only works with [FragmentAction]
  */
-class FragmentActionLiveData: SingleEventLiveData<FragmentAction>() {
+class FragmentActionLiveData : SingleEventLiveData<FragmentAction>() {
 
     /**
      * invoke operator function to save [action] to value of [SingleEventLiveData] instance.

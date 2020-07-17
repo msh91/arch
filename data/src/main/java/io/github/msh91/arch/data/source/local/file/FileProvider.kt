@@ -47,13 +47,13 @@ class FileProvider @Inject constructor(private val context: Context) : BaseFileP
     }
 
     override fun getMimType(uri: Uri): String {
-        return if (uri.scheme?.contentEquals("content") == true)
+        return if (uri.scheme?.contentEquals("content") == true) {
             return context.contentResolver.getType(uri)
-        else
+        } else {
             MimeTypeMap.getFileExtensionFromUrl(uri.path)
-                    ?: MimeTypeMap.getSingleton().getMimeTypeFromExtension(uri.path)
+                ?: MimeTypeMap.getSingleton().getMimeTypeFromExtension(uri.path)
+        }
     }
 
     override fun getContentResolver(): ContentResolver = context.contentResolver
-
 }

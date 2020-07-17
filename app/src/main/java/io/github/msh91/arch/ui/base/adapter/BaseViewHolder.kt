@@ -22,8 +22,9 @@ class BaseViewHolder<in T, out B : ViewDataBinding>(val binding: B) : RecyclerVi
      */
     fun bind(itemBindingId: Int, item: T, viewModelBindingId: Int, viewModel: BaseViewModel?) {
         binding.setVariable(itemBindingId, item)
-        if (viewModel != null)
+        if (viewModel != null) {
             binding.setVariable(viewModelBindingId, viewModel)
+        }
         binding.executePendingBindings()
     }
 }

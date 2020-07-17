@@ -15,8 +15,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class HomeListViewModel @Inject constructor(
-        private val cryptoRepository: CryptoRepository,
-        private val resourceProvider: BaseResourceProvider
+    private val cryptoRepository: CryptoRepository,
+    private val resourceProvider: BaseResourceProvider
 ) : BaseViewModel() {
 
     val cryptoCurrencies = NonNullLiveData<List<CryptoCurrencyItem>>(emptyList())
@@ -38,10 +38,10 @@ class HomeListViewModel @Inject constructor(
         return currencies.map { currency ->
             val quote = currency.quotes["USD"] ?: error("USD quote is a must!")
             CryptoCurrencyItem(
-                    currency.name,
-                    resourceProvider.getString(R.string.holder_usd_price, quote.price),
-                    resourceProvider.getString(R.string.holder_percent, quote.percentChange24h),
-                    resourceProvider.getColor(if (quote.percentChange24h < 0) R.color.red else R.color.green)
+                currency.name,
+                resourceProvider.getString(R.string.holder_usd_price, quote.price),
+                resourceProvider.getString(R.string.holder_percent, quote.percentChange24h),
+                resourceProvider.getColor(if (quote.percentChange24h < 0) R.color.red else R.color.green)
             )
         }
     }

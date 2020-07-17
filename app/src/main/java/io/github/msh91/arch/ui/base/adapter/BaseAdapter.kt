@@ -24,11 +24,11 @@ import io.github.msh91.arch.ui.base.BaseViewModel
  *
  */
 abstract class BaseAdapter<T, B : ViewDataBinding>(
-        private var itemBindingId: Int = BR.item,
-        private var viewModelBindingId: Int = BR.viewModel,
-        private var viewModel: BaseViewModel?,
-        var items: List<T>,
-        var onBind: B.(Int) -> Unit = {}
+    private var itemBindingId: Int = BR.item,
+    private var viewModelBindingId: Int = BR.viewModel,
+    private var viewModel: BaseViewModel?,
+    var items: List<T>,
+    var onBind: B.(Int) -> Unit = {}
 ) : RecyclerView.Adapter<BaseViewHolder<T, B>>() {
 
     /**
@@ -90,16 +90,16 @@ abstract class BaseAdapter<T, B : ViewDataBinding>(
     open fun swapItems(newItems: List<T>) {
         val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-                    items[oldItemPosition] == newItems[newItemPosition]
+                items[oldItemPosition] == newItems[newItemPosition]
 
             override fun getOldListSize(): Int =
-                    items.size
+                items.size
 
             override fun getNewListSize(): Int =
-                    newItems.size
+                newItems.size
 
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-                    items[oldItemPosition] == newItems[newItemPosition]
+                items[oldItemPosition] == newItems[newItemPosition]
         })
         diffResult.dispatchUpdatesTo(this)
 

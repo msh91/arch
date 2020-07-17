@@ -28,12 +28,12 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : DaggerFrag
      * @return T an instance of requested ViewModel.
      */
     inline fun <reified T : BaseViewModel> getLazyViewModel(scope: ViewModelScope): Lazy<T> =
-            lazy {
-                when (scope) {
-                    ACTIVITY -> ViewModelProviders.of(requireActivity(), viewModelFactory)[T::class.java]
-                    FRAGMENT -> ViewModelProviders.of(this, viewModelFactory)[T::class.java]
-                }
+        lazy {
+            when (scope) {
+                ACTIVITY -> ViewModelProviders.of(requireActivity(), viewModelFactory)[T::class.java]
+                FRAGMENT -> ViewModelProviders.of(this, viewModelFactory)[T::class.java]
             }
+        }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // initialize binding
