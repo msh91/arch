@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import javax.inject.Inject
 
-
 /**
  * Concrete implementation of the [BaseResourceProvider] interface.
  */
@@ -40,8 +39,10 @@ class ResourceProvider @Inject constructor(context: Context) : BaseResourceProvi
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             drawable = DrawableCompat.wrap(drawable).mutate()
         }
-        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth,
-                drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val bitmap = Bitmap.createBitmap(
+            drawable.intrinsicWidth,
+            drawable.intrinsicHeight, Bitmap.Config.ARGB_8888
+        )
         val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, canvas.width, canvas.height)
         drawable.draw(canvas)

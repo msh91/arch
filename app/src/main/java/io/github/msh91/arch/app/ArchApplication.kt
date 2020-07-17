@@ -10,7 +10,7 @@ import io.github.msh91.arch.di.component.DaggerAppComponent
 /**
  * Custom [Application] class for app that prepare app for running
  */
-class ArchApplication: DaggerApplication() {
+class ArchApplication : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
@@ -25,5 +25,4 @@ class ArchApplication: DaggerApplication() {
             Stetho.initializeWithDefaults(this)
         }
     }
-
 }

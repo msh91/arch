@@ -14,9 +14,11 @@ import io.github.msh91.arch.viewmodel.ArchViewModelFactory
  * And finally [ArchViewModelFactory] will be provided as [ViewModelProvider.Factory].
  *
  */
-@Module(includes = [
-    (HomeViewModelBuilder::class)
-])
+@Module(
+    includes = [
+        (HomeViewModelBuilder::class)
+    ]
+)
 abstract class ViewModelBuilder {
 
     @Binds

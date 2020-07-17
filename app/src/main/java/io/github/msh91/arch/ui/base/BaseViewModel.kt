@@ -10,8 +10,8 @@ import io.github.msh91.arch.util.livedata.FragmentActionLiveData
 /**
  * All of ViewModels should be inherited from [BaseViewModel]
  */
-abstract class BaseViewModel()
-    : ViewModel(), LifecycleObserver {
+abstract class BaseViewModel() :
+    ViewModel(), LifecycleObserver {
 
     val activityAction = ActivityActionLiveData()
     val fragmentAction = FragmentActionLiveData()

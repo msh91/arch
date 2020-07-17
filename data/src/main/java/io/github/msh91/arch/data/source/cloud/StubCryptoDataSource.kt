@@ -14,11 +14,15 @@ import io.github.msh91.arch.data.util.fromJson
  * <b>CAUTION : this implementation should be used only in debug mode</b>
  */
 class StubCryptoDataSource(
-        private val gson: Gson,
-        private val fileProvider: BaseFileProvider
+    private val gson: Gson,
+    private val fileProvider: BaseFileProvider
 ) : CryptoDataSource {
 
-    override suspend fun getLatestUpdates(start: Int, limit: Int, convertTo: String): ResponseWrapperDto<List<CryptoCurrency>> {
+    override suspend fun getLatestUpdates(
+        start: Int,
+        limit: Int,
+        convertTo: String
+    ): ResponseWrapperDto<List<CryptoCurrency>> {
         val inputStream = fileProvider.getAsset("latest_updates.json")
         val response = String(fileProvider.getByteArrayFromInputStream(inputStream))
         return gson.fromJson(response) ?: throw JsonParseException("provided json file is not ")

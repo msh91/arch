@@ -1,7 +1,11 @@
 package io.github.msh91.arch.di.module
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.google.gson.*
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonPrimitive
+import com.google.gson.JsonSerializer
 import dagger.Module
 import dagger.Provides
 import io.github.msh91.arch.BuildConfig
@@ -21,9 +25,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
+import java.util.Date
 import javax.inject.Singleton
-
 
 /**
  * The main [Module] for providing network-related classes
@@ -38,11 +41,21 @@ object NetworkModule {
     @Provides
     fun provideGson(): Gson {
         return GsonBuilder()
-                // Deserializer to convert json long value into Date
-                .registerTypeAdapter(Date::class.java, JsonDeserializer { json, typeOfT, context -> Date(json.asJsonPrimitive.asLong) })
-                // Serializer to convert Date value into long json primitive
-                .registerTypeAdapter(Date::class.java, JsonSerializer<Date> { src, typeOfSrc, context -> JsonPrimitive(src.time) })
-                .create()
+            // Deserializer to convert json long value into Date
+            .registerTypeAdapter(
+                Date::class.java,
+                JsonDeserializer { json, _, _ ->
+                    Date(json.asJsonPrimitive.asLong)
+                }
+            )
+            // Serializer to convert Date value into long json primitive
+            .registerTypeAdapter(
+                Date::class.java,
+                JsonSerializer<Date> { src, _, _ ->
+                    JsonPrimitive(src.time)
+                }
+            )
+            .create()
     }
 
     /**
@@ -52,9 +65,9 @@ object NetworkModule {
     @Provides
     fun provideSharedHeaders(): Headers {
         return Headers.Builder()
-                .add("Accept", "*/*")
-                .add("User-Agent", "mobile")
-                .build()
+            .add("Accept", "*/*")
+            .add("User-Agent", "mobile")
+            .build()
     }
 
     /**
@@ -62,7 +75,8 @@ object NetworkModule {
      *
      * @param preferencesHelper to access saved token, provided by [AppModule.provideAppPreferencesHelper]
      * @param headers default shared headers to be added in http request, provided by [provideSharedHeaders]
-     * @param authenticator instance of [TokenAuthenticator] for handling UNAUTHORIZED errors, provided by [provideAuthenticator]
+     * @param authenticator instance of [TokenAuthenticator] for handling UNAUTHORIZED errors,
+     * provided by [provideAuthenticator]
      *
      * @return an instance of [OkHttpClient]
      */
@@ -70,10 +84,10 @@ object NetworkModule {
     @Provides
     @WithToken
     fun provideOkHttpClientWithToken(
-            preferencesHelper: AppPreferencesHelper,
-            headers: Headers,
-            authenticator: Authenticator,
-            secretFields: SecretFields
+        preferencesHelper: AppPreferencesHelper,
+        headers: Headers,
+        authenticator: Authenticator,
+        secretFields: SecretFields
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
 
@@ -87,18 +101,22 @@ object NetworkModule {
             builder.addNetworkInterceptor(StethoInterceptor())
         }
 
-        builder.interceptors().add(Interceptor { chain ->
-            val request = chain.request()
-            val requestBuilder = request.newBuilder()
+        builder.interceptors().add(
+            Interceptor { chain ->
+                val request = chain.request()
+                val requestBuilder = request.newBuilder()
                     // add default shared headers to every http request
                     .headers(headers)
                     .addHeader("X-CMC_PRO_API_KEY", secretFields.apiKey)
                     // add tokenType and token to Authorization header of request
-                    .addHeader("Authorization",
-                            preferencesHelper.tokenType + " " + preferencesHelper.token)
+                    .addHeader(
+                        "Authorization",
+                        preferencesHelper.tokenType + " " + preferencesHelper.token
+                    )
                     .method(request.method(), request.body())
-            chain.proceed(requestBuilder.build())
-        })
+                chain.proceed(requestBuilder.build())
+            }
+        )
 
         builder.authenticator(authenticator)
 
@@ -124,17 +142,18 @@ object NetworkModule {
             builder.addNetworkInterceptor(StethoInterceptor())
         }
 
-        builder.interceptors().add(Interceptor { chain ->
-            val request = chain.request()
-            val requestBuilder = request.newBuilder()
+        builder.interceptors().add(
+            Interceptor { chain ->
+                val request = chain.request()
+                val requestBuilder = request.newBuilder()
                     .headers(headers)
                     .addHeader("X-CMC_PRO_API_KEY", secretFields.apiKey)
                     .method(request.method(), request.body())
-            chain.proceed(requestBuilder.build())
-        })
+                chain.proceed(requestBuilder.build())
+            }
+        )
 
         return builder.build()
-
     }
 
     /**
@@ -150,11 +169,11 @@ object NetworkModule {
     @WithoutToken
     fun provideRetrofit(@WithoutToken okHttpClient: OkHttpClient, gson: Gson, secretFields: SecretFields): Retrofit {
         return Retrofit.Builder().client(okHttpClient)
-                // create gson converter factory
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                // get base url from SecretFields interface
-                .baseUrl(secretFields.getBaseUrl())
-                .build()
+            // create gson converter factory
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            // get base url from SecretFields interface
+            .baseUrl(secretFields.getBaseUrl())
+            .build()
     }
 
     /**
@@ -170,11 +189,11 @@ object NetworkModule {
     @WithToken
     fun provideRetrofitWithToken(@WithToken okHttpClient: OkHttpClient, gson: Gson): Retrofit {
         return Retrofit.Builder().client(okHttpClient)
-                // create gson converter factory
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                // get base url from SecretFields interface
-                .baseUrl(SecretFields().getBaseUrl())
-                .build()
+            // create gson converter factory
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            // get base url from SecretFields interface
+            .baseUrl(SecretFields().getBaseUrl())
+            .build()
     }
 
     @Provides

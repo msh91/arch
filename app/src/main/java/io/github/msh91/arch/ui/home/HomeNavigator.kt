@@ -6,15 +6,14 @@ import io.github.msh91.arch.ui.base.BaseNavigator
 import io.github.msh91.arch.ui.home.list.HomeListFragment
 import javax.inject.Inject
 
-class HomeNavigator @Inject constructor(): BaseNavigator {
+class HomeNavigator @Inject constructor() : BaseNavigator {
 
 //    override val mActivity: WeakReference<HomeActivity> = WeakReference(homeActivity)
 
     fun openListFragment(activity: FragmentActivity) {
         activity.supportFragmentManager
-                .beginTransaction()
-                .add(R.id.home_container, HomeListFragment.newInstance())
-                .commitAllowingStateLoss()
-
+            .beginTransaction()
+            .add(R.id.home_container, HomeListFragment.newInstance())
+            .commitAllowingStateLoss()
     }
 }

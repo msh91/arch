@@ -18,7 +18,6 @@ import javax.inject.Inject
 abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : DaggerAppCompatActivity(), BaseView<V, B> {
     override lateinit var binding: B
 
-
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -28,7 +27,7 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : DaggerAppC
      * @return T an instance of requested ViewModel.
      */
     inline fun <reified T : BaseViewModel> getLazyViewModel(): Lazy<T> =
-            lazy { ViewModelProviders.of(this, viewModelFactory)[T::class.java] }
+        lazy { ViewModelProviders.of(this, viewModelFactory)[T::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +40,4 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : DaggerAppC
         viewModel.activityAction.observe(this, Observer { it?.invoke(this) })
         onViewInitialized(binding)
     }
-
 }
-

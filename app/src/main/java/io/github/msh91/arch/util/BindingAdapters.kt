@@ -61,16 +61,17 @@ class BindingAdapters {
         fun setImageSrc(imageView: ImageView, url: String?) {
             if (!url.isNullOrEmpty()) {
                 GlideApp.with(imageView.context).load(url).diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(imageView)
+                    .into(imageView)
             }
         }
 
         @JvmStatic
         @BindingAdapter("matchSrcImageUrl")
         fun setMatchImageSrc(imageView: ImageView, url: String?) {
-            if (!url.isNullOrEmpty())
+            if (!url.isNullOrEmpty()) {
                 GlideApp.with(imageView.context).load(url).diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).into(imageView)
+                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL).into(imageView)
+            }
         }
 
         @JvmStatic
@@ -78,7 +79,7 @@ class BindingAdapters {
         fun setImageBitmap(imageView: ImageView, bitmap: Bitmap?) {
             bitmap?.let {
                 GlideApp.with(imageView.context).load(it)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView)
             }
         }
 
@@ -87,7 +88,7 @@ class BindingAdapters {
         fun setImageDrawable(imageView: ImageView, drawable: Drawable?) {
             drawable?.let {
                 GlideApp.with(imageView.context).load(it)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView)
             }
         }
 

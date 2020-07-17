@@ -7,4 +7,4 @@ import com.bumptech.glide.module.AppGlideModule
  * Glide Module for generating glide operators for app
  */
 @GlideModule
-class KmGlideModule : AppGlideModule()
+class ArchGlideModule : AppGlideModule()

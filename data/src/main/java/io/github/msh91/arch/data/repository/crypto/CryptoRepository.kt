@@ -10,18 +10,16 @@ import io.github.msh91.arch.data.source.remote.CryptoDataSource
 import javax.inject.Inject
 
 class CryptoRepository @Inject constructor(
-        errorMapper: ErrorMapper,
-        @Concrete private val cryptoDataSource: CryptoDataSource
+    errorMapper: ErrorMapper,
+    @Concrete private val cryptoDataSource: CryptoDataSource
 ) : BaseRepository(errorMapper) {
 
     suspend fun getLatestUpdates(
-            start: Int = 1,
-            limit: Int = 20,
-            convertTo: String = "USD"
+        start: Int = 1,
+        limit: Int = 20,
+        convertTo: String = "USD"
     ): Either<Error, List<CryptoCurrency>> {
-
         return safeApiCall { cryptoDataSource.getLatestUpdates(start, limit, convertTo) }
-                .map { it.data }
-
+            .map { it.data }
     }
 }

@@ -8,8 +8,8 @@ import retrofit2.http.Query
 interface CryptoDataSource {
     @GET("v1/cryptocurrency/listings/latest")
     suspend fun getLatestUpdates(
-            @Query("start") start: Int,
-            @Query("limit") limit: Int,
-            @Query("convert") convertTo: String
+        @Query("start") start: Int,
+        @Query("limit") limit: Int,
+        @Query("convert") convertTo: String
     ): ResponseWrapperDto<List<CryptoCurrency>>
 }

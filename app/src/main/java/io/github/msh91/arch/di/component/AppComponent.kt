@@ -17,22 +17,23 @@ import javax.inject.Singleton
  * Main Application [Component] that included all of modules and sub components.
  */
 @Singleton
-@Component(modules = [
-    (NetworkModule::class),
-    (AppModule::class),
-    (UtilModule::class),
-    (AndroidInjectionModule::class),
-    (DatabaseModule::class),
-    (ActivityBuilder::class)])
+@Component(
+    modules = [
+        (NetworkModule::class),
+        (AppModule::class),
+        (UtilModule::class),
+        (AndroidInjectionModule::class),
+        (DatabaseModule::class),
+        (ActivityBuilder::class)
+    ]
+)
 
 interface AppComponent : AndroidInjector<ArchApplication> {
 
     @Component.Factory
-    abstract class Factory : AndroidInjector.Factory<ArchApplication>{
+    abstract class Factory : AndroidInjector.Factory<ArchApplication> {
         interface Factory {
             fun create(@BindsInstance application: Context): AppComponent
         }
     }
 }
-
-

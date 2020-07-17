@@ -15,10 +15,10 @@ class SecretFields @Inject constructor() {
     val apiKey: String = "d9714d48-05fb-494e-aa2c-e1113c178385"
 
     fun getBaseUrl(): String {
-        return if (BuildConfig.DEBUG)
+        return if (BuildConfig.DEBUG) {
             debugBaseUrl
-        else
+        } else {
             releaseBaseUrl
+        }
     }
-
 }
