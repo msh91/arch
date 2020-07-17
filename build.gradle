@@ -3,6 +3,7 @@ import io.github.msh91.arch.Libs
 apply plugin: "com.github.ben-manes.versions"
 
 buildscript {
+    apply from: rootProject.file('gradle/ktlint.gradle')
     repositories {
         google()
         jcenter()

@@ -1,0 +1,41 @@
+import io.github.msh91.arch.Libs
+
+configurations {
+    ktlint
+}
+
+dependencies {
+    ktlint Libs.Plugins.ktlint
+    // additional 3rd party ruleset(s) can be specified here
+    // just add them to the classpath (e.g. ktlint 'groupId:artifactId:version') and
+    // ktlint will pick them up
+}
+
+def ktlintOutputDir = "${project.buildDir}/reports/ktlint/"
+def ktlintInputFiles = project.fileTree(dir: ".", include: "**/src/**/*.kt")
+def ktlintOutputFile = "${ktlintOutputDir}ktlint-checkstyle-report.xml"
+
+task ktlint(type: JavaExec, group: "verification") {
+    inputs.files(ktlintInputFiles)
+    outputs.dir(ktlintOutputDir)
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args = [
+            "--experimental",
+            "--reporter=plain",
+            "--reporter=checkstyle,output=${ktlintOutputFile}",
+            "**/src/**/*.kt"
+    ]
+}
+
+task ktlintFormat(type: JavaExec, group: "formatting") {
+    description = "Fix Kotlin code style deviations."
+    classpath = configurations.ktlint
+    main = "com.pinterest.ktlint.Main"
+    args = [
+            "-F",
+            "--experimental",
+            "**/src/**/*.kt"
+    ]
+}
