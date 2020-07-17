@@ -1,17 +1,16 @@
 package io.github.msh91.arch.ui.base.adapter
 
 import androidx.databinding.ViewDataBinding
-import io.github.msh91.arch.ui.base.BaseViewModel
 
 /**
- * Simplest implementation of [BaseAdapter] to use as a single layout adapter.
+ * Simple implementation of [BaseAdapter] to use as a single layout adapter.
  */
-open class SingleLayoutAdapter<T, B : ViewDataBinding>(
+open class SingleLayoutAdapter<T : Any, B : ViewDataBinding>(
     private val layoutId: Int,
-    items: List<T>,
-    viewModel: BaseViewModel? = null,
+    items: List<T> = emptyList(),
+    onItemClicked: ((T) -> Unit)? = null,
     onBind: B.(Int) -> Unit = {}
-) : BaseAdapter<T, B>(viewModel = viewModel, items = items, onBind = onBind) {
+) : BaseAdapter<T, B>(items = items, onItemClicked = onItemClicked, onBind = onBind) {
 
     override fun getLayoutId(position: Int): Int = layoutId
 }

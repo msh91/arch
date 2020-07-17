@@ -22,11 +22,9 @@ class HomeListFragment : BaseFragment<HomeListViewModel, FragmentHomeListBinding
         super.onViewInitialized(binding)
         binding.viewModel = viewModel
         binding.adapter = SingleLayoutAdapter<CryptoCurrencyItem, ItemCryptoCurrencyBinding>(
-            R.layout.item_crypto_currency,
-            emptyList(),
-            viewModel
+            layoutId = R.layout.item_crypto_currency,
+            onItemClicked = viewModel::onItemClicked
         )
-
         viewModel.cryptoCurrencies.observeSafe(viewLifecycleOwner) { binding.adapter?.swapItems(it) }
     }
 }
