@@ -1,4 +1,4 @@
-package io.github.msh91.arch.data.source.cloud
+package io.github.msh91.arch.data.source.remote
 
 import com.google.gson.Gson
 import com.google.gson.JsonParseException

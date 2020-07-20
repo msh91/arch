@@ -13,7 +13,7 @@ import io.github.msh91.arch.data.di.qualifier.Concrete
 import io.github.msh91.arch.data.di.qualifier.Stub
 import io.github.msh91.arch.data.di.qualifier.WithToken
 import io.github.msh91.arch.data.di.qualifier.WithoutToken
-import io.github.msh91.arch.data.source.cloud.StubCryptoDataSource
+import io.github.msh91.arch.data.source.remote.StubCryptoDataSource
 import io.github.msh91.arch.data.source.local.file.BaseFileProvider
 import io.github.msh91.arch.data.source.preference.AppPreferencesHelper
 import io.github.msh91.arch.data.source.remote.CryptoDataSource
