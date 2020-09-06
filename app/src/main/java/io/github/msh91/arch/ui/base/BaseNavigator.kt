@@ -2,7 +2,11 @@ package io.github.msh91.arch.ui.base
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.ActivityNavigator
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation.*
 
 /**
  * Handles navigation between Activities and fragments in the app.
@@ -18,7 +22,10 @@ interface BaseNavigator {
     fun startActivity(activity: FragmentActivity, cls: Class<*>, bundle: Bundle) {
         val intent = Intent(activity, cls)
         intent.putExtras(bundle)
-        activity.startActivity(intent)
+        val destination = ActivityNavigator(activity)
+            .createDestination()
+            .setIntent(intent)
+        ActivityNavigator(activity).navigate(destination, bundle, null, null)
     }
 
     /**
@@ -55,11 +62,26 @@ interface BaseNavigator {
     }
 
     /**
-     * attempt to start login activity if  token expired
+     * attempt to start login activity if token expired
      *
      * @param activity requested activity
      */
     fun onTokenExpired(activity: FragmentActivity) {
         // todo: open login activity
+    }
+
+    fun navigateTo(fragment: Fragment, directions: NavDirections){
+        findNavController(fragment.requireView()).navigate(directions)
+    }
+
+    fun navigateBack(fragment: Fragment){
+        findNavController(fragment.requireView()).popBackStack().not()
+    }
+
+    fun navigateBackTo(fragment: Fragment, desinationId : Int){
+        findNavController(fragment.requireView()).popBackStack(
+            desinationId,
+            false
+        )
     }
 }
