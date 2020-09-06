@@ -6,6 +6,7 @@ object Libs {
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
         const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersions}"
         const val ktlint = "com.pinterest:ktlint:${Versions.ktlint}"
+        const val safeargs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigationComponent}"
     }
 
     object Modules {
@@ -23,6 +24,9 @@ object Libs {
         const val material = "com.google.android.material:material:${Versions.material}"
         const val annotations = "androidx.annotation:annotation:${Versions.material}"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
+        const val navigationUi ="androidx.navigation:navigation-ui:${Versions.navigationComponent}"
+        const val navigationFragment = "androidx.navigation:navigation-fragment:${Versions.navigationComponent}"
+        const val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
     }
 
     object Common {
