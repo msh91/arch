@@ -5,10 +5,4 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     private val homeNavigator: HomeNavigator
-) : BaseViewModel() {
-
-    override fun onStart() {
-        super.onStart()
-        activityAction { homeNavigator.openListFragment(it) }
-    }
-}
+) : BaseViewModel()
