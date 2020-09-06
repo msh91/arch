@@ -9,11 +9,6 @@ import io.github.msh91.arch.ui.base.adapter.SingleLayoutAdapter
 import io.github.msh91.arch.util.extension.observeSafe
 
 class HomeListFragment : BaseFragment<HomeListViewModel, FragmentHomeListBinding>() {
-    companion object {
-        fun newInstance() = HomeListFragment().apply {
-            //            setArguments(Pair("key", value))
-        }
-    }
 
     override val viewModel: HomeListViewModel by getLazyViewModel(ViewModelScope.ACTIVITY)
     override val layoutId: Int = R.layout.fragment_home_list
