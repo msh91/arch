@@ -22,4 +22,6 @@ object Versions {
     const val testRunner = "1.2.0"
     const val espresso = "3.2.0"
     const val mockitoKotlin = "1.6.0"
+    const val navigationComponent = "2.3.0"
+    const val fragment = "1.2.5"
 }
