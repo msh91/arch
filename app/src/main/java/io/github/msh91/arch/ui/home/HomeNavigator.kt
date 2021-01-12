@@ -9,11 +9,4 @@ import javax.inject.Inject
 class HomeNavigator @Inject constructor() : BaseNavigator {
 
 //    override val mActivity: WeakReference<HomeActivity> = WeakReference(homeActivity)
-
-    fun openListFragment(activity: FragmentActivity) {
-        activity.supportFragmentManager
-            .beginTransaction()
-            .add(R.id.home_container, HomeListFragment.newInstance())
-            .commitAllowingStateLoss()
-    }
 }

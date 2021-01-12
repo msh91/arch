@@ -5,6 +5,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion Android.compileSdkVersion
@@ -58,6 +59,9 @@ dependencies {
     implementation Libs.Jetpack.room
     implementation Libs.Jetpack.material
     implementation Libs.Jetpack.constraintLayout
+    implementation Libs.Jetpack.navigationFragment
+    implementation Libs.Jetpack.navigationUi
+    implementation Libs.Jetpack.fragment
 
     // Dagger
     implementation Libs.Common.dagger
