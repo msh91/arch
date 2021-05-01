@@ -2,6 +2,7 @@ package io.github.msh91.arch.ui.home
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import io.github.msh91.arch.ui.home.chart.CryptoChartFragment
 import io.github.msh91.arch.ui.home.list.LatestUpdatesFragment
 
 /**
@@ -11,5 +12,8 @@ import io.github.msh91.arch.ui.home.list.LatestUpdatesFragment
 abstract class HomeFragmentProvider {
 
     @ContributesAndroidInjector
-    abstract fun provideHomeListFragment(): LatestUpdatesFragment
+    abstract fun provideLatestUpdatesFragment(): LatestUpdatesFragment
+
+    @ContributesAndroidInjector
+    abstract fun provideCryptoChartFragment(): CryptoChartFragment
 }
