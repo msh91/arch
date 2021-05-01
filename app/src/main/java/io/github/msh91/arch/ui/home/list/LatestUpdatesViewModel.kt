@@ -1,6 +1,8 @@
 package io.github.msh91.arch.ui.home.list
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import arrow.core.Either.Left
 import arrow.core.Either.Right
@@ -22,19 +24,27 @@ class LatestUpdatesViewModel @Inject constructor(
     private val resourceProvider: BaseResourceProvider
 ) : BaseViewModel() {
 
-    val cryptoCurrencies = NonNullLiveData<List<CryptoCurrencyItem>>(emptyList())
+    val cryptoCurrencyItemsLiveData = NonNullLiveData<List<CryptoCurrencyItem>>(emptyList())
     val errorLiveData = SingleEventLiveData<String>()
+    val loadingLiveData = MutableLiveData<Boolean>()
+    private var callInitialized = false
 
-    init {
-        getLatestUpdates()
+    override fun onStart() {
+        super.onStart()
+        if (!callInitialized) {
+            getLatestUpdates()
+        }
     }
 
-    private fun getLatestUpdates() {
+    fun getLatestUpdates() {
         viewModelScope.launch {
+            callInitialized = true
+            loadingLiveData.value = true
             when (val either = cryptoRepository.getLatestUpdates()) {
                 is Right -> showCryptoCurrencies(either.b)
                 is Left -> showError(either.a)
             }
+            loadingLiveData.value = false
         }
     }
 
@@ -43,7 +53,7 @@ class LatestUpdatesViewModel @Inject constructor(
             showError(HttpError.InvalidResponse(100, resourceProvider.getString(R.string.error_invalid_quote)))
             return
         }
-        this.cryptoCurrencies.value = mapCurrenciesToItems(currencies)
+        this.cryptoCurrencyItemsLiveData.value = mapCurrenciesToItems(currencies)
     }
 
     private fun areCurrenciesValid(currencies: List<CryptoCurrency>): Boolean {

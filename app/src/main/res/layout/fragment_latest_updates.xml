@@ -20,7 +20,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adapter="@{adapter}"
+            app:changeVisibility="@{!viewModel.loadingLiveData}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:changeVisibility="@{viewModel.loadingLiveData}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -39,15 +39,49 @@ class LatestUpdatesViewModelTest {
     }
 
     @Test
-    fun `getLatestUpdates should be called by creation of viewModel`() {
+    fun `getLatestUpdates should be called after view started`() {
         // GIVEN
         coEvery { cryptoRepository.getLatestUpdates() } returns mockk()
 
         // WHEN
         val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
+        viewModel.onStart()
 
         // THEN
         coVerify { cryptoRepository.getLatestUpdates() }
+    }
+
+    @Test
+    fun `getLatestUpdates should not be called after view restarted`() {
+        // GIVEN
+        coEvery { cryptoRepository.getLatestUpdates() } returns mockk()
+
+        // WHEN
+        val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
+        viewModel.onStart()
+        viewModel.onStart()
+
+        // THEN
+        coVerify(exactly = 1) { cryptoRepository.getLatestUpdates() }
+    }
+
+    @Test
+    fun `loading should be set to true before calling api and then after api call should be set to false`() {
+        val testObserver = mockk<Observer<Boolean>>()
+        every { testObserver.onChanged(any()) } answers {}
+        coEvery { cryptoRepository.getLatestUpdates() } returns mockk()
+
+        // WHEN
+        val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
+        viewModel.loadingLiveData.observeForever(testObserver)
+        viewModel.onStart()
+
+        // THEN
+        coVerifyOrder {
+            testObserver.onChanged(true)
+            cryptoRepository.getLatestUpdates()
+            testObserver.onChanged(false)
+        }
     }
 
     @Test
@@ -63,6 +97,7 @@ class LatestUpdatesViewModelTest {
         // WHEN
         val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
         viewModel.errorLiveData.observeForever(testObserver)
+        viewModel.onStart()
 
         // THEN
         verify { testObserver.onChanged(errorMessage) }
@@ -86,7 +121,8 @@ class LatestUpdatesViewModelTest {
 
         // WHEN
         val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
-        viewModel.cryptoCurrencies.observeForever(testObserver)
+        viewModel.cryptoCurrencyItemsLiveData.observeForever(testObserver)
+        viewModel.onStart()
 
         // THEN
         verify { resourceProvider.getColor(R.color.green) }
@@ -108,6 +144,7 @@ class LatestUpdatesViewModelTest {
         // WHEN
         val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
         viewModel.errorLiveData.observeForever(testObserver)
+        viewModel.onStart()
 
         // THEN
         verify { resourceProvider.getErrorMessage(HttpError.InvalidResponse(100, "invalid quote!")) }
