@@ -11,6 +11,8 @@ import io.github.msh91.arch.data.model.crypto.CryptoCurrency
 import io.github.msh91.arch.data.model.crypto.CurrencyQuote
 import io.github.msh91.arch.data.model.crypto.QuoteKey
 import io.github.msh91.arch.data.repository.crypto.CryptoRepository
+import io.github.msh91.arch.ui.home.HomeNavigator
+import io.github.msh91.arch.util.livedata.FragmentAction
 import io.github.msh91.arch.util.provider.BaseResourceProvider
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
@@ -33,9 +35,15 @@ class LatestUpdatesViewModelTest {
     @MockK
     lateinit var cryptoRepository: CryptoRepository
 
+    @MockK
+    lateinit var homeNavigator: HomeNavigator
+
+    private lateinit var viewModel: LatestUpdatesViewModel
+
     @Before
     fun setup() {
         MockKAnnotations.init(this)
+        viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider, homeNavigator)
     }
 
     @Test
@@ -44,7 +52,7 @@ class LatestUpdatesViewModelTest {
         coEvery { cryptoRepository.getLatestUpdates() } returns mockk()
 
         // WHEN
-        val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
+
         viewModel.onStart()
 
         // THEN
@@ -57,7 +65,7 @@ class LatestUpdatesViewModelTest {
         coEvery { cryptoRepository.getLatestUpdates() } returns mockk()
 
         // WHEN
-        val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
+
         viewModel.onStart()
         viewModel.onStart()
 
@@ -72,7 +80,7 @@ class LatestUpdatesViewModelTest {
         coEvery { cryptoRepository.getLatestUpdates() } returns mockk()
 
         // WHEN
-        val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
+
         viewModel.loadingLiveData.observeForever(testObserver)
         viewModel.onStart()
 
@@ -95,7 +103,7 @@ class LatestUpdatesViewModelTest {
         coEvery { cryptoRepository.getLatestUpdates() } returns Either.left(mockedError)
 
         // WHEN
-        val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
+
         viewModel.errorLiveData.observeForever(testObserver)
         viewModel.onStart()
 
@@ -120,13 +128,13 @@ class LatestUpdatesViewModelTest {
         every { resourceProvider.getColor(any()) } returns 1
 
         // WHEN
-        val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
+
         viewModel.cryptoCurrencyItemsLiveData.observeForever(testObserver)
         viewModel.onStart()
 
         // THEN
         verify { resourceProvider.getColor(R.color.green) }
-        verify { testObserver.onChanged(listOf(CryptoCurrencyItem("Bitcoin", "1000 $", "10%", 1))) }
+        verify { testObserver.onChanged(listOf(CryptoCurrencyItem(mockedCrypto, "Bitcoin", "1000 $", "10%", 1))) }
     }
 
     @Test
@@ -142,12 +150,48 @@ class LatestUpdatesViewModelTest {
         coEvery { cryptoRepository.getLatestUpdates() } returns Either.right(listOf(mockedCrypto))
 
         // WHEN
-        val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
+
         viewModel.errorLiveData.observeForever(testObserver)
         viewModel.onStart()
 
         // THEN
         verify { resourceProvider.getErrorMessage(HttpError.InvalidResponse(100, "invalid quote!")) }
         verify { testObserver.onChanged("invalid quote!") }
+    }
+
+    @Test
+    fun `nothing should be happened if user clicks on any crypto except that bitcoin`() {
+        every { homeNavigator.navigateToChartFragment(any()) } answers {}
+        val testObserver = Observer<FragmentAction> { it?.invoke(mockk()) }
+        val mockedCrypto = mockk<CryptoCurrency>()
+        every { mockedCrypto.id } returns 2
+        val mockedItem = mockk<CryptoCurrencyItem>()
+        every { mockedItem.cryptoCurrency } returns mockedCrypto
+
+        // WHEN
+        viewModel.onItemClicked(mockedItem)
+        viewModel.fragmentAction.observeForever(testObserver)
+
+        // THEN
+        verify(exactly = 0) { homeNavigator.navigateToChartFragment(any()) }
+
+    }
+
+    @Test
+    fun `chart fragment should be opened if user clicks on bitcoin`() {
+        every { homeNavigator.navigateToChartFragment(any()) } answers {}
+        val testObserver = Observer<FragmentAction> { it?.invoke(mockk()) }
+        val mockedCrypto = mockk<CryptoCurrency>()
+        every { mockedCrypto.id } returns 1
+        val mockedItem = mockk<CryptoCurrencyItem>()
+        every { mockedItem.cryptoCurrency } returns mockedCrypto
+
+        // WHEN
+        viewModel.onItemClicked(mockedItem)
+        viewModel.fragmentAction.observeForever(testObserver)
+
+        // THEN
+        verify { homeNavigator.navigateToChartFragment(any()) }
+
     }
 }

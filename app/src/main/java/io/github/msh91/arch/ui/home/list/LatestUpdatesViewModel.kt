@@ -1,8 +1,6 @@
 package io.github.msh91.arch.ui.home.list
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import arrow.core.Either.Left
 import arrow.core.Either.Right
@@ -13,6 +11,7 @@ import io.github.msh91.arch.data.model.crypto.CryptoCurrency
 import io.github.msh91.arch.data.model.crypto.QuoteKey
 import io.github.msh91.arch.data.repository.crypto.CryptoRepository
 import io.github.msh91.arch.ui.base.BaseViewModel
+import io.github.msh91.arch.ui.home.HomeNavigator
 import io.github.msh91.arch.util.livedata.NonNullLiveData
 import io.github.msh91.arch.util.livedata.SingleEventLiveData
 import io.github.msh91.arch.util.provider.BaseResourceProvider
@@ -21,7 +20,8 @@ import javax.inject.Inject
 
 class LatestUpdatesViewModel @Inject constructor(
     private val cryptoRepository: CryptoRepository,
-    private val resourceProvider: BaseResourceProvider
+    private val resourceProvider: BaseResourceProvider,
+    private val homeNavigator: HomeNavigator
 ) : BaseViewModel() {
 
     val cryptoCurrencyItemsLiveData = NonNullLiveData<List<CryptoCurrencyItem>>(emptyList())
@@ -36,7 +36,7 @@ class LatestUpdatesViewModel @Inject constructor(
         }
     }
 
-    fun getLatestUpdates() {
+    private fun getLatestUpdates() {
         viewModelScope.launch {
             callInitialized = true
             loadingLiveData.value = true
@@ -64,6 +64,7 @@ class LatestUpdatesViewModel @Inject constructor(
         return currencies.map { currency ->
             val quote = currency.quotes[QuoteKey.USD]!!
             CryptoCurrencyItem(
+                currency,
                 currency.name,
                 resourceProvider.getString(R.string.holder_usd_price, quote.price),
                 resourceProvider.getString(R.string.holder_percent, quote.percentChange24h),
@@ -76,8 +77,11 @@ class LatestUpdatesViewModel @Inject constructor(
         errorLiveData.value = resourceProvider.getErrorMessage(error)
     }
 
-    fun onItemClicked(cryptoCurrencyItem: CryptoCurrencyItem) {
-        Log.d(TAG, "onItemClicked() called  with: cryptoCurrencyItem = [$cryptoCurrencyItem]")
+    fun onItemClicked(item: CryptoCurrencyItem) {
+        if (item.cryptoCurrency.id != 1) {
+            return
+        }
+        fragmentAction { homeNavigator.navigateToChartFragment(it) }
     }
 
     companion object {

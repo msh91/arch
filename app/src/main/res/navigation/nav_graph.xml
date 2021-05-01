@@ -2,10 +2,22 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeListFragment">
+    app:startDestination="@id/latestUpdatesFragment">
 
     <fragment
-        android:id="@+id/homeListFragment"
+        android:id="@+id/latestUpdatesFragment"
         android:name="io.github.msh91.arch.ui.home.list.LatestUpdatesFragment"
-        android:label="HomeListFragment" />
+        android:label="HomeListFragment">
+
+        <action
+            android:id="@+id/latestUpdatesToChartAction"
+            app:destination="@id/cryptoChartFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cryptoChartFragment"
+        android:name="io.github.msh91.arch.ui.home.chart.CryptoChartFragment"
+        android:label="CryptoChartFragment" />
 </navigation>
