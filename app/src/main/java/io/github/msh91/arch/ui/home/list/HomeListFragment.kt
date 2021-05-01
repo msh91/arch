@@ -1,5 +1,7 @@
 package io.github.msh91.arch.ui.home.list
 
+import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import io.github.msh91.arch.R
 import io.github.msh91.arch.databinding.FragmentHomeListBinding
 import io.github.msh91.arch.databinding.ItemCryptoCurrencyBinding
@@ -21,5 +23,12 @@ class HomeListFragment : BaseFragment<HomeListViewModel, FragmentHomeListBinding
             onItemClicked = viewModel::onItemClicked
         )
         viewModel.cryptoCurrencies.observeSafe(viewLifecycleOwner) { binding.adapter?.swapItems(it) }
+        viewModel.errorLiveData.observe(viewLifecycleOwner, Observer { showSnackBar(it) })
+    }
+
+    private fun showSnackBar(message: String) {
+        Snackbar
+            .make(binding.root, message, Snackbar.LENGTH_LONG)
+            .show()
     }
 }

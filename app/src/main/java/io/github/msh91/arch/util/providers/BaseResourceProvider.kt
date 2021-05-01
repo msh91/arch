@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import io.github.msh91.arch.data.model.Error
 
 /**
  * Resolves application's resources.
@@ -27,6 +28,11 @@ interface BaseResourceProvider {
      * @return String representation of the {@param resId}
      */
     fun getString(@StringRes resId: Int, vararg formatArgs: Any): String
+
+    /**
+     * get error message of the occurred error
+     */
+    fun getErrorMessage(error: Error): String
 
     /**
      * Resolves color's id to int
