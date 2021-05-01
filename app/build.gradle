@@ -82,8 +82,9 @@ dependencies {
 
     // Test Dependencies
     testImplementation Libs.Testing.junit
-    testImplementation Libs.Testing.mockitoKotlin
+    testImplementation Libs.Testing.mockk
     testImplementation Libs.Testing.archTesting
+    testImplementation Libs.Testing.coroutinesTest
     androidTestImplementation Libs.Testing.testRunner
     androidTestImplementation Libs.Testing.esperesso
 }
