@@ -10,9 +10,9 @@ import io.github.msh91.arch.ui.base.ViewModelScope
 import io.github.msh91.arch.ui.base.adapter.SingleLayoutAdapter
 import io.github.msh91.arch.util.extension.observeSafe
 
-class HomeListFragment : BaseFragment<HomeListViewModel, FragmentHomeListBinding>() {
+class LatestUpdatesFragment : BaseFragment<LatestUpdatesViewModel, FragmentHomeListBinding>() {
 
-    override val viewModel: HomeListViewModel by getLazyViewModel(ViewModelScope.FRAGMENT)
+    override val viewModel: LatestUpdatesViewModel by getLazyViewModel(ViewModelScope.FRAGMENT)
     override val layoutId: Int = R.layout.fragment_home_list
 
     override fun onViewInitialized(binding: FragmentHomeListBinding) {

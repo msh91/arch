@@ -17,7 +17,7 @@ import io.github.msh91.arch.util.provider.BaseResourceProvider
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class HomeListViewModel @Inject constructor(
+class LatestUpdatesViewModel @Inject constructor(
     private val cryptoRepository: CryptoRepository,
     private val resourceProvider: BaseResourceProvider
 ) : BaseViewModel() {
@@ -71,6 +71,6 @@ class HomeListViewModel @Inject constructor(
     }
 
     companion object {
-        private const val TAG = "HomeListViewModel"
+        private const val TAG = "LatestUpdatesViewModel"
     }
 }

@@ -20,7 +20,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class HomeListViewModelTest {
+class LatestUpdatesViewModelTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -44,7 +44,7 @@ class HomeListViewModelTest {
         coEvery { cryptoRepository.getLatestUpdates() } returns mockk()
 
         // WHEN
-        val homeListViewModel = HomeListViewModel(cryptoRepository, resourceProvider)
+        val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
 
         // THEN
         coVerify { cryptoRepository.getLatestUpdates() }
@@ -61,8 +61,8 @@ class HomeListViewModelTest {
         coEvery { cryptoRepository.getLatestUpdates() } returns Either.left(mockedError)
 
         // WHEN
-        val homeListViewModel = HomeListViewModel(cryptoRepository, resourceProvider)
-        homeListViewModel.errorLiveData.observeForever(testObserver)
+        val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
+        viewModel.errorLiveData.observeForever(testObserver)
 
         // THEN
         verify { testObserver.onChanged(errorMessage) }
@@ -85,8 +85,8 @@ class HomeListViewModelTest {
         every { resourceProvider.getColor(any()) } returns 1
 
         // WHEN
-        val homeListViewModel = HomeListViewModel(cryptoRepository, resourceProvider)
-        homeListViewModel.cryptoCurrencies.observeForever(testObserver)
+        val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
+        viewModel.cryptoCurrencies.observeForever(testObserver)
 
         // THEN
         verify { resourceProvider.getColor(R.color.green) }
@@ -106,8 +106,8 @@ class HomeListViewModelTest {
         coEvery { cryptoRepository.getLatestUpdates() } returns Either.right(listOf(mockedCrypto))
 
         // WHEN
-        val homeListViewModel = HomeListViewModel(cryptoRepository, resourceProvider)
-        homeListViewModel.errorLiveData.observeForever(testObserver)
+        val viewModel = LatestUpdatesViewModel(cryptoRepository, resourceProvider)
+        viewModel.errorLiveData.observeForever(testObserver)
 
         // THEN
         verify { resourceProvider.getErrorMessage(HttpError.InvalidResponse(100, "invalid quote!")) }
