@@ -2,10 +2,10 @@ package io.github.msh91.arch.ui.base
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.ActivityNavigator
-import androidx.navigation.NavDirections
 import androidx.navigation.Navigation.findNavController
 
 /**
@@ -61,8 +61,8 @@ interface BaseNavigator {
         activity.startActivityForResult(intent, requestCode)
     }
 
-    fun navigateTo(fragment: Fragment, directions: NavDirections) {
-        findNavController(fragment.requireView()).navigate(directions)
+    fun navigateTo(fragment: Fragment, @IdRes destinationId: Int) {
+        findNavController(fragment.requireView()).navigate(destinationId)
     }
 
     fun navigateBack(fragment: Fragment) {

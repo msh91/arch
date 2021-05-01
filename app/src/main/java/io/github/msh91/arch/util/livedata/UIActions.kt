@@ -34,7 +34,7 @@ class ActivityActionLiveData : SingleEventLiveData<ActivityAction>() {
 /**
  * A lambda function that receives a [Fragment]
  */
-typealias FragmentAction = (androidx.fragment.app.Fragment) -> Unit
+typealias FragmentAction = (Fragment) -> Unit
 
 /**
  * A custom wrapper for [SingleEventLiveData] that only works with [FragmentAction]

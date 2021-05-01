@@ -7,10 +7,6 @@
         <variable
             name="item"
             type="io.github.msh91.arch.ui.home.list.CryptoCurrencyItem" />
-
-        <variable
-            name="viewModel"
-            type="io.github.msh91.arch.ui.home.list.LatestUpdatesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:background="@drawable/item_crypto_background"
-        android:onClick="@{() -> viewModel.onItemClicked(item)}"
         android:padding="8dp">
 
         <TextView
