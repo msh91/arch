@@ -7,6 +7,7 @@ import arrow.core.Either.Right
 import io.github.msh91.arch.R
 import io.github.msh91.arch.data.model.Error
 import io.github.msh91.arch.data.model.crypto.CryptoCurrency
+import io.github.msh91.arch.data.model.crypto.QuoteKey
 import io.github.msh91.arch.data.repository.crypto.CryptoRepository
 import io.github.msh91.arch.ui.base.BaseViewModel
 import io.github.msh91.arch.util.livedata.NonNullLiveData
@@ -36,7 +37,7 @@ class HomeListViewModel @Inject constructor(
 
     private fun mapCurrenciesToItems(currencies: List<CryptoCurrency>): List<CryptoCurrencyItem> {
         return currencies.map { currency ->
-            val quote = currency.quotes["USD"] ?: error("USD quote is a must!")
+            val quote = currency.quotes[QuoteKey.USD] ?: error("USD quote is a must!")
             CryptoCurrencyItem(
                 currency.name,
                 resourceProvider.getString(R.string.holder_usd_price, quote.price),
