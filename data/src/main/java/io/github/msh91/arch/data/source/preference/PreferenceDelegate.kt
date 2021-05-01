@@ -5,9 +5,9 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 class PreferenceDelegate<T>(
-    val prefs: SharedPreferences,
+    private val prefs: SharedPreferences,
     val name: String,
-    val default: T
+    private val default: T
 ) : ReadWriteProperty<Any?, T> {
     private var cachedT: T? = null
 

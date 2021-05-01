@@ -19,7 +19,7 @@ interface BaseFileProvider {
     /**
      * Resolves asset name to to Inputstream
      *
-     * @param assetName to  fetched from the asset
+     * @param fileName to  fetched from the asset
      * @return InputStream
      */
     fun getAsset(fileName: String): InputStream

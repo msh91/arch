@@ -15,14 +15,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-/**
- * Observe [LiveData] on an instance of [LifecycleOwner] like [Fragment] or [Activity]
- * @param lifecycleOwner
- * @param observer a lambda function that receives a nullable [T] and will be invoked when data is available
- */
-fun <T> LiveData<T>.observe(lifecycleOwner: LifecycleOwner, observer: (T?) -> Unit) {
-    this.observe(lifecycleOwner, Observer { observer.invoke(it) })
-}
 
 /**
  * Observe [LiveData] on an instance of [LifecycleOwner] like [Fragment] or [Activity] and observer
@@ -58,8 +50,7 @@ inline fun <reified T> Bundle.getGenericSerializable(key: String) = getSerializa
  */
 fun Bundle.fill(vararg params: Pair<String, Any?>) = apply {
     params.forEach {
-        val value = it.second
-        when (value) {
+        when (val value = it.second) {
             null -> putSerializable(it.first, null as Serializable?)
             is Int -> putInt(it.first, value)
             is Long -> putLong(it.first, value)

@@ -56,7 +56,6 @@ dependencies {
     implementation Libs.Jetpack.lifecycleExtensions
     implementation Libs.Jetpack.viewModelKtx
     implementation Libs.Jetpack.livedataKtx
-    implementation Libs.Jetpack.room
     implementation Libs.Jetpack.material
     implementation Libs.Jetpack.constraintLayout
     implementation Libs.Jetpack.navigationFragment
@@ -73,12 +72,6 @@ dependencies {
     implementation Libs.Common.retrofit
     implementation Libs.Common.retrofitGson
     implementation Libs.Common.okHttpInterceptor
-    implementation Libs.Common.stetho
-    implementation Libs.Common.stetho_OkHttp
-
-    // Glide
-    implementation Libs.Common.glide
-    kapt Libs.Common.glideCompiler
 
     // Test Dependencies
     testImplementation Libs.Testing.junit

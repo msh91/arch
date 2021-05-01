@@ -1,9 +1,6 @@
-package io.github.msh91.arch.util.providers
+package io.github.msh91.arch.util.provider
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import io.github.msh91.arch.data.model.Error
 
@@ -41,17 +38,4 @@ interface BaseResourceProvider {
      * @return Int representation of the {@param id}
      */
     fun getColor(@ColorRes resId: Int): Int
-
-    /**
-     * Resolves drawable's id to Drawable
-     *
-     * @param resId to ne fetched from the resources
-     * @return Drawable representation of the {@param id}
-     */
-    fun getDrawable(@DrawableRes resId: Int): Drawable?
-
-    /**
-     * get an instance of [Bitmap] from given vector resource
-     */
-    fun getBitmapFromVectorDrawable(@DrawableRes drawableId: Int): Bitmap
 }

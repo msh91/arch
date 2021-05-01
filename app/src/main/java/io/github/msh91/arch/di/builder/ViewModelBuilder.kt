@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import io.github.msh91.arch.ui.home.HomeViewModelBuilder
-import io.github.msh91.arch.viewmodel.ArchViewModelFactory
+import io.github.msh91.arch.ui.base.ArchViewModelFactory
 
 /**
  * With this module all of ViewModels binds into generated Map<Class, ViewModel> and the map

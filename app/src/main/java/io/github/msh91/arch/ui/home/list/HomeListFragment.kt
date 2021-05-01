@@ -12,7 +12,7 @@ import io.github.msh91.arch.util.extension.observeSafe
 
 class HomeListFragment : BaseFragment<HomeListViewModel, FragmentHomeListBinding>() {
 
-    override val viewModel: HomeListViewModel by getLazyViewModel(ViewModelScope.ACTIVITY)
+    override val viewModel: HomeListViewModel by getLazyViewModel(ViewModelScope.FRAGMENT)
     override val layoutId: Int = R.layout.fragment_home_list
 
     override fun onViewInitialized(binding: FragmentHomeListBinding) {

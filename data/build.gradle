@@ -42,9 +42,6 @@ dependencies {
     implementation Libs.Jetpack.livedataKtx
     implementation Libs.Common.dagger
     kapt Libs.Common.daggerCompiler
-    implementation Libs.Jetpack.room
-    implementation Libs.Jetpack.roomKtx
-    kapt Libs.Jetpack.roomCompiler
     implementation Libs.Common.gson
     implementation Libs.Common.retrofit
     implementation Libs.Common.retrofitGson
