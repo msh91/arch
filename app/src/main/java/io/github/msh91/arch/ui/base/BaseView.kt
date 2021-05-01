@@ -26,7 +26,7 @@ interface BaseView<V : BaseViewModel, B : ViewDataBinding> {
     /**
      * child class of [ViewDataBinding] that generated for this [layoutId] by Android Data Binding framework
      */
-    var binding: B
+    val binding: B
 
     /**
      * will be called after initialization of view
