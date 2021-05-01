@@ -15,7 +15,10 @@ import javax.inject.Inject
 
 abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : DaggerFragment(), BaseView<V, B> {
 
-    override lateinit var binding: B
+    private var _binding: B? = null
+    override val binding: B
+        get() = _binding
+            ?: throw IllegalStateException("access to binding should between onCreateView and onDestroyView")
 
     @Inject
     override lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -36,7 +39,7 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : DaggerFrag
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // initialize binding
-        binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+        _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         binding.lifecycleOwner = this
 
         // set viewModel as an observer to this activity lifecycle events
@@ -51,5 +54,11 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : DaggerFrag
         viewModel.activityAction.observe(viewLifecycleOwner, Observer { it?.invoke(requireActivity()) })
         viewModel.fragmentAction.observe(viewLifecycleOwner, Observer { it?.invoke(this) })
         onViewInitialized(binding)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding?.unbind()
+        _binding = null
     }
 }
