@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="io.github.msh91.arch.ui.home.list.HomeListViewModel" />
+            type="io.github.msh91.arch.ui.home.list.LatestUpdatesViewModel" />
 
         <variable
             name="adapter"

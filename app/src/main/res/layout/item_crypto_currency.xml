@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="io.github.msh91.arch.ui.home.list.HomeListViewModel" />
+            type="io.github.msh91.arch.ui.home.list.LatestUpdatesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/homeListFragment"
-        android:name="io.github.msh91.arch.ui.home.list.HomeListFragment"
+        android:name="io.github.msh91.arch.ui.home.list.LatestUpdatesFragment"
         android:label="HomeListFragment" />
 </navigation>
