@@ -6,11 +6,13 @@ import arrow.core.Either.Left
 import arrow.core.Either.Right
 import io.github.msh91.arch.R
 import io.github.msh91.arch.data.model.Error
+import io.github.msh91.arch.data.model.HttpError
 import io.github.msh91.arch.data.model.crypto.CryptoCurrency
 import io.github.msh91.arch.data.model.crypto.QuoteKey
 import io.github.msh91.arch.data.repository.crypto.CryptoRepository
 import io.github.msh91.arch.ui.base.BaseViewModel
 import io.github.msh91.arch.util.livedata.NonNullLiveData
+import io.github.msh91.arch.util.livedata.SingleEventLiveData
 import io.github.msh91.arch.util.providers.BaseResourceProvider
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,6 +23,7 @@ class HomeListViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val cryptoCurrencies = NonNullLiveData<List<CryptoCurrencyItem>>(emptyList())
+    val errorLiveData = SingleEventLiveData<String>()
 
     init {
         getLatestUpdates()
@@ -29,15 +32,27 @@ class HomeListViewModel @Inject constructor(
     private fun getLatestUpdates() {
         viewModelScope.launch {
             when (val either = cryptoRepository.getLatestUpdates()) {
-                is Right -> cryptoCurrencies.value = mapCurrenciesToItems(either.b)
+                is Right -> showCryptoCurrencies(either.b)
                 is Left -> showError(either.a)
             }
         }
     }
 
+    private fun showCryptoCurrencies(currencies: List<CryptoCurrency>) {
+        if (!areCurrenciesValid(currencies)) {
+            showError(HttpError.InvalidResponse(100, resourceProvider.getString(R.string.error_invalid_quote)))
+            return
+        }
+        this.cryptoCurrencies.value = mapCurrenciesToItems(currencies)
+    }
+
+    private fun areCurrenciesValid(currencies: List<CryptoCurrency>): Boolean {
+        return currencies.all { it.quotes.containsKey(QuoteKey.USD) }
+    }
+
     private fun mapCurrenciesToItems(currencies: List<CryptoCurrency>): List<CryptoCurrencyItem> {
         return currencies.map { currency ->
-            val quote = currency.quotes[QuoteKey.USD] ?: error("USD quote is a must!")
+            val quote = currency.quotes[QuoteKey.USD]!!
             CryptoCurrencyItem(
                 currency.name,
                 resourceProvider.getString(R.string.holder_usd_price, quote.price),
@@ -48,7 +63,7 @@ class HomeListViewModel @Inject constructor(
     }
 
     private fun showError(error: Error) {
-        Log.d(TAG, "showError() called  with: error = [$error]")
+        errorLiveData.value = resourceProvider.getErrorMessage(error)
     }
 
     fun onItemClicked(cryptoCurrencyItem: CryptoCurrencyItem) {
