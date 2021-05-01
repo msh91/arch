@@ -11,7 +11,7 @@ import io.github.msh91.arch.data.model.crypto.CryptoCurrency
 import io.github.msh91.arch.data.model.crypto.CurrencyQuote
 import io.github.msh91.arch.data.model.crypto.QuoteKey
 import io.github.msh91.arch.data.repository.crypto.CryptoRepository
-import io.github.msh91.arch.util.providers.BaseResourceProvider
+import io.github.msh91.arch.util.provider.BaseResourceProvider
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -13,7 +13,7 @@ import io.github.msh91.arch.data.repository.crypto.CryptoRepository
 import io.github.msh91.arch.ui.base.BaseViewModel
 import io.github.msh91.arch.util.livedata.NonNullLiveData
 import io.github.msh91.arch.util.livedata.SingleEventLiveData
-import io.github.msh91.arch.util.providers.BaseResourceProvider
+import io.github.msh91.arch.util.provider.BaseResourceProvider
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

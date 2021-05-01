@@ -1,4 +1,4 @@
-package io.github.msh91.arch.viewmodel
+package io.github.msh91.arch.ui.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -16,8 +16,6 @@ object Versions {
     const val okHttp = "3.8.1"
     const val gson = "2.8.6"
     const val retrofit = "2.7.1"
-    const val stetho = "1.5.1"
-    const val glide = "4.11.0"
     const val junit = "4.12"
     const val testRunner = "1.2.0"
     const val espresso = "3.2.0"

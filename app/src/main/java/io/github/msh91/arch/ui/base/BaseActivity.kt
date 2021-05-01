@@ -5,7 +5,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -27,7 +26,7 @@ abstract class BaseActivity<V : BaseViewModel, B : ViewDataBinding> : DaggerAppC
      * @return T an instance of requested ViewModel.
      */
     inline fun <reified T : BaseViewModel> getLazyViewModel(): Lazy<T> =
-        lazy { ViewModelProviders.of(this, viewModelFactory)[T::class.java] }
+        lazy { ViewModelProvider(this, viewModelFactory)[T::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

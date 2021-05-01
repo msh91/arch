@@ -29,7 +29,7 @@ interface BaseView<V : BaseViewModel, B : ViewDataBinding> {
     var binding: B
 
     /**
-     * will be called after intialization of view
+     * will be called after initialization of view
      *
      * @param binding refers to [binding]
      */
