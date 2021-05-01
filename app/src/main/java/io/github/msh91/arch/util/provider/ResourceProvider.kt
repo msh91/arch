@@ -11,20 +11,18 @@ import javax.inject.Inject
 /**
  * Concrete implementation of the [BaseResourceProvider] interface.
  */
-class ResourceProvider @Inject constructor(context: Context) : BaseResourceProvider {
-
-    private val mContext: Context = context
+class ResourceProvider @Inject constructor(private val context: Context) : BaseResourceProvider {
 
     override fun getString(@StringRes id: Int): String {
-        return mContext.getString(id)
+        return context.getString(id)
     }
 
     override fun getString(@StringRes resId: Int, vararg formatArgs: Any): String {
-        return mContext.getString(resId, *formatArgs)
+        return context.getString(resId, *formatArgs)
     }
 
     override fun getColor(resId: Int): Int {
-        return ContextCompat.getColor(mContext, resId)
+        return ContextCompat.getColor(context, resId)
     }
 
     override fun getErrorMessage(error: Error): String {
