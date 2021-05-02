@@ -1,7 +1,6 @@
 package io.github.msh91.arch.ui.home.list
 
 import androidx.lifecycle.Observer
-import com.google.android.material.snackbar.Snackbar
 import io.github.msh91.arch.R
 import io.github.msh91.arch.databinding.FragmentLatestUpdatesBinding
 import io.github.msh91.arch.databinding.ItemCryptoCurrencyBinding
@@ -9,6 +8,7 @@ import io.github.msh91.arch.ui.base.BaseFragment
 import io.github.msh91.arch.ui.base.ViewModelScope
 import io.github.msh91.arch.ui.base.adapter.SingleLayoutAdapter
 import io.github.msh91.arch.util.extension.observeSafe
+import io.github.msh91.arch.util.extension.showSnackBar
 
 class LatestUpdatesFragment : BaseFragment<LatestUpdatesViewModel, FragmentLatestUpdatesBinding>() {
 
@@ -24,11 +24,5 @@ class LatestUpdatesFragment : BaseFragment<LatestUpdatesViewModel, FragmentLates
         )
         viewModel.cryptoCurrencyItemsLiveData.observeSafe(viewLifecycleOwner) { binding.adapter?.swapItems(it) }
         viewModel.errorLiveData.observe(viewLifecycleOwner, Observer { showSnackBar(it) })
-    }
-
-    private fun showSnackBar(message: String) {
-        Snackbar
-            .make(binding.root, message, Snackbar.LENGTH_LONG)
-            .show()
     }
 }
