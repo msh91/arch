@@ -40,7 +40,7 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewDataBinding> : DaggerFrag
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // initialize binding
         _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         // set viewModel as an observer to this activity lifecycle events
         lifecycle.addObserver(viewModel)
