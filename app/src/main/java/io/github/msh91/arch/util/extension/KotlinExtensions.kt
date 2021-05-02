@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import java.io.Serializable
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 
 /**
@@ -25,6 +25,18 @@ import java.util.Locale
  */
 fun <T> LiveData<T>.observeSafe(lifecycleOwner: LifecycleOwner, observer: (T) -> Unit) {
     this.observe(lifecycleOwner, Observer { if (it != null) observer.invoke(it) })
+}
+
+/**
+ * Show a default snackBar inside the fragment view
+ * @param message message to be shown
+ * @param length length of the [Snackbar]. can be one of the [Snackbar.LENGTH_LONG], [Snackbar.LENGTH_SHORT],
+ * [Snackbar.LENGTH_INDEFINITE]
+ */
+fun <T : Fragment> T.showSnackBar(message: String, length: Int = Snackbar.LENGTH_LONG) {
+    Snackbar
+        .make(requireView(), message, length)
+        .show()
 }
 
 /**
