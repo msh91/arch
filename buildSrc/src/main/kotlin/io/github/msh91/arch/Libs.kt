@@ -44,6 +44,7 @@ object Libs {
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
         const val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
         const val okHttpInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
+        const val anyChart = "com.github.AnyChart:AnyChart-Android:${Versions.anyChart}"
     }
 
     object Testing {
