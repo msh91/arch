@@ -7,6 +7,7 @@ import io.github.msh91.arch.BuildConfig
 import io.github.msh91.arch.data.di.qualifier.Concrete
 import io.github.msh91.arch.data.di.qualifier.Stub
 import io.github.msh91.arch.data.source.local.file.BaseFileProvider
+import io.github.msh91.arch.data.source.remote.ChartDataSource
 import io.github.msh91.arch.data.source.remote.CryptoDataSource
 import io.github.msh91.arch.data.source.remote.StubCryptoDataSource
 import io.github.msh91.arch.util.SecretFields
@@ -36,7 +37,7 @@ object NetworkModule {
             .registerTypeAdapter(
                 Date::class.java,
                 JsonDeserializer { json, _, _ ->
-                    Date(json.asJsonPrimitive.asLong)
+                    Date(json.asJsonPrimitive.asLong * 1000)
                 }
             )
             // Serializer to convert Date value into long json primitive
@@ -99,21 +100,30 @@ object NetworkModule {
      *
      * @return an instance of [Retrofit] for api calls
      */
-    @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson, secretFields: SecretFields): Retrofit {
+    fun provideRetrofitBuilder(okHttpClient: OkHttpClient, gson: Gson, secretFields: SecretFields): Retrofit.Builder {
         return Retrofit.Builder().client(okHttpClient)
             // create gson converter factory
             .addConverterFactory(GsonConverterFactory.create(gson))
-            // get base url from SecretFields interface
-            .baseUrl(secretFields.getBaseUrl())
+    }
+
+    @Provides
+    @Singleton
+    fun provideChartDataSource(retrofitBuilder: Retrofit.Builder, secretFields: SecretFields): ChartDataSource {
+        return retrofitBuilder
+            .baseUrl(secretFields.getChartBaseUrl())
             .build()
+            .create(ChartDataSource::class.java)
     }
 
     @Provides
     @Concrete
-    fun provideConcreteCryptoDataSource(retrofit: Retrofit): CryptoDataSource {
-        return retrofit.create(CryptoDataSource::class.java)
+    @Singleton
+    fun provideConcreteCryptoDataSource(retrofitBuilder: Retrofit.Builder, secretFields: SecretFields): CryptoDataSource {
+        return retrofitBuilder
+            .baseUrl(secretFields.getCoinMarketBaseUrl())
+            .build()
+            .create(CryptoDataSource::class.java)
     }
 
     @Provides
