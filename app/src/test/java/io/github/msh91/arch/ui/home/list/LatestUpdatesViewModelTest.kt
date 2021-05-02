@@ -160,9 +160,17 @@ class LatestUpdatesViewModelTest {
     }
 
     @Test
-    fun `nothing should be happened if user clicks on any crypto except that bitcoin`() {
+    fun `error should be shown if user clicks on any crypto except that bitcoin`() {
         every { homeNavigator.navigateToChartFragment(any()) } answers {}
+        every { resourceProvider.getString(R.string.error_chart_not_provided) } returns "invalid crypto"
+
         val testObserver = Observer<FragmentAction> { it?.invoke(mockk()) }
+        viewModel.fragmentAction.observeForever(testObserver)
+
+        val testErrorObserver = mockk<Observer<String>>()
+        every { testErrorObserver.onChanged(any()) } answers {}
+        viewModel.errorLiveData.observeForever(testErrorObserver)
+
         val mockedCrypto = mockk<CryptoCurrency>()
         every { mockedCrypto.id } returns 2
         val mockedItem = mockk<CryptoCurrencyItem>()
@@ -170,11 +178,10 @@ class LatestUpdatesViewModelTest {
 
         // WHEN
         viewModel.onItemClicked(mockedItem)
-        viewModel.fragmentAction.observeForever(testObserver)
 
         // THEN
         verify(exactly = 0) { homeNavigator.navigateToChartFragment(any()) }
-
+        verify { testErrorObserver.onChanged("invalid crypto") }
     }
 
     @Test

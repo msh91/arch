@@ -10,5 +10,6 @@
     <string name="error_unauthorized">You are not authorized to do this!</string>
     <string name="error_null">Nothing received!</string>
     <string name="error_invalid_quote">USD quote is a must!</string>
+    <string name="error_chart_not_provided">Historical chart is only availablle for Bitcoin!</string>
 
 </resources>

@@ -78,7 +78,8 @@ class LatestUpdatesViewModel @Inject constructor(
     }
 
     fun onItemClicked(item: CryptoCurrencyItem) {
-        if (item.cryptoCurrency.id != 1) {
+        if (item.cryptoCurrency.id != BITCOIN_ID) {
+            errorLiveData.value = resourceProvider.getString(R.string.error_chart_not_provided)
             return
         }
         fragmentAction { homeNavigator.navigateToChartFragment(it) }
@@ -86,5 +87,6 @@ class LatestUpdatesViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "LatestUpdatesViewModel"
+        private const val BITCOIN_ID = 1
     }
 }
