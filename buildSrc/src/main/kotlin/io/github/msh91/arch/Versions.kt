@@ -22,4 +22,5 @@ object Versions {
     const val mockk = "1.10.6"
     const val navigationComponent = "2.3.0"
     const val fragment = "1.2.5"
+    const val anyChart = "1.1.2"
 }

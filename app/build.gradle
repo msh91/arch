@@ -73,6 +73,9 @@ dependencies {
     implementation Libs.Common.retrofitGson
     implementation Libs.Common.okHttpInterceptor
 
+    // Others
+    implementation Libs.Common.anyChart
+
     // Test Dependencies
     testImplementation Libs.Testing.junit
     testImplementation Libs.Testing.mockk
