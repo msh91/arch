@@ -8,17 +8,29 @@ import javax.inject.Inject
  */
 class SecretFields @Inject constructor() {
 
-    private val debugBaseUrl = "https://pro-api.coinmarketcap.com/"
+    private val debugCoinMarketBaseUrl = "https://pro-api.coinmarketcap.com/"
 
-    private val releaseBaseUrl = "https://pro-api.coinmarketcap.com/"
+    private val releaseCoinMarketBaseUrl = "https://pro-api.coinmarketcap.com/"
 
     val apiKey: String = "d9714d48-05fb-494e-aa2c-e1113c178385"
 
-    fun getBaseUrl(): String {
+    private val debugChartBaseUrl = "https://api.blockchain.info/"
+
+    private val releaseChartBaseUrl = "https://api.blockchain.info/"
+
+    fun getCoinMarketBaseUrl(): String {
         return if (BuildConfig.DEBUG) {
-            debugBaseUrl
+            debugCoinMarketBaseUrl
         } else {
-            releaseBaseUrl
+            releaseCoinMarketBaseUrl
+        }
+    }
+
+    fun getChartBaseUrl(): String {
+        return if (BuildConfig.DEBUG) {
+            debugChartBaseUrl
+        } else {
+            releaseChartBaseUrl
         }
     }
 }
