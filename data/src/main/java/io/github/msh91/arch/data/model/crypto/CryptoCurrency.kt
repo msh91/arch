@@ -7,5 +7,5 @@ data class CryptoCurrency(
     @SerializedName("name") val name: String,
     @SerializedName("symbol") val symbol: String,
     @SerializedName("slug") val slug: String,
-    @SerializedName("quote") val quotes: Map<String, CurrencyQuote>
+    @SerializedName("quote") val quotes: Map<QuoteKey, CurrencyQuote>
 )

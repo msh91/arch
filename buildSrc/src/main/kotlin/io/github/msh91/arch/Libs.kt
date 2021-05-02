@@ -44,17 +44,15 @@ object Libs {
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
         const val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
         const val okHttpInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
-        const val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"
-        const val stetho_OkHttp = "com.facebook.stetho:stetho-okhttp3:${Versions.stetho}"
-        const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
-        const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
+        const val anyChart = "com.github.AnyChart:AnyChart-Android:${Versions.anyChart}"
     }
 
     object Testing {
         const val junit = "junit:junit:${Versions.junit}"
+        const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
         const val testRunner = "androidx.test:runner:${Versions.testRunner}"
         const val esperesso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
-        const val mockitoKotlin = "com.nhaarman:mockito-kotlin-kt1.1:${Versions.mockitoKotlin}"
+        const val mockk = "io.mockk:mockk:${Versions.mockk}"
         const val archTesting = "androidx.arch.core:core-testing:${Versions.archTest}"
     }
 }

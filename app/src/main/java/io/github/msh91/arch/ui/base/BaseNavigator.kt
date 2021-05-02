@@ -2,11 +2,11 @@ package io.github.msh91.arch.ui.base
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.ActivityNavigator
-import androidx.navigation.NavDirections
-import androidx.navigation.Navigation.*
+import androidx.navigation.Navigation.findNavController
 
 /**
  * Handles navigation between Activities and fragments in the app.
@@ -61,24 +61,15 @@ interface BaseNavigator {
         activity.startActivityForResult(intent, requestCode)
     }
 
-    /**
-     * attempt to start login activity if token expired
-     *
-     * @param activity requested activity
-     */
-    fun onTokenExpired(activity: FragmentActivity) {
-        // todo: open login activity
+    fun navigateTo(fragment: Fragment, @IdRes destinationId: Int) {
+        findNavController(fragment.requireView()).navigate(destinationId)
     }
 
-    fun navigateTo(fragment: Fragment, directions: NavDirections){
-        findNavController(fragment.requireView()).navigate(directions)
-    }
-
-    fun navigateBack(fragment: Fragment){
+    fun navigateBack(fragment: Fragment) {
         findNavController(fragment.requireView()).popBackStack().not()
     }
 
-    fun navigateBackTo(fragment: Fragment, desinationId : Int){
+    fun navigateBackTo(fragment: Fragment, desinationId: Int) {
         findNavController(fragment.requireView()).popBackStack(
             desinationId,
             false

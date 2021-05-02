@@ -5,7 +5,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 import io.github.msh91.arch.di.builder.ViewModelKey
-import io.github.msh91.arch.ui.home.list.HomeListViewModel
+import io.github.msh91.arch.ui.home.chart.CryptoChartViewModel
+import io.github.msh91.arch.ui.home.list.LatestUpdatesViewModel
 
 @Module
 abstract class HomeViewModelBuilder {
@@ -16,6 +17,11 @@ abstract class HomeViewModelBuilder {
 
     @Binds
     @IntoMap
-    @ViewModelKey(HomeListViewModel::class)
-    abstract fun bindHomeListViewModel(homeListViewModel: HomeListViewModel): ViewModel
+    @ViewModelKey(LatestUpdatesViewModel::class)
+    abstract fun bindLatestUpdatesViewModel(latestUpdatesViewModel: LatestUpdatesViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CryptoChartViewModel::class)
+    abstract fun bindCryptoChartViewModel(viewModel: CryptoChartViewModel): ViewModel
 }

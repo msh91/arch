@@ -10,19 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import java.io.Serializable
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
-/**
- * Observe [LiveData] on an instance of [LifecycleOwner] like [Fragment] or [Activity]
- * @param lifecycleOwner
- * @param observer a lambda function that receives a nullable [T] and will be invoked when data is available
- */
-fun <T> LiveData<T>.observe(lifecycleOwner: LifecycleOwner, observer: (T?) -> Unit) {
-    this.observe(lifecycleOwner, Observer { observer.invoke(it) })
-}
 
 /**
  * Observe [LiveData] on an instance of [LifecycleOwner] like [Fragment] or [Activity] and observer
@@ -33,6 +25,18 @@ fun <T> LiveData<T>.observe(lifecycleOwner: LifecycleOwner, observer: (T?) -> Un
  */
 fun <T> LiveData<T>.observeSafe(lifecycleOwner: LifecycleOwner, observer: (T) -> Unit) {
     this.observe(lifecycleOwner, Observer { if (it != null) observer.invoke(it) })
+}
+
+/**
+ * Show a default snackBar inside the fragment view
+ * @param message message to be shown
+ * @param length length of the [Snackbar]. can be one of the [Snackbar.LENGTH_LONG], [Snackbar.LENGTH_SHORT],
+ * [Snackbar.LENGTH_INDEFINITE]
+ */
+fun <T : Fragment> T.showSnackBar(message: String, length: Int = Snackbar.LENGTH_LONG) {
+    Snackbar
+        .make(requireView(), message, length)
+        .show()
 }
 
 /**
@@ -58,8 +62,7 @@ inline fun <reified T> Bundle.getGenericSerializable(key: String) = getSerializa
  */
 fun Bundle.fill(vararg params: Pair<String, Any?>) = apply {
     params.forEach {
-        val value = it.second
-        when (value) {
+        when (val value = it.second) {
             null -> putSerializable(it.first, null as Serializable?)
             is Int -> putInt(it.first, value)
             is Long -> putLong(it.first, value)

@@ -1,5 +1,15 @@
 <resources>
-    <string name="app_name">Arch</string>
+    <string name="app_name">CryptoArch</string>
     <string name="holder_usd_price">$%.2f</string>
     <string name="holder_percent">%%%.2f</string>
+    <string name="holder_day_month">%s %s</string>
+
+    <string name="error_connection">Connection Failed!</string>
+    <string name="error_not_defined">Something Bad Happened!</string>
+    <string name="error_timeout">Request timed out!</string>
+    <string name="error_unauthorized">You are not authorized to do this!</string>
+    <string name="error_null">Nothing received!</string>
+    <string name="error_invalid_quote">USD quote is a must!</string>
+    <string name="error_chart_not_provided">Historical chart is only availablle for Bitcoin!</string>
+
 </resources>
