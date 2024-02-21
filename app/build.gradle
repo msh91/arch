@@ -4,23 +4,20 @@ import io.github.msh91.arch.Libs
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs"
 
 android {
-    compileSdkVersion Android.compileSdkVersion
+    compileSdk Android.compileSdkVersion
+
     defaultConfig {
         applicationId Android.applicationId
-        minSdkVersion Android.minSdkVersion
+        minSdk Android.minSdkVersion
         targetSdkVersion Android.targetSdkVersion
         versionCode Android.versionCode
         versionName Android.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true
         multiDexEnabled true
-    }
-    dataBinding {
-        enabled = true
     }
     buildTypes {
 
@@ -33,12 +30,13 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_17
     }
-    androidExtensions {
-        experimental = true
+    kotlinOptions {
+        jvmTarget = "17"
     }
+    namespace 'io.github.msh91.arch'
 }
 
 dependencies {
@@ -46,14 +44,11 @@ dependencies {
     implementation Libs.Common.coroutines
     implementation Libs.Common.coroutinesAndroid
     implementation Libs.Common.arrowCore
-    implementation Libs.Common.arrowSyntax
-    kapt Libs.Common.arrowMeta
 
     // Project Submodules
     implementation project(Libs.Modules.data)
 
     // Jetpack
-    implementation Libs.Jetpack.lifecycleExtensions
     implementation Libs.Jetpack.viewModelKtx
     implementation Libs.Jetpack.livedataKtx
     implementation Libs.Jetpack.material

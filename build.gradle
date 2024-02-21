@@ -1,7 +1,5 @@
 import io.github.msh91.arch.Libs
 
-apply plugin: "com.github.ben-manes.versions"
-
 buildscript {
     apply from: rootProject.file('gradle/ktlint.gradle')
     repositories {
@@ -9,9 +7,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath Libs.Plugins.gradle
+        classpath 'com.android.tools.build:gradle:8.2.2'
         classpath Libs.Plugins.kotlin
-        classpath Libs.Plugins.gradleVersions
         classpath Libs.Plugins.safeargs
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
