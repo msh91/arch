@@ -1,44 +1,41 @@
+import io.github.msh91.arch.Android
 import io.github.msh91.arch.Libs
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
-
+    compileSdk Android.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-
+        minSdk Android.minSdkVersion
+        versionCode Android.versionCode
+        versionName Android.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
+        vectorDrawables.useSupportLibrary true
     }
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_17
     }
 
+    kotlinOptions {
+        jvmTarget = "17"
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    namespace 'io.github.msh91.arch.data'
 }
 
 dependencies {
     implementation Libs.Common.kotlin
     implementation Libs.Common.coroutines
     implementation Libs.Common.arrowCore
-    implementation Libs.Common.arrowSyntax
-    kapt Libs.Common.arrowMeta
-    implementation Libs.Jetpack.lifecycleExtensions
     implementation Libs.Jetpack.livedataKtx
     implementation Libs.Common.dagger
     kapt Libs.Common.daggerCompiler
