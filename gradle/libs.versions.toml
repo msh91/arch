@@ -8,7 +8,7 @@ lifecycle = "2.7.0"
 archTest = "2.2.0"
 material = "1.11.0"
 annotation = "1.11.0"
-constraint-layout = "2.1.4"
+constraintLayout = "2.1.4"
 room = "2.6.1"
 dagger = "2.50"
 okHttp = "4.11.0"
@@ -28,13 +28,13 @@ anyChart = "1.1.5"
 
 lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 lifecycle-viewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
-lifecycle-livedata = { group = " androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
+lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
-material = { group = "androidx.compose.material", name = "material", version.ref = "material" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
-constraintLayout = { group = "androidx.constraintlayout", name = "constraint-layout", version.ref = "constraint-layout" }
+constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigation-component" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigation-component" }
 fragment = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment" }
@@ -58,11 +58,13 @@ coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-
 test-runner = { group = "androidx.test", name = "runner", version.ref = "test-runner" }
 test-esperesso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
-arch-core-testing = { group = "android.arch.core", name = "core-testing", version.ref = "archTest" }
+arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archTest" }
 
 
 [plugins]
-application = { id = "com.android.application", version.ref = "agp" }
-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation-component" }
