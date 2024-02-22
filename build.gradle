@@ -1,31 +1,7 @@
-import io.github.msh91.arch.Libs
-
-buildscript {
-    apply from: rootProject.file('gradle/ktlint.gradle')
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.2'
-        classpath Libs.Plugins.kotlin
-        classpath Libs.Plugins.safeargs
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
+plugins {
+    alias libs.plugins.application apply false
+    alias libs.plugins.kotlin apply false
+    alias libs.plugins.safeargs apply false
+    alias libs.plugins.ktlint apply true
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        repositories {
-            maven { url 'https://jitpack.io' }
-        }
-        maven { url "https://dl.bintray.com/arrow-kt/arrow-kt/" }
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}

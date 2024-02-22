@@ -1,0 +1,68 @@
+[versions]
+arrow = "1.2.0"
+agp = "8.2.2"
+ktlint = "12.1.0"
+kotlin = "1.9.22"
+coroutines = "1.7.1"
+lifecycle = "2.7.0"
+archTest = "2.2.0"
+material = "1.11.0"
+annotation = "1.11.0"
+constraint-layout = "2.1.4"
+room = "2.6.1"
+dagger = "2.50"
+okHttp = "4.11.0"
+gson = "2.10.1"
+retrofit = "2.9.0"
+junit = "4.13.2"
+test-runner = "1.5.2"
+espresso = "3.5.1"
+mockk = "1.13.8"
+navigation-component = "2.7.7"
+fragment = "1.6.2"
+anyChart = "1.1.5"
+
+
+
+[libraries]
+
+lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
+lifecycle-viewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+lifecycle-livedata = { group = " androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+material = { group = "androidx.compose.material", name = "material", version.ref = "material" }
+annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
+constraintLayout = { group = "androidx.constraintlayout", name = "constraint-layout", version.ref = "constraint-layout" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigation-component" }
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigation-component" }
+fragment = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment" }
+
+kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+arrow-core = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow" }
+dagger-core = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
+dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
+dagger-android-support = { group = "com.google.dagger", name = "dagger-android-support", version.ref = "dagger" }
+dagger-android-compiler = { group = "com.google.dagger", name = "dagger-android-processor", version.ref = "dagger" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+okHttp-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttp" }
+anyChart = { group = "com.github.AnyChart", name = "AnyChart-Android", version.ref = "anyChart" }
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+test-runner = { group = "androidx.test", name = "runner", version.ref = "test-runner" }
+test-esperesso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+arch-core-testing = { group = "android.arch.core", name = "core-testing", version.ref = "archTest" }
+
+
+[plugins]
+application = { id = "com.android.application", version.ref = "agp" }
+kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation-component" }
