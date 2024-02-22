@@ -19,4 +19,18 @@ dependencyResolutionManagement {
     }
 }
 
-include(":app", ":data")
+//include(":app", ":data")
+val excludedModules = listOf("buildSrc")
+File(rootDir.path)
+    .listFiles(java.io.FileFilter { it.isDirectory })
+    ?.mapNotNull { module -> File(module, "build.gradle.kts") }
+    ?.filter { it.exists() && !excludedModules.contains(it.parentFile.name) }
+    ?.onEach {
+        val isBuildModule = File(it.parentFile, "settings.gradle.kts").exists()
+        val moduleName = it.parentFile.name
+        if (isBuildModule) {
+            includeBuild(moduleName)
+        } else {
+            include(":${moduleName}")
+        }
+    }
