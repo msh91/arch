@@ -1,17 +1,14 @@
-import io.github.msh91.arch.Android
-import io.github.msh91.arch.Libs
-
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdk Android.compileSdkVersion
+    compileSdk 34
 
     defaultConfig {
-        minSdk Android.minSdkVersion
-        versionCode Android.versionCode
-        versionName Android.versionName
+        minSdk 23
+        versionCode 1
+        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true
     }
@@ -33,15 +30,15 @@ android {
 }
 
 dependencies {
-    implementation Libs.Common.kotlin
-    implementation Libs.Common.coroutines
-    implementation Libs.Common.arrowCore
-    implementation Libs.Jetpack.livedataKtx
-    implementation Libs.Common.dagger
-    kapt Libs.Common.daggerCompiler
-    implementation Libs.Common.gson
-    implementation Libs.Common.retrofit
-    implementation Libs.Common.retrofitGson
-    testImplementation Libs.Testing.junit
-    testImplementation Libs.Testing.mockk
+    implementation libs.kotlin.bom
+    implementation libs.coroutines.core
+    implementation libs.arrow.core
+    implementation libs.lifecycle.livedata
+    implementation libs.dagger.core
+    kapt libs.dagger.compiler
+    implementation libs.gson
+    implementation libs.retrofit.core
+    implementation libs.retrofit.gson
+    testImplementation libs.junit
+    testImplementation libs.mockk
 }

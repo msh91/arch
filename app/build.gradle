@@ -1,20 +1,17 @@
-import io.github.msh91.arch.Android
-import io.github.msh91.arch.Libs
-
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs"
 
 android {
-    compileSdk Android.compileSdkVersion
+    compileSdk 34
 
     defaultConfig {
-        applicationId Android.applicationId
-        minSdk Android.minSdkVersion
-        targetSdkVersion Android.targetSdkVersion
-        versionCode Android.versionCode
-        versionName Android.versionName
+        applicationId "io.github.msh91.arch"
+        minSdk 23
+        targetSdkVersion 34
+        versionCode 1
+        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true
         multiDexEnabled true
@@ -40,47 +37,44 @@ android {
 }
 
 dependencies {
-    implementation Libs.Common.kotlin
-    implementation Libs.Common.coroutines
-    implementation Libs.Common.coroutinesAndroid
-    implementation Libs.Common.arrowCore
+    implementation libs.kotlin.bom
+    implementation libs.coroutines.core
+    implementation libs.coroutines.android
+    implementation libs.arrow.core
 
     // Project Submodules
-    implementation project(Libs.Modules.data)
+    implementation project(":data")
 
     // Jetpack
-    implementation Libs.Jetpack.viewModelKtx
-    implementation Libs.Jetpack.livedataKtx
-    implementation Libs.Jetpack.material
-    implementation Libs.Jetpack.constraintLayout
-    implementation Libs.Jetpack.navigationFragment
-    implementation Libs.Jetpack.navigationUi
-    implementation Libs.Jetpack.fragment
+    implementation libs.lifecycle.livedata
+    implementation libs.lifecycle.runtime
+    implementation libs.lifecycle.viewModel
+    implementation libs.material
+    implementation libs.constraintLayout
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
+    implementation libs.fragment
 
     // Dagger
-    implementation Libs.Common.dagger
-    implementation Libs.Common.daggerAndroid
-    kapt Libs.Common.daggerCompiler
-    kapt Libs.Common.daggerAndroidCompiler
+    implementation libs.dagger.core
+    implementation libs.dagger.android.support
+    kapt libs.dagger.compiler
+    kapt libs.dagger.android.compiler
 
     // Retrofit - OkHttp
-    implementation Libs.Common.retrofit
-    implementation Libs.Common.retrofitGson
-    implementation Libs.Common.okHttpInterceptor
+    implementation libs.retrofit.core
+    implementation libs.retrofit.gson
+    implementation libs.okHttp.interceptor
 
     // Others
-    implementation Libs.Common.anyChart
+    implementation libs.anyChart
 
     // Test Dependencies
-    testImplementation Libs.Testing.junit
-    testImplementation Libs.Testing.mockk
-    testImplementation Libs.Testing.archTesting
-    testImplementation Libs.Testing.coroutinesTest
-    androidTestImplementation Libs.Testing.testRunner
-    androidTestImplementation Libs.Testing.esperesso
-}
-repositories {
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
+    testImplementation libs.junit
+    testImplementation libs.mockk
+    testImplementation libs.arch.core.testing
+    testImplementation libs.coroutines.test
+    androidTestImplementation libs.test.runner
+    androidTestImplementation libs.test.esperesso
 }
 
