@@ -8,13 +8,15 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
+    @Suppress("UnstableApiUsage")
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    @Suppress("UnstableApiUsage")
     repositories {
         google()
         mavenCentral()
-        maven { url "https://jitpack.io" }
-        maven { url "https://dl.bintray.com/arrow-kt/arrow-kt/" }
+        maven("https://jitpack.io")
+        maven("https://dl.bintray.com/arrow-kt/arrow-kt/")
     }
 }
 
-include ':app', ':data'
+include(":app", ":data")
