@@ -19,8 +19,10 @@ dependencyResolutionManagement {
     }
 }
 
+includeBuild("gradle-project-plugins")
+
 //include(":app", ":data")
-val excludedModules = listOf("buildSrc")
+val excludedModules = listOf("buildSrc", "gradle-project-plugins")
 File(rootDir.path)
     .listFiles(java.io.FileFilter { it.isDirectory })
     ?.mapNotNull { module -> File(module, "build.gradle.kts") }
