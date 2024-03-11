@@ -1,6 +1,6 @@
 [versions]
 arrow = "1.2.0"
-agp = "8.2.2"
+agp = "8.3.0"
 ktlint = "12.1.0"
 kotlin = "1.9.22"
 coroutines = "1.7.1"
@@ -25,7 +25,7 @@ anyChart = "1.1.5"
 
 
 [libraries]
-
+agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 lifecycle-viewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
@@ -39,7 +39,9 @@ navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigation-component" }
 fragment = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment" }
 
-kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+kotlin-gradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin" }
+
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 arrow-core = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow" }
@@ -66,5 +68,6 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation-component" }
