@@ -36,8 +36,8 @@ class CryptoChartViewModel @Inject constructor(
         viewModelScope.launch {
             loadingLiveData.value = true
             when (val either = cryptoChartRepository.getChartInfo()) {
-                is Either.Left -> showError(either.a)
-                is Either.Right -> showChartInfo(either.b)
+                is Either.Left -> showError(either.value)
+                is Either.Right -> showChartInfo(either.value)
             }
             loadingLiveData.value = false
         }

@@ -41,8 +41,8 @@ class LatestUpdatesViewModel @Inject constructor(
             callInitialized = true
             loadingLiveData.value = true
             when (val either = cryptoRepository.getLatestUpdates()) {
-                is Right -> showCryptoCurrencies(either.b)
-                is Left -> showError(either.a)
+                is Right -> showCryptoCurrencies(either.value)
+                is Left -> showError(either.value)
             }
             loadingLiveData.value = false
         }

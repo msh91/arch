@@ -9,6 +9,10 @@ android {
     defaultConfig {
         applicationId = "io.github.msh91.arch"
     }
+    buildFeatures {
+        dataBinding = true
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -27,7 +31,7 @@ dependencies {
     implementation(libs.constraintLayout)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
-    implementation(libs.fragment)
+    implementation(libs.fragment.ktx)
 
     // Dagger
     implementation(libs.dagger.core)

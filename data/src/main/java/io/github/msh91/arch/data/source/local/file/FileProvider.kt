@@ -43,10 +43,10 @@ class FileProvider @Inject constructor(private val context: Context) : BaseFileP
     }
 
     override fun getContentInputStream(uri: Uri): InputStream {
-        return context.contentResolver.openInputStream(uri)
+        return requireNotNull(context.contentResolver.openInputStream(uri))
     }
 
-    override fun getMimType(uri: Uri): String {
+    override fun getMimType(uri: Uri): String? {
         return if (uri.scheme?.contentEquals("content") == true) {
             return context.contentResolver.getType(uri)
         } else {

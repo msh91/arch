@@ -2,7 +2,8 @@ package io.github.msh91.arch.ui.home.chart
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import io.github.msh91.arch.CoroutinesTestRule
 import io.github.msh91.arch.R
 import io.github.msh91.arch.data.model.Error
@@ -10,13 +11,19 @@ import io.github.msh91.arch.data.model.crypto.ChartValue
 import io.github.msh91.arch.data.model.crypto.CryptoChartInfo
 import io.github.msh91.arch.data.repository.crypto.CryptoChartRepository
 import io.github.msh91.arch.util.provider.BaseResourceProvider
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.coVerifyOrder
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.util.*
+import java.util.Date
 
 @ExperimentalCoroutinesApi
 class CryptoChartViewModelTest {
@@ -94,7 +101,7 @@ class CryptoChartViewModelTest {
         val errorMessage = "Error message"
         every { testObserver.onChanged(any()) } answers {}
         every { resourceProvider.getErrorMessage(mockedError) } returns errorMessage
-        coEvery { cryptoChartRepository.getChartInfo() } returns Either.left(mockedError)
+        coEvery { cryptoChartRepository.getChartInfo() } returns mockedError.left()
         viewModel.errorLiveData.observeForever(testObserver)
 
         // WHEN
@@ -123,18 +130,20 @@ class CryptoChartViewModelTest {
         every { resourceProvider.getString(R.string.holder_day_month, "Feb", 13) } returns "Feb 13"
         every { resourceProvider.getString(R.string.holder_day_month, "Mar", 11) } returns "Mar 11"
         every { resourceProvider.getString(R.string.holder_day_month, "Apr", 1) } returns "Apr 1"
-        coEvery { cryptoChartRepository.getChartInfo() } returns Either.right(mockedInfo)
+        coEvery { cryptoChartRepository.getChartInfo() } returns mockedInfo.right()
 
         // WHEN
         viewModel.onStart()
 
         // THEN
-        val item = ChartInfoItem("name", "description", listOf(
-            ChartEntry("Jan 10", 50000f),
-            ChartEntry("Feb 13", 60000f),
-            ChartEntry("Mar 11", 40000f),
-            ChartEntry("Apr 1", 70000f)
-        ))
+        val item = ChartInfoItem(
+            "name", "description", listOf(
+                ChartEntry("Jan 10", 50000f),
+                ChartEntry("Feb 13", 60000f),
+                ChartEntry("Mar 11", 40000f),
+                ChartEntry("Apr 1", 70000f)
+            )
+        )
         verify { testObserver.onChanged(item) }
     }
 }
