@@ -1,7 +1,7 @@
 package io.github.msh91.arch.data.util
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import arrow.core.Either
 import com.google.gson.Gson
 import com.google.gson.JsonElement
@@ -16,5 +16,5 @@ inline fun <reified T> Gson.fromJson(jsonStr: String): T? {
 }
 
 fun <T> LiveData<T>.toEither(): LiveData<Either<Error, T>> {
-    return Transformations.map(this) { input -> Either.Right(input) }
+    return this.map { Either.Right(it) }
 }

@@ -19,13 +19,15 @@ test-runner = "1.5.2"
 espresso = "3.5.1"
 mockk = "1.13.8"
 navigation-component = "2.7.7"
-fragment = "1.6.2"
+fragment-ktx = "1.6.2"
+core-ktx = "1.12.0"
 anyChart = "1.1.5"
 
 
 
 [libraries]
 agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 lifecycle-viewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
@@ -37,7 +39,7 @@ annotation = { group = "androidx.annotation", name = "annotation", version.ref =
 constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigation-component" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigation-component" }
-fragment = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment" }
+fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment-ktx" }
 
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-gradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin" }

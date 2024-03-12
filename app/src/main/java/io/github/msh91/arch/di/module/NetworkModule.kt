@@ -84,7 +84,7 @@ object NetworkModule {
                 val requestBuilder = request.newBuilder()
                     .headers(headers)
                     .addHeader("X-CMC_PRO_API_KEY", secretFields.apiKey)
-                    .method(request.method(), request.body())
+                    .method(request.method, request.body)
                 chain.proceed(requestBuilder.build())
             }
         )

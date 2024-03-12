@@ -7,6 +7,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.core)
     implementation(libs.coroutines.core)
     implementation(libs.arrow.core)
     implementation(libs.lifecycle.livedata)

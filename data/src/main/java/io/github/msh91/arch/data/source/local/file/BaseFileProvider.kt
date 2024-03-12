@@ -35,7 +35,7 @@ interface BaseFileProvider {
     /**
      * Get MimType of given [Uri]
      */
-    fun getMimType(uri: Uri): String
+    fun getMimType(uri: Uri): String?
 
     /**
      * get an instance of [ContentResolver]
