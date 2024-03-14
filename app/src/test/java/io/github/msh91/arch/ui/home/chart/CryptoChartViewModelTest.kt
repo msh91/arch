@@ -33,7 +33,7 @@ class CryptoChartViewModelTest {
     @get:Rule
     val testCoroutineRule = CoroutinesTestRule()
 
-    @MockK
+    @MockK(relaxed = true)
     lateinit var resourceProvider: BaseResourceProvider
 
     @MockK
@@ -79,7 +79,7 @@ class CryptoChartViewModelTest {
         // GIVEN
         val testObserver = mockk<Observer<Boolean>>()
         every { testObserver.onChanged(any()) } answers {}
-        coEvery { cryptoChartRepository.getChartInfo() } returns mockk()
+        coEvery { cryptoChartRepository.getChartInfo() } returns mockk<Error>().left()
         viewModel.loadingLiveData.observeForever(testObserver)
 
         // WHEN

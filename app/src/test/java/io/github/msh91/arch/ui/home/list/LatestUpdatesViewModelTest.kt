@@ -30,7 +30,7 @@ class LatestUpdatesViewModelTest {
     @get:Rule
     val testCoroutineRule = CoroutinesTestRule()
 
-    @MockK
+    @MockK(relaxed = true)
     lateinit var resourceProvider: BaseResourceProvider
 
     @MockK
@@ -78,7 +78,7 @@ class LatestUpdatesViewModelTest {
     fun `loading should be set to true before calling api and then after api call should be set to false`() {
         val testObserver = mockk<Observer<Boolean>>()
         every { testObserver.onChanged(any()) } answers {}
-        coEvery { cryptoRepository.getLatestUpdates() } returns mockk()
+        coEvery { cryptoRepository.getLatestUpdates() } returns mockk<Error>(relaxed = true).left()
 
         // WHEN
 
@@ -165,7 +165,7 @@ class LatestUpdatesViewModelTest {
         every { homeNavigator.navigateToChartFragment(any()) } answers {}
         every { resourceProvider.getString(R.string.error_chart_not_provided) } returns "invalid crypto"
 
-        val testObserver = Observer<FragmentAction> { it?.invoke(mockk()) }
+        val testObserver = Observer<FragmentAction> { it.invoke(mockk()) }
         viewModel.fragmentAction.observeForever(testObserver)
 
         val testErrorObserver = mockk<Observer<String>>()
