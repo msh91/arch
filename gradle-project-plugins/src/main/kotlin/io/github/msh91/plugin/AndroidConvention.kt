@@ -7,6 +7,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 class AndroidConvention : Plugin<Project> {
@@ -23,11 +24,11 @@ class AndroidConvention : Plugin<Project> {
 
     private fun Project.configureAndroid() {
         configure<BaseExtension> {
-            compileSdkVersion(34)
+            compileSdkVersion(35)
 
             defaultConfig {
                 it.minSdk = 23
-                it.targetSdk = 34
+                it.targetSdk = 35
                 it.versionCode = 1
                 it.versionName = "1.0"
                 it.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -56,8 +57,8 @@ class AndroidConvention : Plugin<Project> {
 
     private fun Project.configureKotlin() {
         tasks.withType(KotlinCompile::class.java) {
-            it.kotlinOptions {
-                jvmTarget = "17"
+            it.compilerOptions {
+                jvmTarget.set(JvmTarget.JVM_17)
             }
         }
     }
