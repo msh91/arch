@@ -2,25 +2,23 @@
 arrow = "1.2.0"
 agp = "8.7.2"
 ktlint = "12.1.0"
-kotlin = "1.9.22"
+kotlin = "2.0.20"
 coroutines = "1.7.1"
-lifecycle = "2.7.0"
+lifecycle = "2.8.7"
 archTest = "2.2.0"
-material = "1.11.0"
-annotation = "1.11.0"
-constraintLayout = "2.1.4"
-room = "2.6.1"
+material = "1.12.0"
+constraintLayout = "2.2.0"
 dagger = "2.50"
 okHttp = "4.11.0"
 gson = "2.10.1"
 retrofit = "2.9.0"
 junit = "4.13.2"
-test-runner = "1.5.2"
-espresso = "3.5.1"
+test-runner = "1.6.2"
+espresso = "3.6.1"
 mockk = "1.13.8"
-navigation-component = "2.7.7"
-fragment-ktx = "1.6.2"
-core-ktx = "1.12.0"
+navigation-component = "2.8.4"
+fragment-ktx = "1.8.5"
+core-ktx = "1.15.0"
 anyChart = "1.1.5"
 
 
@@ -31,11 +29,7 @@ androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "cor
 lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 lifecycle-viewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigation-component" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigation-component" }
