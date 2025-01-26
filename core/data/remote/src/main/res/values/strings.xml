@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_request_timed_out">Request timed out. Please try again.</string>
+    <string name="error_no_internet_connection">No internet connection. Please check your network.</string>
+    <string name="error_server_error">Server error. Please try again later.</string>
+    <string name="error_resource_not_found">Resource not found.</string>
+    <string name="error_server_unknown">Something went wrong. Error code: %1$d</string>
+    <string name="error_unknown">An unexpected error occurred.</string>
+</resources>
