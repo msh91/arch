@@ -9,6 +9,14 @@ list.
 I aimed to showcase what a release-ready project looks like, using a modular structure with MVVM and clean architecture.
 Below is a brief explanation of each module.
 
+## Running the app
+To run the app, you need an api key from CoinGecko. Put the api key in the file `local.properties` in the root 
+directory, like the following:
+
+```
+API_KEY=YOUR_API_KEY
+```
+
 ## Modules
 
 - `app`: The main Android application
