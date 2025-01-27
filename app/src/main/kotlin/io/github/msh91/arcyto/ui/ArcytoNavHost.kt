@@ -3,6 +3,8 @@ package io.github.msh91.arcyto.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import io.github.msh91.arcyto.history.ui.HistoricalListRoute
+import io.github.msh91.arcyto.history.ui.historicalListScreen
 
 @Composable
 fun ArcytoNavHost(
@@ -13,9 +15,9 @@ fun ArcytoNavHost(
     val navController = appState.navController
     NavHost(
         navController = navController,
-        startDestination = Any(),
+        startDestination = HistoricalListRoute,
         modifier = modifier,
     ) {
-
+        historicalListScreen(onShowSnackbar)
     }
 }
