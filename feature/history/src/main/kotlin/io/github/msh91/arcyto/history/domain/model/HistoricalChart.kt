@@ -7,6 +7,6 @@ data class HistoricalChart(
 )
 
 data class HistoricalValue(
-    val timestamp: Long,
+    val date: Long,
     val value: Double,
 )

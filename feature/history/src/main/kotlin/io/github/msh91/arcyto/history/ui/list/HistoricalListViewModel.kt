@@ -4,19 +4,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.squareup.anvil.annotations.ContributesMultibinding
 import io.github.msh91.arcyto.core.data.remote.RemoteErrorMapper
+import io.github.msh91.arcyto.core.design.component.PerformanceValue
 import io.github.msh91.arcyto.core.di.scope.MainScreenScope
 import io.github.msh91.arcyto.core.di.viewmodel.ViewModelKey
 import io.github.msh91.arcyto.core.tooling.extension.coroutines.eventsFlow
-import io.github.msh91.arcyto.history.domain.model.HistoricalChart
 import io.github.msh91.arcyto.history.domain.model.HistoricalChartRequest
+import io.github.msh91.arcyto.history.domain.model.HistoricalPrice
+import io.github.msh91.arcyto.history.domain.usecase.FormatDateUseCase
+import io.github.msh91.arcyto.history.domain.usecase.FormatPriceUseCase
 import io.github.msh91.arcyto.history.domain.usecase.GetHistoricalChartUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Locale
 import javax.inject.Inject
+import kotlin.math.abs
 
 @ContributesMultibinding(
     scope = MainScreenScope::class,
@@ -26,6 +28,8 @@ import javax.inject.Inject
 class HistoricalListViewModel @Inject constructor(
     private val getHistoricalChartUseCase: GetHistoricalChartUseCase,
     private val errorMapper: RemoteErrorMapper,
+    private val formatDateUseCase: FormatDateUseCase,
+    private val formatPriceUseCase: FormatPriceUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<HistoryUiState>(HistoryUiState.Loading)
@@ -45,13 +49,19 @@ class HistoricalListViewModel @Inject constructor(
         }
     }
 
-    private fun onHistoricalListReceived(historicalChart: HistoricalChart) {
+    private fun onHistoricalListReceived(historicalPrices: List<HistoricalPrice>) {
         _uiState.value = HistoryUiState.Success(
-            historicalChart.prices.map {
+            historicalPrices.map {
                 HistoricalValueItem(
-                    date = it.timestamp,
-                    formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it.timestamp),
-                    value = it.value.toString(),
+                    date = it.date,
+                    formattedDate = formatDateUseCase.invoke(it.date),
+                    value = formatPriceUseCase.invoke(it.value, "eur"),
+                    performanceValue = it.changePercentage?.let { diff ->
+                        PerformanceValue(
+                            text = "%.2f".format(abs(diff)).plus("%"),
+                            isPositive = diff > 0
+                        )
+                    },
                 )
             }
         )

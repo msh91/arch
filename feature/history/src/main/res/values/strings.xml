@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_date_today">Earlier Today</string>
+    <string name="title_date_yesterday">Yesterday</string>
+    <string name="title_date_recently">Recently</string>
+</resources>
