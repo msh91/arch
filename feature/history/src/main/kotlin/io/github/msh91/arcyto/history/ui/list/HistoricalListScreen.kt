@@ -1,5 +1,7 @@
 package io.github.msh91.arcyto.history.ui.list
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,13 +40,16 @@ import io.github.msh91.arcyto.history.ui.list.HistoricalListUiEvent.ShowSnackbar
 @Composable
 fun HistoricalListRoute(
     onShowSnackbar: suspend (String, String?) -> Boolean,
+    navigateToDetails: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HistoricalListViewModel = arcytoViewModel(),
 ) {
-    val event by viewModel.events.collectAsStateWithLifecycle(null)
+    val event by viewModel.events.collectAsStateWithLifecycle(initialValue = null)
     LaunchedEffect(event) {
-        if (event is ShowSnackbar) {
-            onShowSnackbar((event as ShowSnackbar).message, null)
+        when (event) {
+            is HistoricalListUiEvent.NavigateToDetails -> navigateToDetails()
+            is ShowSnackbar -> onShowSnackbar((event as ShowSnackbar).message, null)
+            null -> {}
         }
     }
 
@@ -58,9 +63,15 @@ internal fun HistoricalListScreen(
     onItemClick: (HistoricalValueItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    when (uiState) {
-        HistoryUiState.Loading -> LoadingState(modifier)
-        is HistoryUiState.Success -> HistoricalList(uiState.valueItems, onItemClick, modifier)
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(colorScheme.background)
+    ) {
+        when (uiState) {
+            HistoryUiState.Loading -> LoadingState(modifier)
+            is HistoryUiState.Success -> HistoricalList(uiState.valueItems, onItemClick, modifier)
+        }
     }
 }
 
@@ -99,7 +110,7 @@ private fun HistoricalValue(
 ) {
     Card(
         elevation = cardElevation(defaultElevation = 4.dp, pressedElevation = 8.dp),
-        colors = cardColors(containerColor = colorScheme.background),
+        colors = cardColors(containerColor = colorScheme.surface),
         onClick = { onItemClick(valueItem) },
         modifier = modifier
             .padding(vertical = 8.dp, horizontal = 8.dp),
@@ -117,6 +128,7 @@ private fun HistoricalValue(
             Text(
                 text = valueItem.formattedDate,
                 style = typography.labelSmall,
+                color = colorScheme.onSurface,
                 maxLines = 1,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
@@ -135,6 +147,7 @@ private fun HistoricalValue(
                     style = typography.titleLarge,
                     maxLines = 1,
                     fontWeight = Bold,
+                    color = colorScheme.onSurface,
                     modifier = Modifier
                         .padding(bottom = 8.dp, start = 8.dp, end = 8.dp),
                 )
@@ -144,6 +157,7 @@ private fun HistoricalValue(
 }
 
 @Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun HistoricalListScreenPreview() {
     ArcytoTheme {

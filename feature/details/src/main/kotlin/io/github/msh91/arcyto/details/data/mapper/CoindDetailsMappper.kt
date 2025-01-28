@@ -11,7 +11,7 @@ fun CoinDetailsApiModel.toDomainModel() = CoinDetails(
     id = id,
     name = name,
     symbol = symbol,
-    marketData = marketDataApiModel.toDomainModel(),
+    marketDataList = marketDataApiModel.toDomainModel(),
 )
 
 fun MarketDataApiModel.toDomainModel() = currentPrice
@@ -20,7 +20,8 @@ fun MarketDataApiModel.toDomainModel() = currentPrice
         MarketData(
             currency = it.key,
             currentPrice = it.value,
-            marketCap = marketCap.getValue(it.key.key)
+            marketCap = marketCap.getValue(it.key.key),
+            totalVolume = totalVolume.getValue(it.key.key),
         )
     }
 

@@ -4,4 +4,5 @@ data class MarketData(
     val currency: Currency,
     val currentPrice: Double,
     val marketCap: Double,
+    val totalVolume: Double,
 )

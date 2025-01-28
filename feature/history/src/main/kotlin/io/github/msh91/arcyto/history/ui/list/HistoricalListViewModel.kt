@@ -77,6 +77,8 @@ class HistoricalListViewModel @Inject constructor(
     }
 
     fun onItemClick(historicalValueItem: HistoricalValueItem) {
-        // todo: Navigate to details screen
+        viewModelScope.launch {
+            _events.emit(HistoricalListUiEvent.NavigateToDetails("bitcoin"))
+        }
     }
 }

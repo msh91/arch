@@ -25,6 +25,7 @@ dependencies {
     implementation(projects.core.data.local)
     implementation(projects.core.data.remote)
     implementation(projects.core.tooling.extension)
+    implementation(projects.feature.details)
     implementation(projects.feature.history)
 
     testImplementation(libs.junit)

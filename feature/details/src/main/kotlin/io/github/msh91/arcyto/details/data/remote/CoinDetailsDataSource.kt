@@ -3,6 +3,7 @@ package io.github.msh91.arcyto.details.data.remote
 import io.github.msh91.arcyto.details.data.remote.model.CoinDetailsApiModel
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface CoinDetailsDataSource {
     /**
@@ -14,7 +15,7 @@ interface CoinDetailsDataSource {
     @GET("coins/{id}/history")
     suspend fun getCoinDetails(
         @Path("id") id: String,
-        @Path("date") date: String,
-        @Path("localization") localization: Boolean,
+        @Query("date") date: String,
+        @Query("localization") localization: Boolean,
     ): Result<CoinDetailsApiModel>
 }
