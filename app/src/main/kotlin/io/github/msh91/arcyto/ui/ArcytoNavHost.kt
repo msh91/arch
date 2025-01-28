@@ -3,6 +3,8 @@ package io.github.msh91.arcyto.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import io.github.msh91.arcyto.details.ui.DetailsRoute
+import io.github.msh91.arcyto.details.ui.detailsScreen
 import io.github.msh91.arcyto.history.ui.HistoricalListRoute
 import io.github.msh91.arcyto.history.ui.historicalListScreen
 
@@ -18,6 +20,11 @@ fun ArcytoNavHost(
         startDestination = HistoricalListRoute,
         modifier = modifier,
     ) {
-        historicalListScreen(onShowSnackbar)
+        historicalListScreen(
+            onShowSnackbar = onShowSnackbar,
+            navigateToDetails = { navController.navigate(DetailsRoute) }
+        )
+
+        detailsScreen(onShowSnackbar)
     }
 }

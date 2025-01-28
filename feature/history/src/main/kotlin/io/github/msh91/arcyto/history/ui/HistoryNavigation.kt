@@ -8,8 +8,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 object HistoricalListRoute
 
-fun NavGraphBuilder.historicalListScreen(onShowSnackbar: suspend (String, String?) -> Boolean,) {
+fun NavGraphBuilder.historicalListScreen(
+    onShowSnackbar: suspend (String, String?) -> Boolean,
+    navigateToDetails: () -> Unit,
+) {
     composable<HistoricalListRoute> {
-        HistoricalListRoute(onShowSnackbar)
+        HistoricalListRoute(onShowSnackbar, navigateToDetails)
     }
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_current_price">"Current Price: "</string>
+    <string name="title_market_cap">"Market Cap: "</string>
+    <string name="title_total_volume">"Total Volume: "</string>
+</resources>

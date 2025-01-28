@@ -4,6 +4,6 @@ data class CoinDetails(
     val id: String,
     val name: String,
     val symbol: String,
-    val marketData: List<MarketData>,
+    val marketDataList: List<MarketData>,
 )
 
