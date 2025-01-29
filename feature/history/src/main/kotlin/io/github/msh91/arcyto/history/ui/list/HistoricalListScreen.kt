@@ -2,9 +2,11 @@ package io.github.msh91.arcyto.history.ui.list
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,6 +34,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import io.github.msh91.arcyto.core.design.component.ArcBitcoinIcon
 import io.github.msh91.arcyto.core.design.component.ArcHistoricalListLoading
 import io.github.msh91.arcyto.core.design.component.ArcPerformance
+import io.github.msh91.arcyto.core.design.component.LiveAnimationCircle
 import io.github.msh91.arcyto.core.design.component.PerformanceValue
 import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
 import io.github.msh91.arcyto.core.di.viewmodel.arcytoViewModel
@@ -51,6 +54,7 @@ fun HistoricalListRoute(
             is HistoricalListUiEvent.NavigateToDetails -> {
                 navigateToDetails((event as HistoricalListUiEvent.NavigateToDetails).detailsRouteRequest)
             }
+
             is ShowSnackbar -> onShowSnackbar((event as ShowSnackbar).message, null)
             null -> {}
         }
@@ -63,7 +67,7 @@ fun HistoricalListRoute(
 @Composable
 internal fun HistoricalListScreen(
     uiState: HistoryUiState,
-    onItemClick: (HistoricalValueItem) -> Unit,
+    onItemClick: (PriceValueUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -73,7 +77,7 @@ internal fun HistoricalListScreen(
     ) {
         when (uiState) {
             HistoryUiState.Loading -> LoadingState(modifier)
-            is HistoryUiState.Success -> HistoricalList(uiState.valueItems, onItemClick, modifier)
+            is HistoryUiState.Success -> PriceList(uiState, onItemClick, modifier)
         }
     }
 }
@@ -86,9 +90,9 @@ private fun LoadingState(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun HistoricalList(
-    valueItems: List<HistoricalValueItem>,
-    onItemClick: (HistoricalValueItem) -> Unit,
+private fun PriceList(
+    successUiState: HistoryUiState.Success,
+    onItemClick: (PriceValueUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier.fillMaxSize()) {
@@ -97,8 +101,13 @@ private fun HistoricalList(
             modifier = modifier,
             contentPadding = PaddingValues(all = 8.dp),
         ) {
-            items(items = valueItems, key = { it.date }) {
-                HistoricalValue(it, onItemClick)
+            successUiState.currentPriceUiModel?.let {
+                item {
+                    Price(it, onItemClick, true)
+                }
+            }
+            items(items = successUiState.historicalValueUiModels, key = { it.date }) {
+                Price(it, onItemClick, false)
             }
         }
     }
@@ -106,15 +115,16 @@ private fun HistoricalList(
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-private fun HistoricalValue(
-    valueItem: HistoricalValueItem,
-    onItemClick: (HistoricalValueItem) -> Unit,
+private fun Price(
+    priceValueUiModel: PriceValueUiModel,
+    onItemClick: (PriceValueUiModel) -> Unit,
+    isCurrentPrice: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Card(
         elevation = cardElevation(defaultElevation = 4.dp, pressedElevation = 8.dp),
         colors = cardColors(containerColor = colorScheme.surface),
-        onClick = { onItemClick(valueItem) },
+        onClick = { onItemClick(priceValueUiModel) },
         modifier = modifier
             .padding(vertical = 8.dp, horizontal = 8.dp),
     ) {
@@ -129,7 +139,7 @@ private fun HistoricalValue(
                     .padding(8.dp)
             )
             Text(
-                text = valueItem.formattedDate,
+                text = priceValueUiModel.formattedDate,
                 style = typography.labelSmall,
                 color = colorScheme.onSurface,
                 maxLines = 1,
@@ -139,21 +149,28 @@ private fun HistoricalValue(
                     .padding(all = 12.dp),
             )
             Column(modifier = Modifier.align(Alignment.BottomStart)) {
-                valueItem.performanceValue?.let {
+                priceValueUiModel.performanceValue?.let {
                     ArcPerformance(
                         value = it,
                         modifier = Modifier.padding(start = 8.dp)
                     )
                 }
-                Text(
-                    text = valueItem.value,
-                    style = typography.titleLarge,
-                    maxLines = 1,
-                    fontWeight = Bold,
-                    color = colorScheme.onSurface,
-                    modifier = Modifier
-                        .padding(bottom = 8.dp, start = 8.dp, end = 8.dp),
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp)
+                ) {
+                    Text(
+                        text = priceValueUiModel.value,
+                        style = typography.titleLarge,
+                        maxLines = 1,
+                        fontWeight = Bold,
+                        color = colorScheme.onSurface,
+                    )
+                    if (isCurrentPrice) {
+                        LiveAnimationCircle()
+                    }
+                }
             }
         }
     }
@@ -166,26 +183,26 @@ fun HistoricalListScreenPreview() {
     ArcytoTheme {
         HistoricalListScreen(
             uiState = HistoryUiState.Success(
-                listOf(
-                    HistoricalValueItem(
-                        date = 1,
-                        formattedDate = "Today",
-                        value = "99,000 $",
-                        performanceValue = PerformanceValue("4000", true),
-                    ),
-                    HistoricalValueItem(
+                currentPriceUiModel = PriceValueUiModel(
+                    date = 1,
+                    formattedDate = "Today",
+                    value = "99,000 $",
+                    performanceValue = PerformanceValue("4000", true),
+                ),
+                historicalValueUiModels = listOf(
+                    PriceValueUiModel(
                         date = 2,
                         formattedDate = "Yesterday",
                         value = "95000 $",
                         performanceValue = PerformanceValue("5000", false),
                     ),
-                    HistoricalValueItem(
+                    PriceValueUiModel(
                         date = 3,
                         formattedDate = "Friday",
                         value = "100000 $",
                         performanceValue = PerformanceValue("1000", true),
                     ),
-                    HistoricalValueItem(
+                    PriceValueUiModel(
                         date = 4,
                         formattedDate = "Friday",
                         value = "100000 $",

@@ -8,10 +8,13 @@ sealed interface HistoryUiState {
     object Loading : HistoryUiState
 
     @Immutable
-    data class Success(val valueItems: List<HistoricalValueItem>) : HistoryUiState
+    data class Success(
+        val currentPriceUiModel: PriceValueUiModel?,
+        val historicalValueUiModels: List<PriceValueUiModel>,
+    ) : HistoryUiState
 }
 
-data class HistoricalValueItem(
+data class PriceValueUiModel(
     val date: Long,
     val formattedDate: String,
     val value: String,
