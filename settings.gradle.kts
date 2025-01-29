@@ -28,13 +28,21 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "Arcyto"
 include(":app")
-include(":core:design-system")
-include(":core:di")
-include(":core:data:local")
-include(":core:data:remote")
-include(":core:tooling:extension")
-include(":core:tooling:test")
-include(":feature:details:api")
-include(":feature:details:impl")
-include(":feature:history:api")
-include(":feature:history:impl")
+
+val rootDirectories = listOf(
+    "core",
+    "feature",
+)
+rootDirectories
+    .map { File(rootDir, it) }
+    .flatMap { findModules(it, 3) }
+    .onEach {
+        include(it)
+    }
+
+fun findModules(directory: File, depth: Int): List<String> =
+    directory.walk()
+        .maxDepth(depth)
+        .filter { it.isDirectory && File(it, "build.gradle.kts").exists() }
+        .map { it.toRelativeString(directory.parentFile).replace(File.separator, ":") }
+        .toList()
