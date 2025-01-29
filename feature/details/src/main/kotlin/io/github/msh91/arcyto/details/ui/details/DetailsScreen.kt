@@ -59,7 +59,25 @@ internal fun DetailsScreen(
         when (uiState) {
             DetailsUiState.Loading -> ArcDetailsListLoading()
             is DetailsUiState.Success -> DetailsScreen(uiState.detailsUiModel, onCurrencySelected)
+            is DetailsUiState.Error -> DetailsScreenError(uiState.message)
         }
+    }
+}
+
+@Composable
+fun DetailsScreenError(message: String, modifier: Modifier = Modifier) {
+    Box(modifier = modifier
+        .fillMaxSize()
+        .padding(16.dp)
+    ) {
+        Text(
+            text = message,
+            style = typography.titleMedium,
+            fontWeight = Bold,
+            color = colorScheme.primary,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.align(Alignment.Center),
+        )
     }
 }
 
