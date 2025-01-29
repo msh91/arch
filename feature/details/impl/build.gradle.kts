@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "io.github.msh91.arcyto.details"
+    namespace = "io.github.msh91.arcyto.details.impl"
 }
 
 dependencies {
@@ -15,6 +15,8 @@ dependencies {
     implementation(projects.core.data.local)
     implementation(projects.core.data.remote)
     implementation(projects.core.tooling.extension)
+
+    api(projects.feature.details.api)
 
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.remote.provider)

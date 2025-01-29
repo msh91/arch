@@ -38,7 +38,7 @@ import io.github.msh91.arcyto.core.design.component.LiveAnimationCircle
 import io.github.msh91.arcyto.core.design.component.PerformanceValue
 import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
 import io.github.msh91.arcyto.core.di.viewmodel.arcytoViewModel
-import io.github.msh91.arcyto.details.ui.DetailsRouteRequest
+import io.github.msh91.arcyto.details.api.navigation.DetailsRouteRequest
 import io.github.msh91.arcyto.history.ui.list.HistoricalListUiEvent.ShowSnackbar
 
 @Composable

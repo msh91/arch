@@ -11,7 +11,7 @@ import io.github.msh91.arcyto.details.domain.model.CoinDetails
 import io.github.msh91.arcyto.details.domain.model.CoinDetailsRequest
 import io.github.msh91.arcyto.details.domain.model.Currency
 import io.github.msh91.arcyto.details.domain.model.MarketData
-import io.github.msh91.arcyto.details.ui.DetailsRouteRequest
+import io.github.msh91.arcyto.details.api.navigation.DetailsRouteRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
