@@ -9,7 +9,7 @@ import io.github.msh91.arcyto.core.di.scope.MainScreenScope
 import io.github.msh91.arcyto.core.di.viewmodel.ViewModelKey
 import io.github.msh91.arcyto.core.tooling.extension.coroutines.eventsFlow
 import io.github.msh91.arcyto.core.tooling.extension.isToday
-import io.github.msh91.arcyto.details.ui.DetailsRouteRequest
+import io.github.msh91.arcyto.details.api.navigation.DetailsRouteRequest
 import io.github.msh91.arcyto.history.domain.model.HistoricalChartRequest
 import io.github.msh91.arcyto.history.domain.model.HistoricalPrice
 import io.github.msh91.arcyto.history.domain.model.LatestPrice

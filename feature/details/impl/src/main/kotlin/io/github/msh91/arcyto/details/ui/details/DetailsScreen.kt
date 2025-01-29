@@ -27,9 +27,9 @@ import io.github.msh91.arcyto.core.design.component.ArcDetailsListLoading
 import io.github.msh91.arcyto.core.design.component.ArcSwitcher
 import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
 import io.github.msh91.arcyto.core.di.viewmodel.arcytoViewModel
-import io.github.msh91.arcyto.details.R
+import io.github.msh91.arcyto.details.impl.R
+import io.github.msh91.arcyto.details.api.navigation.DetailsRouteRequest
 import io.github.msh91.arcyto.details.domain.model.Currency
-import io.github.msh91.arcyto.details.ui.DetailsRouteRequest
 
 @Composable
 fun DetailsRoute(
