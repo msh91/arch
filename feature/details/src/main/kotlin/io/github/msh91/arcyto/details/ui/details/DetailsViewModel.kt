@@ -1,6 +1,5 @@
 package io.github.msh91.arcyto.details.ui.details
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.squareup.anvil.annotations.ContributesMultibinding
@@ -49,7 +48,7 @@ class DetailsViewModel @Inject constructor(
     }
 
     private fun onErrorReceived(throwable: Throwable) {
-        Log.e("sdsdsd", "Error fetching coin details", throwable)
+        // TODO: Handle error
     }
 
     fun onCurrencySelected(currency: Currency) {
@@ -57,7 +56,6 @@ class DetailsViewModel @Inject constructor(
         val currentState = _uiState.value
         if (currentState is DetailsUiState.Success) {
             val selectedMarketData = coinDetails.marketDataList.first { it.currency == currency }
-            Log.d("Sdsdsd", "onCurrencySelected() returned: $selectedMarketData")
             _uiState.value = currentState.copy(
                 detailsUiModel = currentState.detailsUiModel.copy(
                     selectedMarketData = selectedMarketData.toUiModel()
