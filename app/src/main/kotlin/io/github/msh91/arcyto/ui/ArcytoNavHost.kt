@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import io.github.msh91.arcyto.details.ui.detailsScreen
-import io.github.msh91.arcyto.history.ui.HistoricalListRoute
+import io.github.msh91.arcyto.history.api.navigation.HistoricalRouteRequest
 import io.github.msh91.arcyto.history.ui.historicalListScreen
 
 @Composable
@@ -16,7 +16,7 @@ fun ArcytoNavHost(
     val navController = appState.navController
     NavHost(
         navController = navController,
-        startDestination = HistoricalListRoute,
+        startDestination = HistoricalRouteRequest,
         modifier = modifier,
     ) {
         historicalListScreen(
@@ -24,6 +24,6 @@ fun ArcytoNavHost(
             navigateToDetails = { navController.navigate(it) }
         )
 
-        detailsScreen(onShowSnackbar)
+        detailsScreen()
     }
 }
