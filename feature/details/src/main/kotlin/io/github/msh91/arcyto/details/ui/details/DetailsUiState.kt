@@ -6,6 +6,8 @@ sealed interface DetailsUiState {
     data object Loading : DetailsUiState
 
     data class Success(val detailsUiModel: CoinDetailsUiModel) : DetailsUiState
+
+    data class Error(val message: String) : DetailsUiState
 }
 
 data class CoinDetailsUiModel(
