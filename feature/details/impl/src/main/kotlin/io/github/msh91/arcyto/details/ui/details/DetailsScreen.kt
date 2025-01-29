@@ -34,7 +34,6 @@ import io.github.msh91.arcyto.details.domain.model.Currency
 @Composable
 fun DetailsRoute(
     detailsRouteRequest: DetailsRouteRequest,
-    onShowSnackbar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
     viewModel: DetailsViewModel = arcytoViewModel(),
 ) {
