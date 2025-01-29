@@ -21,12 +21,13 @@ class GetHistoricalChartUseCaseImpl @Inject constructor(
         historicalChartRepository.getHistoricalChart(request)
             .map { it.toHistoricalPrices() }
 
-    private fun HistoricalChart.toHistoricalPrices(): List<HistoricalPrice> = prices
-        .sortedByDescending { it.date }
-        .mapIndexed { index, historicalValue ->
+    private fun HistoricalChart.toHistoricalPrices(): List<HistoricalPrice> {
+        val sortedPrices = prices.sortedByDescending { it.date }
+        return sortedPrices.mapIndexed { index, historicalValue ->
             val value = historicalValue.value
-            val previousValue = if (index == prices.lastIndex) null else prices[index + 1].value
+            val previousValue = if (index == sortedPrices.lastIndex) null else sortedPrices[index + 1].value
             val changePercentage = previousValue?.let { (value - previousValue) / previousValue * 100 }
+
             HistoricalPrice(
                 date = historicalValue.date,
                 value = historicalValue.value,
@@ -34,4 +35,5 @@ class GetHistoricalChartUseCaseImpl @Inject constructor(
                 changePercentage = changePercentage,
             )
         }
+    }
 }
