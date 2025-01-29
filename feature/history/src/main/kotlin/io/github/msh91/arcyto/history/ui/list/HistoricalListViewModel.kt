@@ -8,6 +8,7 @@ import io.github.msh91.arcyto.core.design.component.PerformanceValue
 import io.github.msh91.arcyto.core.di.scope.MainScreenScope
 import io.github.msh91.arcyto.core.di.viewmodel.ViewModelKey
 import io.github.msh91.arcyto.core.tooling.extension.coroutines.eventsFlow
+import io.github.msh91.arcyto.details.ui.DetailsRouteRequest
 import io.github.msh91.arcyto.history.domain.model.HistoricalChartRequest
 import io.github.msh91.arcyto.history.domain.model.HistoricalPrice
 import io.github.msh91.arcyto.history.domain.usecase.FormatDateUseCase
@@ -44,7 +45,7 @@ class HistoricalListViewModel @Inject constructor(
     private fun fetchHistoricalList() {
         viewModelScope.launch {
             getHistoricalChartUseCase
-                .invoke(request = HistoricalChartRequest("bitcoin", "eur", 14, "daily", 0))
+                .invoke(request = HistoricalChartRequest(COIN_ID, "eur", 14, "daily", 0))
                 .fold(::onHistoricalListReceived, ::onErrorReceived)
         }
     }
@@ -76,9 +77,13 @@ class HistoricalListViewModel @Inject constructor(
         }
     }
 
-    fun onItemClick(historicalValueItem: HistoricalValueItem) {
+    fun onItemClick(item: HistoricalValueItem) {
         viewModelScope.launch {
-            _events.emit(HistoricalListUiEvent.NavigateToDetails("bitcoin"))
+            _events.emit(HistoricalListUiEvent.NavigateToDetails(DetailsRouteRequest(COIN_ID, item.date)))
         }
+    }
+
+    companion object {
+        private const val COIN_ID = "bitcoin"
     }
 }

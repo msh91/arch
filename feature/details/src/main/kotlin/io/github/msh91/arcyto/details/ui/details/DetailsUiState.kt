@@ -11,6 +11,7 @@ sealed interface DetailsUiState {
 data class CoinDetailsUiModel(
     val name: String,
     val symbol: String,
+    val date: String,
     val currentPriceDefault: String,
     val marketDataList: List<MarketDataUiModel>,
     val selectedMarketData: MarketDataUiModel,

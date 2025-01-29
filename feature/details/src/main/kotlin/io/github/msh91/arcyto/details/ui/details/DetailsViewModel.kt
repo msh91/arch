@@ -11,9 +11,12 @@ import io.github.msh91.arcyto.details.domain.model.CoinDetails
 import io.github.msh91.arcyto.details.domain.model.CoinDetailsRequest
 import io.github.msh91.arcyto.details.domain.model.Currency
 import io.github.msh91.arcyto.details.domain.model.MarketData
+import io.github.msh91.arcyto.details.ui.DetailsRouteRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 import javax.inject.Inject
 
 @ContributesMultibinding(
@@ -28,15 +31,14 @@ class DetailsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<DetailsUiState>(DetailsUiState.Loading)
     val uiState = _uiState.asStateFlow()
     private var coinDetails: CoinDetails? = null
+    private lateinit var request: DetailsRouteRequest
 
-    init {
-        fetchCoinDetails()
-    }
-
-    private fun fetchCoinDetails() {
+    fun fetchCoinDetails(request: DetailsRouteRequest) {
+        this.request = request
         viewModelScope.launch {
+            val date = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(request.date)
             detailsRepository
-                .getCoinDetails(CoinDetailsRequest("bitcoin", "20-01-2025", false))
+                .getCoinDetails(CoinDetailsRequest(request.coinId, date, false))
                 .fold(onSuccess = ::onCoinDetailsReceived, onFailure = ::onErrorReceived)
         }
     }
@@ -51,7 +53,6 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun onCurrencySelected(currency: Currency) {
-        Log.d("sdsdsd", "onCurrencySelected() called with: currency = $currency")
         val coinDetails = this.coinDetails ?: return
         val currentState = _uiState.value
         if (currentState is DetailsUiState.Success) {
@@ -71,6 +72,7 @@ class DetailsViewModel @Inject constructor(
             CoinDetailsUiModel(
                 name = name,
                 symbol = symbol,
+                date = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(request.date),
                 currentPriceDefault = defaultData.currentPrice,
                 marketDataList = marketDataList.map { it.toUiModel() },
                 selectedMarketData = defaultData,

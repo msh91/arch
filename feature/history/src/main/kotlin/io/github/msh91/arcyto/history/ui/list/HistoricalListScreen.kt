@@ -35,19 +35,22 @@ import io.github.msh91.arcyto.core.design.component.ArcPerformance
 import io.github.msh91.arcyto.core.design.component.PerformanceValue
 import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
 import io.github.msh91.arcyto.core.di.viewmodel.arcytoViewModel
+import io.github.msh91.arcyto.details.ui.DetailsRouteRequest
 import io.github.msh91.arcyto.history.ui.list.HistoricalListUiEvent.ShowSnackbar
 
 @Composable
 fun HistoricalListRoute(
     onShowSnackbar: suspend (String, String?) -> Boolean,
-    navigateToDetails: () -> Unit,
+    navigateToDetails: (DetailsRouteRequest) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HistoricalListViewModel = arcytoViewModel(),
 ) {
     val event by viewModel.events.collectAsStateWithLifecycle(initialValue = null)
     LaunchedEffect(event) {
         when (event) {
-            is HistoricalListUiEvent.NavigateToDetails -> navigateToDetails()
+            is HistoricalListUiEvent.NavigateToDetails -> {
+                navigateToDetails((event as HistoricalListUiEvent.NavigateToDetails).detailsRouteRequest)
+            }
             is ShowSnackbar -> onShowSnackbar((event as ShowSnackbar).message, null)
             null -> {}
         }

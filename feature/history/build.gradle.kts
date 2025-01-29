@@ -21,5 +21,7 @@ dependencies {
     implementation(libs.glide.compose)
     implementation(libs.navigation.compose)
 
+    implementation(projects.feature.details)
+
     testImplementation(projects.core.tooling.test)
 }
