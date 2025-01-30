@@ -7,14 +7,13 @@ import io.github.msh91.arcyto.history.data.remote.HistoricalRemoteDataSource
 import io.github.msh91.arcyto.history.domain.model.HistoricalChart
 import io.github.msh91.arcyto.history.domain.model.HistoricalChartRequest
 import io.github.msh91.arcyto.history.domain.model.LatestPrice
-import io.github.msh91.arcyto.history.domain.model.LatestPriceRequest
 import javax.inject.Inject
 import javax.inject.Singleton
 
 interface HistoricalChartRepository {
     suspend fun getHistoricalChart(request: HistoricalChartRequest): Result<HistoricalChart>
 
-    suspend fun getLatestCoinPrice(request: LatestPriceRequest): Result<LatestPrice>
+    suspend fun getLatestCoinPrice(coinId: String, currency: String, precision: Int): Result<LatestPrice>
 }
 
 /**
@@ -31,13 +30,13 @@ class HistoricalChartRepositoryImpl @Inject constructor(
             .getHistoricalChart(request.id, request.currency, request.days, request.interval, request.precision)
             .map { it.toDomain() }
 
-    override suspend fun getLatestCoinPrice(request: LatestPriceRequest): Result<LatestPrice> =
+    override suspend fun getLatestCoinPrice(coinId: String, currency: String, precision: Int): Result<LatestPrice> =
         historicalRemoteDataSource
-            .getLatestCoinPrice(request.coinId, request.currency, request.precision)
+            .getLatestCoinPrice(coinId, currency, precision)
             .map { result ->
-                val priceApiModel = result.getValue(request.coinId)
+                val priceApiModel = result.getValue(coinId)
                 LatestPrice(
-                    coinId = request.coinId,
+                    coinId = coinId,
                     price = priceApiModel.priceInEur,
                     lastUpdated = priceApiModel.lastUpdatedAt,
                     changePercentage = priceApiModel.changePercentage,

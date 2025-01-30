@@ -5,16 +5,18 @@ import io.github.msh91.arcyto.core.di.scope.AppScope
 import io.github.msh91.arcyto.history.data.repository.HistoricalChartRepository
 import io.github.msh91.arcyto.history.domain.model.LatestPrice
 import io.github.msh91.arcyto.history.domain.model.LatestPriceRequest
-import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.shareIn
 import javax.inject.Inject
 
 interface GetLatestPriceUseCase {
-    operator fun invoke(request: LatestPriceRequest): Flow<Result<LatestPrice>>
+    suspend operator fun invoke(request: LatestPriceRequest): Flow<Result<LatestPrice>>
 }
 
 /**
@@ -24,21 +26,25 @@ interface GetLatestPriceUseCase {
 class GetLatestPriceUseCaseImpl @Inject constructor(
     private val historicalChartRepository: HistoricalChartRepository,
 ) : GetLatestPriceUseCase {
-    private val latestPriceFlow = MutableSharedFlow<Result<LatestPrice>>(
-        replay = 1,
-        extraBufferCapacity = 0,
-        onBufferOverflow = BufferOverflow.DROP_LATEST
-    )
 
-    override fun invoke(request: LatestPriceRequest): Flow<Result<LatestPrice>> {
-        // Fetch the latest price every 60 seconds
-        request.coroutineScope.launch {
-            //repeat every 60 seconds
+    override suspend fun invoke(request: LatestPriceRequest): Flow<Result<LatestPrice>> {
+        // Fetch the latest price in an interval provided by the request
+        val coroutineScope = CoroutineScope(currentCoroutineContext() + SupervisorJob())
+        return flow {
             while (true) {
-                latestPriceFlow.emit(historicalChartRepository.getLatestCoinPrice(request))
+                emit(
+                    historicalChartRepository.getLatestCoinPrice(
+                        coinId = request.coinId,
+                        currency = request.currency,
+                        precision = request.precision
+                    )
+                )
                 delay(request.intervalMs)
             }
-        }
-        return latestPriceFlow.asSharedFlow()
+        }.shareIn(
+            scope = coroutineScope,
+            started = SharingStarted.WhileSubscribed(),
+            replay = 1,
+        )
     }
 }

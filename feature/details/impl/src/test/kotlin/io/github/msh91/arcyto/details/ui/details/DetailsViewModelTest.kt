@@ -91,7 +91,6 @@ class DetailsViewModelTest {
     @Test
     fun `fetchCoinDetails - should update the uiState to error`() = runTest {
         // GIVEN
-        val coinDetails = getCoinDetails()
         val request = CoinDetailsRequest("bitcoin", formattedDate, false)
         val error = mockk<Throwable>()
         val errorMessage = "Something went wrong"

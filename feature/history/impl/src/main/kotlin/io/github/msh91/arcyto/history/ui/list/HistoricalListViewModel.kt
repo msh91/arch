@@ -8,6 +8,7 @@ import io.github.msh91.arcyto.core.di.common.CompositeErrorMapper
 import io.github.msh91.arcyto.core.di.scope.MainScreenScope
 import io.github.msh91.arcyto.core.di.viewmodel.ViewModelKey
 import io.github.msh91.arcyto.core.formatter.date.DateFormat
+import io.github.msh91.arcyto.core.formatter.date.DateProvider
 import io.github.msh91.arcyto.core.formatter.date.FormatDateUseCase
 import io.github.msh91.arcyto.core.formatter.price.FormatPriceUseCase
 import io.github.msh91.arcyto.core.tooling.extension.coroutines.eventsFlow
@@ -38,6 +39,7 @@ class HistoricalListViewModel @Inject constructor(
     private val errorMapper: CompositeErrorMapper,
     private val formatDateUseCase: FormatDateUseCase,
     private val formatPriceUseCase: FormatPriceUseCase,
+    private val dateProvider: DateProvider,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<HistoryUiState>(HistoryUiState.Loading)
@@ -57,7 +59,6 @@ class HistoricalListViewModel @Inject constructor(
                 currency = CURRENCY,
                 precision = 2,
                 intervalMs = 60_000,
-                coroutineScope = viewModelScope,
             )
             getLatestPriceUseCase.invoke(request)
                 .collectLatest { it.fold(onSuccess = ::onLatestPriceReceived, onFailure = ::onErrorReceived) }
@@ -96,7 +97,7 @@ class HistoricalListViewModel @Inject constructor(
         )
     }
 
-    private fun LatestPrice.toUiModel() = createValueItem(System.currentTimeMillis(), price, changePercentage)
+    private fun LatestPrice.toUiModel() = createValueItem(dateProvider.getCurrentDate(), price, changePercentage)
 
     private fun List<HistoricalPrice>.toUiModel(): List<PriceValueUiModel> = this
         // remote today price from the list as it will be displayed separately via latest price component
