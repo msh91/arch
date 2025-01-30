@@ -7,6 +7,7 @@ import io.github.msh91.arcyto.core.design.component.PerformanceValue
 import io.github.msh91.arcyto.core.di.common.CompositeErrorMapper
 import io.github.msh91.arcyto.core.di.scope.MainScreenScope
 import io.github.msh91.arcyto.core.di.viewmodel.ViewModelKey
+import io.github.msh91.arcyto.core.formatter.date.DateFormat
 import io.github.msh91.arcyto.core.formatter.date.FormatDateUseCase
 import io.github.msh91.arcyto.core.formatter.price.FormatPriceUseCase
 import io.github.msh91.arcyto.core.tooling.extension.coroutines.eventsFlow
@@ -105,7 +106,7 @@ class HistoricalListViewModel @Inject constructor(
     private fun createValueItem(date: Long, value: Double, changePercentage: Double?): PriceValueUiModel {
         return PriceValueUiModel(
             date = date,
-            formattedDate = formatDateUseCase.invoke(date),
+            formattedDate = formatDateUseCase.invoke(date, DateFormat.MONTH_DAY, true),
             value = formatPriceUseCase.invoke(value, CURRENCY),
             performanceValue = changePercentage?.let { diff ->
                 PerformanceValue(
