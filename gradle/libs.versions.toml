@@ -12,6 +12,7 @@ coroutines = "1.9.0"
 dagger = "2.52"
 dataStore = "1.1.1"
 espressoCore = "3.6.1"
+googleTruth = "1.2.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 kotlin = "2.0.21"
@@ -50,6 +51,7 @@ dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
 glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide" }
+google-truth = { group = "com.google.truth", name = "truth", version.ref = "googleTruth" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }

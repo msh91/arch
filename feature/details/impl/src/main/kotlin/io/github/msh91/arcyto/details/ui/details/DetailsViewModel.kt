@@ -6,6 +6,8 @@ import com.squareup.anvil.annotations.ContributesMultibinding
 import io.github.msh91.arcyto.core.di.common.CompositeErrorMapper
 import io.github.msh91.arcyto.core.di.scope.MainScreenScope
 import io.github.msh91.arcyto.core.di.viewmodel.ViewModelKey
+import io.github.msh91.arcyto.core.formatter.date.DateFormat
+import io.github.msh91.arcyto.core.formatter.date.FormatDateUseCase
 import io.github.msh91.arcyto.core.formatter.price.FormatPriceUseCase
 import io.github.msh91.arcyto.details.api.navigation.DetailsRouteRequest
 import io.github.msh91.arcyto.details.data.repository.CoinDetailsRepository
@@ -16,8 +18,6 @@ import io.github.msh91.arcyto.details.domain.model.MarketData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Locale
 import javax.inject.Inject
 
 @ContributesMultibinding(
@@ -28,6 +28,7 @@ import javax.inject.Inject
 class DetailsViewModel @Inject constructor(
     private val detailsRepository: CoinDetailsRepository,
     private val formatPriceUseCase: FormatPriceUseCase,
+    private val formatDateUseCase: FormatDateUseCase,
     private val errorMapper: CompositeErrorMapper,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<DetailsUiState>(DetailsUiState.Loading)
@@ -38,7 +39,7 @@ class DetailsViewModel @Inject constructor(
     fun fetchCoinDetails(request: DetailsRouteRequest) {
         this.request = request
         viewModelScope.launch {
-            val date = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(request.date)
+            val date = formatDateUseCase.invoke(request.date, DateFormat.DAY_MONTH_YEAR, false)
             detailsRepository
                 .getCoinDetails(CoinDetailsRequest(request.coinId, date, false))
                 .fold(onSuccess = ::onCoinDetailsReceived, onFailure = ::onErrorReceived)
@@ -75,7 +76,7 @@ class DetailsViewModel @Inject constructor(
             CoinDetailsUiModel(
                 name = name,
                 symbol = symbol,
-                date = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(request.date),
+                date = formatDateUseCase.invoke(request.date, DateFormat.MONTH_DAY, true),
                 currentPriceDefault = defaultData.currentPrice,
                 marketDataList = marketDataList.map { it.toUiModel() },
                 selectedMarketData = defaultData,

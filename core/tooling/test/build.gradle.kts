@@ -11,6 +11,7 @@ dependencies {
     api(libs.androidx.test.ext)
     api(libs.androidx.test.rules)
     api(libs.coroutines.test)
+    api(libs.google.truth)
     api(libs.junit)
     api(libs.kotlin.test)
     api(libs.mockk)
