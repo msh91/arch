@@ -22,7 +22,7 @@ class GetHistoricalChartUseCaseImpl @Inject constructor(
             .map { it.toHistoricalPrices() }
 
     private fun HistoricalChart.toHistoricalPrices(): List<HistoricalPrice> {
-        val sortedPrices = prices.sortedByDescending { it.date }
+        val sortedPrices = chartPrices.sortedByDescending { it.date }
         return sortedPrices.mapIndexed { index, historicalValue ->
             val value = historicalValue.value
             val previousValue = if (index == sortedPrices.lastIndex) null else sortedPrices[index + 1].value
@@ -31,7 +31,7 @@ class GetHistoricalChartUseCaseImpl @Inject constructor(
             HistoricalPrice(
                 date = historicalValue.date,
                 value = historicalValue.value,
-                // diff percentage with 2 decimals
+                // diff percentage is null if there is no previous value
                 changePercentage = changePercentage,
             )
         }
