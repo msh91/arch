@@ -3,8 +3,8 @@ package io.github.msh91.arcyto.history.ui.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.squareup.anvil.annotations.ContributesMultibinding
-import io.github.msh91.arcyto.core.data.remote.RemoteErrorMapper
 import io.github.msh91.arcyto.core.design.component.PerformanceValue
+import io.github.msh91.arcyto.core.di.common.CompositeErrorMapper
 import io.github.msh91.arcyto.core.di.scope.MainScreenScope
 import io.github.msh91.arcyto.core.di.viewmodel.ViewModelKey
 import io.github.msh91.arcyto.core.tooling.extension.coroutines.eventsFlow
@@ -34,7 +34,7 @@ import kotlin.math.abs
 class HistoricalListViewModel @Inject constructor(
     private val getHistoricalChartUseCase: GetHistoricalChartUseCase,
     private val getLatestPriceUseCase: GetLatestPriceUseCase,
-    private val errorMapper: RemoteErrorMapper,
+    private val errorMapper: CompositeErrorMapper,
     private val formatDateUseCase: FormatDateUseCase,
     private val formatPriceUseCase: FormatPriceUseCase,
 ) : ViewModel() {

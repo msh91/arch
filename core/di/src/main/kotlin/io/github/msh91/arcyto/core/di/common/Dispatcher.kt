@@ -1,4 +1,4 @@
-package io.github.msh91.arcyto.core.di.module
+package io.github.msh91.arcyto.core.di.common
 
 import javax.inject.Qualifier
 
