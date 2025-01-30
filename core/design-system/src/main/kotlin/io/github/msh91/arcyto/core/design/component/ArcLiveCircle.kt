@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
 
 @Composable
-fun LiveAnimationCircle(modifier: Modifier = Modifier) {
+fun ArcLiveCircle(modifier: Modifier = Modifier) {
     val infiniteTransition = rememberInfiniteTransition()
 
     val circleRadius by infiniteTransition.animateFloat(
@@ -59,6 +59,6 @@ fun CircleAnimation(circleRadius: Float, color: Color, modifier: Modifier = Modi
 @Composable
 fun LiveAnimationCirclePreview() {
     ArcytoTheme {
-        LiveAnimationCircle()
+        ArcLiveCircle()
     }
 }

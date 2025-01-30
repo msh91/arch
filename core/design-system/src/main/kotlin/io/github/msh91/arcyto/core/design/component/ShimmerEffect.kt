@@ -7,9 +7,9 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -64,14 +64,20 @@ fun ShimmerEffect(
         end = Offset(x = translateAnimation.value, y = angleOfAxisY),
     )
 
+    ShimmerEffectContent(brush = brush, modifier = modifier)
+}
+
+@Composable
+fun ShimmerEffectContent(brush: Brush, modifier: Modifier) {
     Box(
         modifier = modifier
     ) {
-        Spacer(
+        Canvas(
             modifier = Modifier
                 .matchParentSize()
-                .background(brush)
-        )
+        ) {
+            drawRect(brush = brush)
+        }
     }
 }
 

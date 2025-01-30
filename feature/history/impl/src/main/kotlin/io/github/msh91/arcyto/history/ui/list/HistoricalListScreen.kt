@@ -34,7 +34,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import io.github.msh91.arcyto.core.design.component.ArcBitcoinIcon
 import io.github.msh91.arcyto.core.design.component.ArcHistoricalListLoading
 import io.github.msh91.arcyto.core.design.component.ArcPerformance
-import io.github.msh91.arcyto.core.design.component.LiveAnimationCircle
+import io.github.msh91.arcyto.core.design.component.ArcLiveCircle
 import io.github.msh91.arcyto.core.design.component.PerformanceValue
 import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
 import io.github.msh91.arcyto.core.di.viewmodel.arcytoViewModel
@@ -168,7 +168,7 @@ private fun Price(
                         color = colorScheme.onSurface,
                     )
                     if (isCurrentPrice) {
-                        LiveAnimationCircle()
+                        ArcLiveCircle()
                     }
                 }
             }
