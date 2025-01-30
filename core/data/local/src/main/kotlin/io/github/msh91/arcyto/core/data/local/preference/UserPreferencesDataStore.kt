@@ -1,4 +1,4 @@
-package io.github.msh91.arcyto.core.data.local
+package io.github.msh91.arcyto.core.data.local.preference
 
 import android.content.Context
 import androidx.datastore.core.DataStore

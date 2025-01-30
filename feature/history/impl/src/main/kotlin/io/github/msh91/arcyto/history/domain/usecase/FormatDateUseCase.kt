@@ -2,6 +2,7 @@ package io.github.msh91.arcyto.history.domain.usecase
 
 import android.content.Context
 import com.squareup.anvil.annotations.ContributesBinding
+import io.github.msh91.arcyto.core.data.local.resource.StringProvider
 import io.github.msh91.arcyto.core.di.scope.AppScope
 import io.github.msh91.arcyto.core.tooling.extension.isSameDayAs
 import io.github.msh91.arcyto.history.R
@@ -22,7 +23,7 @@ interface FormatDateUseCase {
  */
 @ContributesBinding(AppScope::class)
 class FormatDateUseCaseImpl @Inject constructor(
-    private val context: Context,
+    private val stringProvider: StringProvider,
 ) : FormatDateUseCase {
     override fun invoke(date: Long): String {
 
@@ -30,8 +31,8 @@ class FormatDateUseCaseImpl @Inject constructor(
         val today = Calendar.getInstance()
         val yesterday = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -1) }
         return when {
-            calendarDate.isSameDayAs(today) -> context.getString(R.string.title_date_today)
-            calendarDate.isSameDayAs(yesterday) -> context.getString(R.string.title_date_yesterday)
+            calendarDate.isSameDayAs(today) -> stringProvider.getString(R.string.title_date_today)
+            calendarDate.isSameDayAs(yesterday) -> stringProvider.getString(R.string.title_date_yesterday)
             else -> SimpleDateFormat(MONTH_DAY_FORMAT, Locale.getDefault()).format(date)
         }
     }
