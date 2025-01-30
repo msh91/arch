@@ -1,9 +1,9 @@
-package io.github.msh91.arcyto.core.di.module
+package io.github.msh91.arcyto.core.di.common
 
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import io.github.msh91.arcyto.core.di.module.DispatcherType.*
+import io.github.msh91.arcyto.core.di.common.DispatcherType.*
 import io.github.msh91.arcyto.core.di.scope.AppScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

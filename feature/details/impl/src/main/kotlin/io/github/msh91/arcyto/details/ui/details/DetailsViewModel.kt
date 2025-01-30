@@ -3,7 +3,7 @@ package io.github.msh91.arcyto.details.ui.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.squareup.anvil.annotations.ContributesMultibinding
-import io.github.msh91.arcyto.core.data.remote.RemoteErrorMapper
+import io.github.msh91.arcyto.core.di.common.CompositeErrorMapper
 import io.github.msh91.arcyto.core.di.scope.MainScreenScope
 import io.github.msh91.arcyto.core.di.viewmodel.ViewModelKey
 import io.github.msh91.arcyto.details.data.repository.CoinDetailsRepository
@@ -27,7 +27,7 @@ import javax.inject.Inject
 class DetailsViewModel @Inject constructor(
     private val detailsRepository: CoinDetailsRepository,
     private val priceFormatter: DetailsPriceFormatter,
-    private val errorMapper: RemoteErrorMapper,
+    private val errorMapper: CompositeErrorMapper,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<DetailsUiState>(DetailsUiState.Loading)
     val uiState = _uiState.asStateFlow()
