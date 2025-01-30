@@ -1,8 +1,8 @@
 package io.github.msh91.arcyto.details.domain.model
 
 enum class Currency(val key: String) {
-    USD("usd"),
     EUR("eur"),
+    USD("usd"),
     GBP("gbp");
 
     companion object {

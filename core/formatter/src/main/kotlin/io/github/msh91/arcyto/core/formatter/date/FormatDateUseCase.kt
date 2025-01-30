@@ -1,11 +1,10 @@
-package io.github.msh91.arcyto.history.domain.usecase
+package io.github.msh91.arcyto.core.formatter.date
 
-import android.content.Context
 import com.squareup.anvil.annotations.ContributesBinding
 import io.github.msh91.arcyto.core.data.local.resource.StringProvider
 import io.github.msh91.arcyto.core.di.scope.AppScope
+import io.github.msh91.arcyto.core.formatter.R
 import io.github.msh91.arcyto.core.tooling.extension.isSameDayAs
-import io.github.msh91.arcyto.history.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

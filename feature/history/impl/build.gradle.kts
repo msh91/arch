@@ -14,6 +14,7 @@ dependencies {
     implementation(projects.core.di)
     implementation(projects.core.data.local)
     implementation(projects.core.data.remote)
+    implementation(projects.core.formatter)
     implementation(projects.core.tooling.extension)
 
     implementation(libs.bundles.coroutines)

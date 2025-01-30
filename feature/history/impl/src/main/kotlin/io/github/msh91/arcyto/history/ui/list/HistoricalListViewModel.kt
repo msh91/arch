@@ -7,6 +7,8 @@ import io.github.msh91.arcyto.core.design.component.PerformanceValue
 import io.github.msh91.arcyto.core.di.common.CompositeErrorMapper
 import io.github.msh91.arcyto.core.di.scope.MainScreenScope
 import io.github.msh91.arcyto.core.di.viewmodel.ViewModelKey
+import io.github.msh91.arcyto.core.formatter.date.FormatDateUseCase
+import io.github.msh91.arcyto.core.formatter.price.FormatPriceUseCase
 import io.github.msh91.arcyto.core.tooling.extension.coroutines.eventsFlow
 import io.github.msh91.arcyto.core.tooling.extension.isToday
 import io.github.msh91.arcyto.details.api.navigation.DetailsRouteRequest
@@ -14,8 +16,6 @@ import io.github.msh91.arcyto.history.domain.model.HistoricalChartRequest
 import io.github.msh91.arcyto.history.domain.model.HistoricalPrice
 import io.github.msh91.arcyto.history.domain.model.LatestPrice
 import io.github.msh91.arcyto.history.domain.model.LatestPriceRequest
-import io.github.msh91.arcyto.history.domain.usecase.FormatDateUseCase
-import io.github.msh91.arcyto.history.domain.usecase.FormatPriceUseCase
 import io.github.msh91.arcyto.history.domain.usecase.GetHistoricalChartUseCase
 import io.github.msh91.arcyto.history.domain.usecase.GetLatestPriceUseCase
 import kotlinx.coroutines.flow.Flow
@@ -54,7 +54,7 @@ class HistoricalListViewModel @Inject constructor(
             val request = LatestPriceRequest(
                 coinId = COIN_ID,
                 currency = CURRENCY,
-                precision = 0,
+                precision = 2,
                 intervalMs = 60_000,
                 coroutineScope = viewModelScope,
             )
@@ -74,7 +74,15 @@ class HistoricalListViewModel @Inject constructor(
     private fun fetchHistoricalList() {
         viewModelScope.launch {
             getHistoricalChartUseCase
-                .invoke(request = HistoricalChartRequest(COIN_ID, CURRENCY, 15, "daily", 0))
+                .invoke(
+                    request = HistoricalChartRequest(
+                        id = COIN_ID,
+                        currency = CURRENCY,
+                        days = 15,
+                        interval = "daily",
+                        precision = 2
+                    )
+                )
                 .fold(::onHistoricalListReceived, ::onErrorReceived)
         }
     }
