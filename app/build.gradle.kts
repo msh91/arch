@@ -20,11 +20,13 @@ dependencies {
 
     kapt(libs.dagger.compiler)
 
-    implementation(projects.core.designSystem)
-    implementation(projects.core.di)
     implementation(projects.core.data.local)
     implementation(projects.core.data.remote)
+    implementation(projects.core.designSystem)
+    implementation(projects.core.di)
+    implementation(projects.core.formatter)
     implementation(projects.core.tooling.extension)
+
     implementation(projects.feature.details.impl)
     implementation(projects.feature.history.impl)
 
