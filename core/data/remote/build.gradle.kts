@@ -24,6 +24,7 @@ android {
 dependencies {
     api(libs.bundles.remote.builder)
     implementation(libs.bundles.coroutines)
+    implementation(projects.core.data.local)
     implementation(projects.core.di)
-    testImplementation(libs.junit)
+    testImplementation(projects.core.tooling.test)
 }
