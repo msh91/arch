@@ -6,8 +6,8 @@ import androidx.navigation.toRoute
 import io.github.msh91.arcyto.details.api.navigation.DetailsRouteRequest
 import io.github.msh91.arcyto.details.ui.details.DetailsRoute
 
-fun NavGraphBuilder.detailsScreen() {
+fun NavGraphBuilder.detailsScreen(onNavigateBack: () -> Unit) {
     composable<DetailsRouteRequest> {
-        DetailsRoute(it.toRoute())
+        DetailsRoute(it.toRoute(), onNavigateBack)
     }
 }

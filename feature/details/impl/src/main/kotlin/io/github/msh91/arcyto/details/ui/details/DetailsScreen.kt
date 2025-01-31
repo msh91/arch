@@ -8,14 +8,19 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
@@ -27,13 +32,15 @@ import io.github.msh91.arcyto.core.design.component.ArcDetailsListLoading
 import io.github.msh91.arcyto.core.design.component.ArcSwitcher
 import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
 import io.github.msh91.arcyto.core.di.viewmodel.arcytoViewModel
-import io.github.msh91.arcyto.details.impl.R
 import io.github.msh91.arcyto.details.api.navigation.DetailsRouteRequest
 import io.github.msh91.arcyto.details.domain.model.Currency
+import io.github.msh91.arcyto.details.impl.R
+import io.github.msh91.arcyto.core.design.R as R_design
 
 @Composable
 fun DetailsRoute(
     detailsRouteRequest: DetailsRouteRequest,
+    onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DetailsViewModel = arcytoViewModel(),
 ) {
@@ -41,33 +48,63 @@ fun DetailsRoute(
         viewModel.fetchCoinDetails(detailsRouteRequest)
     }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    DetailsScreen(uiState, viewModel::onCurrencySelected, modifier)
+    DetailsScreen(uiState, viewModel::onCurrencySelected, onNavigateBack, modifier)
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun DetailsScreen(
     uiState: DetailsUiState,
     onCurrencySelected: (Currency) -> Unit,
+    onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(colorScheme.background)
-    ) {
-        when (uiState) {
-            DetailsUiState.Loading -> ArcDetailsListLoading()
-            is DetailsUiState.Success -> DetailsScreen(uiState.detailsUiModel, onCurrencySelected)
-            is DetailsUiState.Error -> DetailsScreenError(uiState.message)
+    Column {
+        DetailsTopBar(onNavigateBack)
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .background(colorScheme.background)
+        ) {
+            when (uiState) {
+                DetailsUiState.Loading -> ArcDetailsListLoading()
+                is DetailsUiState.Success -> DetailsContent(uiState.detailsUiModel, onCurrencySelected)
+                is DetailsUiState.Error -> DetailsScreenError(uiState.message)
+            }
         }
     }
 }
 
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun DetailsTopBar(onNavigateBack: () -> Unit, modifier: Modifier = Modifier) {
+    TopAppBar(
+        title = {
+            Text(
+                text = stringResource(R.string.title_details_bitcoin),
+                color = colorScheme.onBackground,
+                modifier = Modifier.padding(horizontal = 4.dp),
+            )
+        },
+        navigationIcon = {
+            IconButton(onNavigateBack) {
+                Icon(
+                    painter = painterResource(R_design.drawable.ic_arrow_back),
+                    contentDescription = "Back",
+                    tint = colorScheme.onBackground
+                )
+            }
+        },
+        modifier = modifier,
+    )
+}
+
+@Composable
 fun DetailsScreenError(message: String, modifier: Modifier = Modifier) {
-    Box(modifier = modifier
-        .fillMaxSize()
-        .padding(16.dp)
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
         Text(
             text = message,
@@ -81,7 +118,7 @@ fun DetailsScreenError(message: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun DetailsScreen(
+private fun DetailsContent(
     uiModel: CoinDetailsUiModel,
     onCurrencySelected: (Currency) -> Unit,
     modifier: Modifier = Modifier,
@@ -222,6 +259,7 @@ fun DetailsScreenPreview() {
                     selectedMarketData = list.first(),
                 )
             ),
+            onNavigateBack = {},
             onCurrencySelected = {},
         )
     }
