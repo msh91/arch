@@ -24,6 +24,6 @@ fun ArcytoNavHost(
             navigateToDetails = { navController.navigate(it) }
         )
 
-        detailsScreen()
+        detailsScreen(onNavigateBack = { navController.popBackStack() })
     }
 }

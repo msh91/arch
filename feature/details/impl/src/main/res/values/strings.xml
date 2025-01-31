@@ -3,4 +3,5 @@
     <string name="title_current_price">"Current Price: "</string>
     <string name="title_market_cap">"Market Cap: "</string>
     <string name="title_total_volume">"Total Volume: "</string>
+    <string name="title_details_bitcoin">Bitcoin details</string>
 </resources>

@@ -33,8 +33,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import io.github.msh91.arcyto.core.design.component.ArcBitcoinIcon
 import io.github.msh91.arcyto.core.design.component.ArcHistoricalListLoading
-import io.github.msh91.arcyto.core.design.component.ArcPerformance
 import io.github.msh91.arcyto.core.design.component.ArcLiveCircle
+import io.github.msh91.arcyto.core.design.component.ArcPerformance
 import io.github.msh91.arcyto.core.design.component.PerformanceValue
 import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
 import io.github.msh91.arcyto.core.di.viewmodel.arcytoViewModel
