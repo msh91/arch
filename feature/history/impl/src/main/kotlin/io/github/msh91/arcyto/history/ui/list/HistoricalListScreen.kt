@@ -30,7 +30,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import io.github.msh91.arcyto.core.design.component.ArcBitcoinIcon
 import io.github.msh91.arcyto.core.design.component.ArcHistoricalListLoading
 import io.github.msh91.arcyto.core.design.component.ArcLiveCircle
@@ -113,7 +112,6 @@ private fun PriceList(
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 private fun Price(
     priceValueUiModel: PriceValueUiModel,

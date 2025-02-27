@@ -8,7 +8,14 @@ data class CoinDetailsApiModel(
     @SerialName("id") val id: String,
     @SerialName("symbol") val symbol: String,
     @SerialName("name") val name: String,
+    @SerialName("image") val image: CoinImageApiModel? = null,
     @SerialName("market_data") val marketDataApiModel: MarketDataApiModel,
+)
+
+@Serializable
+data class CoinImageApiModel(
+    @SerialName("thumb") val thumb: String? = null,
+    @SerialName("small") val small: String? = null,
 )
 
 @Serializable

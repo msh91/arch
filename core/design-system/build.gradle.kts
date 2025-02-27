@@ -17,4 +17,5 @@ dependencies {
     api(libs.androidx.ui.graphics)
     api(libs.androidx.ui.tooling)
     api(libs.androidx.ui.tooling.preview)
+    implementation(libs.coil.compose)
 }

@@ -27,7 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import io.github.msh91.arcyto.core.design.component.ArcBitcoinIcon
+import io.github.msh91.arcyto.core.design.component.ArcCryptoIcon
 import io.github.msh91.arcyto.core.design.component.ArcDetailsListLoading
 import io.github.msh91.arcyto.core.design.component.ArcSwitcher
 import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
@@ -140,7 +140,7 @@ private fun DetailsContent(
 private fun DetailsHeader(uiModel: CoinDetailsUiModel, modifier: Modifier = Modifier) {
     Column(modifier = modifier.padding(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-            ArcBitcoinIcon()
+            ArcCryptoIcon(imageUrl = uiModel.imageUrl)
             Text(
                 text = uiModel.date,
                 style = typography.titleMedium,
@@ -255,6 +255,7 @@ fun DetailsScreenPreview() {
                     symbol = "BTC",
                     date = "27 Jan 2021",
                     currentPriceDefault = "$130,000",
+                    imageUrl = "https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png",
                     marketDataList = list,
                     selectedMarketData = list.first(),
                 )

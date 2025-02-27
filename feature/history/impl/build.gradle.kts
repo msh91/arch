@@ -19,7 +19,6 @@ dependencies {
 
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.remote.provider)
-    implementation(libs.glide.compose)
     implementation(libs.navigation.compose)
 
     api(projects.feature.history.api)
