@@ -21,7 +21,7 @@ dependencies {
 
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.remote.provider)
-    implementation(libs.glide.compose)
+    implementation(libs.coil.compose)
     implementation(libs.navigation.compose)
 
     testImplementation(projects.core.tooling.test)

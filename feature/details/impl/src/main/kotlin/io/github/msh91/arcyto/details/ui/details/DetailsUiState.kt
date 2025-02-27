@@ -15,6 +15,7 @@ data class CoinDetailsUiModel(
     val symbol: String,
     val date: String,
     val currentPriceDefault: String,
+    val imageUrl: String?,
     val marketDataList: List<MarketDataUiModel>,
     val selectedMarketData: MarketDataUiModel,
 )

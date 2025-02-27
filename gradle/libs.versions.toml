@@ -6,6 +6,7 @@ androidxTest = "1.6.1"
 androidxTestExt = "1.2.1"
 agp = "8.8.1"
 anvil = "2.5.0-beta11"
+coil = "2.6.0"
 composeBom = "2025.02.00"
 coreKtx = "1.15.0"
 coroutines = "1.9.0"
@@ -18,7 +19,6 @@ junitVersion = "1.2.1"
 kotlin = "2.0.21"
 kotlinxSerialization = "1.7.3"
 lifecycle = "2.8.7"
-glide = "1.0.0-beta01"
 loggingInterceptor = "4.12.0"
 mockk = "1.13.8"
 navigation = "2.8.7"
@@ -44,13 +44,13 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
-glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide" }
 google-truth = { group = "com.google.truth", name = "truth", version.ref = "googleTruth" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }

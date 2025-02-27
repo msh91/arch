@@ -135,6 +135,7 @@ class DetailsViewModelTest {
             id = "bitcoin",
             name = "Bitcoin",
             symbol = "btc",
+            imageUrl = "url",
             marketDataList = listOf(
                 MarketData(
                     currency = Currency.EUR,
@@ -187,6 +188,7 @@ class DetailsViewModelTest {
             symbol = "btc",
             date = "Today",
             currentPriceDefault = "€1.00",
+            imageUrl = "url",
             marketDataList = marketDateList,
             selectedMarketData = marketDateList.first { it.currency == defaultCurrency },
         )

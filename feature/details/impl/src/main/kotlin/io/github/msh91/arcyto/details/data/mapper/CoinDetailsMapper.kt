@@ -11,6 +11,7 @@ fun CoinDetailsApiModel.toDomainModel() = CoinDetails(
     id = id,
     name = name,
     symbol = symbol,
+    imageUrl = image?.small,
     marketDataList = marketDataApiModel.toDomainModel(),
 )
 

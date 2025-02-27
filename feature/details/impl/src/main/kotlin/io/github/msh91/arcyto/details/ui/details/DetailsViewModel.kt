@@ -78,6 +78,7 @@ class DetailsViewModel @Inject constructor(
                 symbol = symbol,
                 date = formatDateUseCase.invoke(request.date, DateFormat.MONTH_DAY, true),
                 currentPriceDefault = defaultData.currentPrice,
+                imageUrl = imageUrl,
                 marketDataList = marketDataList.map { it.toUiModel() },
                 selectedMarketData = defaultData,
             )
