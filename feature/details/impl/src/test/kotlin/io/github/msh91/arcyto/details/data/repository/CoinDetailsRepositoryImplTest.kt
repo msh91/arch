@@ -55,5 +55,6 @@ class CoinDetailsRepositoryImplTest {
             MarketData(Currency.USD, 2.0, 20.0, 200.0),
             MarketData(Currency.GBP, 3.0, 30.0, 300.0),
         ),
+        imageUrl = null,
     )
 }
