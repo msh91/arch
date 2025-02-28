@@ -17,6 +17,7 @@ import io.github.msh91.arcyto.details.domain.model.Currency
 import io.github.msh91.arcyto.details.domain.model.MarketData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,15 +32,16 @@ class DetailsViewModel @Inject constructor(
     private val formatDateUseCase: FormatDateUseCase,
     private val errorMapper: CompositeErrorMapper,
 ) : ViewModel() {
+
     private val _uiState = MutableStateFlow<DetailsUiState>(DetailsUiState.Loading)
     val uiState = _uiState.asStateFlow()
-    private var coinDetails: CoinDetails? = null
+
     private lateinit var request: DetailsRouteRequest
 
     fun fetchCoinDetails(request: DetailsRouteRequest) {
         this.request = request
         viewModelScope.launch {
-            val date = formatDateUseCase.invoke(request.date, DateFormat.DAY_MONTH_YEAR, false)
+            val date = formatDateUseCase(request.date, DateFormat.DAY_MONTH_YEAR, false)
             detailsRepository
                 .getCoinDetails(CoinDetailsRequest(request.coinId, date, false))
                 .fold(onSuccess = ::onCoinDetailsReceived, onFailure = ::onErrorReceived)
@@ -47,36 +49,34 @@ class DetailsViewModel @Inject constructor(
     }
 
     private fun onCoinDetailsReceived(coinDetails: CoinDetails) {
-        this.coinDetails = coinDetails
-        _uiState.value = coinDetails.toUiState()
+        _uiState.update { coinDetails.toUiState() }
     }
 
     private fun onErrorReceived(throwable: Throwable) {
-        _uiState.value = DetailsUiState.Error(
-            message = errorMapper.getErrorMessage(throwable)
-        )
+        _uiState.update { DetailsUiState.Error(errorMapper.getErrorMessage(throwable)) }
     }
 
     fun onCurrencySelected(currency: Currency) {
-        val coinDetails = this.coinDetails ?: return
-        val currentState = _uiState.value
-        if (currentState is DetailsUiState.Success) {
-            val selectedMarketData = coinDetails.marketDataList.first { it.currency == currency }
-            _uiState.value = currentState.copy(
-                detailsUiModel = currentState.detailsUiModel.copy(
-                    selectedMarketData = selectedMarketData.toUiModel()
+        (_uiState.value as? DetailsUiState.Success)?.let { currentState ->
+            val selectedMarketData = currentState.coinDetails.marketDataList.first { it.currency == currency }
+            _uiState.update {
+                currentState.copy(
+                    detailsUiModel = currentState.detailsUiModel.copy(
+                        selectedMarketData = selectedMarketData.toUiModel()
+                    )
                 )
-            )
+            }
         }
     }
 
     private fun CoinDetails.toUiState(): DetailsUiState {
         val defaultData = marketDataList.first().toUiModel()
         return DetailsUiState.Success(
-            CoinDetailsUiModel(
+            coinDetails = this, // Store the CoinDetails in the Success state
+            detailsUiModel = CoinDetailsUiModel(
                 name = name,
                 symbol = symbol,
-                date = formatDateUseCase.invoke(request.date, DateFormat.MONTH_DAY, true),
+                date = formatDateUseCase(request.date, DateFormat.MONTH_DAY, true),
                 currentPriceDefault = defaultData.currentPrice,
                 imageUrl = imageUrl,
                 marketDataList = marketDataList.map { it.toUiModel() },
@@ -89,9 +89,9 @@ class DetailsViewModel @Inject constructor(
         return MarketDataUiModel(
             currency = currency,
             currencyTitle = currency.key.uppercase(),
-            currentPrice = formatPriceUseCase.invoke(currentPrice, currency.key),
-            marketCap = formatPriceUseCase.invoke(marketCap, currency.key),
-            totalVolume = formatPriceUseCase.invoke(totalVolume, currency.key),
+            currentPrice = formatPriceUseCase(currentPrice, currency.key),
+            marketCap = formatPriceUseCase(marketCap, currency.key),
+            totalVolume = formatPriceUseCase(totalVolume, currency.key),
         )
     }
 }

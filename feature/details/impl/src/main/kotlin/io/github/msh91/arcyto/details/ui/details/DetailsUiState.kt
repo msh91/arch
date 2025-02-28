@@ -1,11 +1,12 @@
 package io.github.msh91.arcyto.details.ui.details
 
+import io.github.msh91.arcyto.details.domain.model.CoinDetails
 import io.github.msh91.arcyto.details.domain.model.Currency
 
 sealed interface DetailsUiState {
     data object Loading : DetailsUiState
 
-    data class Success(val detailsUiModel: CoinDetailsUiModel) : DetailsUiState
+    data class Success(val coinDetails: CoinDetails, val detailsUiModel: CoinDetailsUiModel) : DetailsUiState
 
     data class Error(val message: String) : DetailsUiState
 }
