@@ -33,6 +33,7 @@ import io.github.msh91.arcyto.core.design.component.ArcSwitcher
 import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
 import io.github.msh91.arcyto.core.di.viewmodel.arcytoViewModel
 import io.github.msh91.arcyto.details.api.navigation.DetailsRouteRequest
+import io.github.msh91.arcyto.details.domain.model.CoinDetails
 import io.github.msh91.arcyto.details.domain.model.Currency
 import io.github.msh91.arcyto.details.impl.R
 import io.github.msh91.arcyto.core.design.R as R_design
@@ -250,7 +251,14 @@ fun DetailsScreenPreview() {
         )
         DetailsScreen(
             uiState = DetailsUiState.Success(
-                CoinDetailsUiModel(
+                coinDetails = CoinDetails(
+                    id = "btc",
+                    name = "Bitcoin",
+                    symbol = "BTC",
+                    imageUrl = "https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png",
+                    marketDataList = emptyList(),
+                ),
+                detailsUiModel = CoinDetailsUiModel(
                     name = "Bitcoin",
                     symbol = "BTC",
                     date = "27 Jan 2021",

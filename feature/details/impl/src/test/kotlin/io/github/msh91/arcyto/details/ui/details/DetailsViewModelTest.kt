@@ -84,7 +84,7 @@ class DetailsViewModelTest {
             sut.fetchCoinDetails(DetailsRouteRequest("bitcoin", date))
 
             // THEN
-            assertThat(awaitItem()).isEqualTo(Success(getUiModel()))
+            assertThat(awaitItem()).isEqualTo(Success(coinDetails, getUiModel()))
         }
     }
 
@@ -118,14 +118,14 @@ class DetailsViewModelTest {
         sut.uiState.test {
             assertThat(awaitItem()).isEqualTo(Loading)
             sut.fetchCoinDetails(DetailsRouteRequest("bitcoin", date))
-            assertThat(awaitItem()).isEqualTo(Success(getUiModel()))
+            assertThat(awaitItem()).isEqualTo(Success(coinDetails, getUiModel()))
 
             Currency.entries.asReversed().forEach { currency ->
                 // WHEN
                 sut.onCurrencySelected(currency)
 
                 // THEN
-                assertThat(awaitItem()).isEqualTo(Success(getUiModel(currency)))
+                assertThat(awaitItem()).isEqualTo(Success(coinDetails, getUiModel(currency)))
             }
         }
     }
