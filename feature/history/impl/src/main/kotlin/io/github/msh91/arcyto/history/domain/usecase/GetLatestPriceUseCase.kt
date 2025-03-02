@@ -13,7 +13,7 @@ import kotlinx.coroutines.isActive
 import javax.inject.Inject
 
 interface GetLatestPriceUseCase {
-    suspend operator fun invoke(request: LatestPriceRequest): Flow<Result<LatestPrice>>
+    operator fun invoke(request: LatestPriceRequest): Flow<Result<LatestPrice>>
 }
 
 /**
@@ -24,7 +24,7 @@ class GetLatestPriceUseCaseImpl @Inject constructor(
     private val historicalChartRepository: HistoricalChartRepository,
 ) : GetLatestPriceUseCase {
 
-    override suspend fun invoke(request: LatestPriceRequest): Flow<Result<LatestPrice>> {
+    override fun invoke(request: LatestPriceRequest): Flow<Result<LatestPrice>> {
         // Fetch the latest price in an interval provided by the request
         return flow {
             while (currentCoroutineContext().isActive) {

@@ -21,10 +21,12 @@ import io.github.msh91.arcyto.history.domain.model.LatestPriceRequest
 import io.github.msh91.arcyto.history.domain.usecase.GetHistoricalChartUseCase
 import io.github.msh91.arcyto.history.domain.usecase.GetLatestPriceUseCase
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.abs
@@ -45,7 +47,7 @@ data class HistoricalListConfig(
     val pricePrecision: Int = 2,
     val priceUpdateIntervalMs: Long = 60_000L,
     val historicalDays: Int = 15,
-    val historicalInterval: String = "daily"
+    val historicalInterval: String = "daily",
 )
 
 /**
@@ -66,82 +68,59 @@ class HistoricalListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val config = HistoricalListConfig()
-    
-    private val _uiState = MutableStateFlow<HistoryUiState>(HistoryUiState.Loading)
-    val uiState = _uiState.asStateFlow()
-    
+
+    val uiState: StateFlow<HistoryUiState>
+
     private val _events = viewModelScope.eventsFlow<HistoricalListUiEvent>()
     val events: Flow<HistoricalListUiEvent> = _events
 
     init {
-        fetchHistoricalList()
-        observeLatestPrice()
+        uiState = combine(
+            flow { emit(fetchHistoricalList()) },
+            getLatestPriceFlow()
+        ) { historicalList, latestPrice ->
+            HistoryUiState.Success(latestPrice, historicalList)
+        }.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            HistoryUiState.Loading,
+        )
     }
 
-    private fun observeLatestPrice() {
-        viewModelScope.launch {
-            val request = LatestPriceRequest(
+    private suspend fun fetchHistoricalList(): List<PriceValueUiModel> = getHistoricalChartUseCase
+        .invoke(
+            request = HistoricalChartRequest(
+                id = config.coinId,
+                currency = config.currency,
+                days = config.historicalDays,
+                interval = config.historicalInterval,
+                precision = config.pricePrecision
+            )
+        )
+        .getOrElse {
+            handleError(it)
+            emptyList()
+        }
+        .toUiModel()
+
+    private fun getLatestPriceFlow(): Flow<PriceValueUiModel?> = getLatestPriceUseCase
+        .invoke(
+            request = LatestPriceRequest(
                 coinId = config.coinId,
                 currency = config.currency,
                 precision = config.pricePrecision,
                 intervalMs = config.priceUpdateIntervalMs,
             )
-            getLatestPriceUseCase(request)
-                .collectLatest { result ->
-                    result.fold(
-                        onSuccess = ::updateLatestPrice,
-                        onFailure = ::handleError
-                    )
+        )
+        .map {
+            it.map { it.toUiModel() }
+                .getOrElse {
+                    handleError(it)
+                    (uiState.value as? HistoryUiState.Success)?.currentPriceUiModel
                 }
         }
-    }
 
-    private fun updateLatestPrice(latestPrice: LatestPrice) {
-        _uiState.update { currentState ->
-            when (currentState) {
-                is HistoryUiState.Success -> currentState.copy(
-                    currentPriceUiModel = latestPrice.toUiModel()
-                )
-                HistoryUiState.Loading -> HistoryUiState.Success(
-                    currentPriceUiModel = latestPrice.toUiModel(),
-                    historicalValueUiModels = emptyList()
-                )
-            }
-        }
-    }
-
-    private fun fetchHistoricalList() {
-        viewModelScope.launch {
-            getHistoricalChartUseCase(
-                HistoricalChartRequest(
-                    id = config.coinId,
-                    currency = config.currency,
-                    days = config.historicalDays,
-                    interval = config.historicalInterval,
-                    precision = config.pricePrecision
-                )
-            ).fold(
-                onSuccess = ::updateHistoricalList,
-                onFailure = ::handleError
-            )
-        }
-    }
-
-    private fun updateHistoricalList(historicalPrices: List<HistoricalPrice>) {
-        _uiState.update { currentState ->
-            when (currentState) {
-                is HistoryUiState.Success -> currentState.copy(
-                    historicalValueUiModels = historicalPrices.toUiModel()
-                )
-                HistoryUiState.Loading -> HistoryUiState.Success(
-                    currentPriceUiModel = null,
-                    historicalValueUiModels = historicalPrices.toUiModel()
-                )
-            }
-        }
-    }
-
-    private fun LatestPrice.toUiModel(): PriceValueUiModel = 
+    private fun LatestPrice.toUiModel(): PriceValueUiModel =
         createPriceValueUiModel(dateProvider.getCurrentDate(), price, changePercentage)
 
     private fun List<HistoricalPrice>.toUiModel(): List<PriceValueUiModel> = this
@@ -150,9 +129,9 @@ class HistoricalListViewModel @Inject constructor(
         .map { createPriceValueUiModel(it.date, it.value, it.changePercentage) }
 
     private fun createPriceValueUiModel(
-        date: Long, 
-        value: Double, 
-        changePercentage: Double?
+        date: Long,
+        value: Double,
+        changePercentage: Double?,
     ): PriceValueUiModel = PriceValueUiModel(
         date = date,
         formattedDate = formatDateUseCase(date, DateFormat.MONTH_DAY, true),
@@ -168,13 +147,6 @@ class HistoricalListViewModel @Inject constructor(
     private fun handleError(throwable: Throwable) {
         viewModelScope.launch {
             _events.emit(HistoricalListUiEvent.ShowSnackbar(errorMapper.getErrorMessage(throwable)))
-            
-            if (_uiState.value is HistoryUiState.Loading) {
-                _uiState.value = HistoryUiState.Success(
-                    currentPriceUiModel = null,
-                    historicalValueUiModels = emptyList()
-                )
-            }
         }
     }
 
