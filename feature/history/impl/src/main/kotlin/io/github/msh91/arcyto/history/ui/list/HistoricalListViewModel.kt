@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -76,32 +76,36 @@ class HistoricalListViewModel @Inject constructor(
 
     init {
         uiState = combine(
-            flow { emit(fetchHistoricalList()) },
+            getHistoricalListFlow(),
             getLatestPriceFlow()
         ) { historicalList, latestPrice ->
             HistoryUiState.Success(latestPrice, historicalList)
-        }.stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            HistoryUiState.Loading,
-        )
+        }
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5000),
+                HistoryUiState.Loading,
+            )
     }
 
-    private suspend fun fetchHistoricalList(): List<PriceValueUiModel> = getHistoricalChartUseCase
-        .invoke(
-            request = HistoricalChartRequest(
-                id = config.coinId,
-                currency = config.currency,
-                days = config.historicalDays,
-                interval = config.historicalInterval,
-                precision = config.pricePrecision
-            )
-        )
-        .getOrElse {
-            handleError(it)
-            emptyList()
+    private fun getHistoricalListFlow() = flowOf(Unit)
+        .map {
+            getHistoricalChartUseCase
+                .invoke(
+                    request = HistoricalChartRequest(
+                        id = config.coinId,
+                        currency = config.currency,
+                        days = config.historicalDays,
+                        interval = config.historicalInterval,
+                        precision = config.pricePrecision
+                    )
+                )
+                .getOrElse { throwable ->
+                    handleError(throwable)
+                    emptyList()
+                }
         }
-        .toUiModel()
+        .map { historicalPrices -> historicalPrices.toUiModel() }
 
     private fun getLatestPriceFlow(): Flow<PriceValueUiModel?> = getLatestPriceUseCase
         .invoke(
@@ -112,10 +116,11 @@ class HistoricalListViewModel @Inject constructor(
                 intervalMs = config.priceUpdateIntervalMs,
             )
         )
-        .map {
-            it.map { it.toUiModel() }
-                .getOrElse {
-                    handleError(it)
+        .map { result ->
+            result
+                .map { latestPrice -> latestPrice.toUiModel() }
+                .getOrElse { throwable ->
+                    handleError(throwable)
                     (uiState.value as? HistoryUiState.Success)?.currentPriceUiModel
                 }
         }
