@@ -21,7 +21,7 @@ fun ArcytoNavHost(
     ) {
         historicalListScreen(
             onShowSnackbar = onShowSnackbar,
-            navigateToDetails = { navController.navigate(it) }
+            navigateToDetails = { navController.navigate(it) },
         )
 
         detailsScreen(onNavigateBack = { navController.popBackStack() })

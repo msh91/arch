@@ -63,9 +63,10 @@ internal fun DetailsScreen(
     Column {
         DetailsTopBar(onNavigateBack)
         Box(
-            modifier = modifier
-                .fillMaxSize()
-                .background(colorScheme.background)
+            modifier =
+                modifier
+                    .fillMaxSize()
+                    .background(colorScheme.background),
         ) {
             when (uiState) {
                 DetailsUiState.Loading -> ArcDetailsListLoading()
@@ -78,7 +79,10 @@ internal fun DetailsScreen(
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun DetailsTopBar(onNavigateBack: () -> Unit, modifier: Modifier = Modifier) {
+private fun DetailsTopBar(
+    onNavigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     TopAppBar(
         title = {
             Text(
@@ -92,7 +96,7 @@ private fun DetailsTopBar(onNavigateBack: () -> Unit, modifier: Modifier = Modif
                 Icon(
                     painter = painterResource(R_design.drawable.ic_arrow_back),
                     contentDescription = "Back",
-                    tint = colorScheme.onBackground
+                    tint = colorScheme.onBackground,
                 )
             }
         },
@@ -101,11 +105,15 @@ private fun DetailsTopBar(onNavigateBack: () -> Unit, modifier: Modifier = Modif
 }
 
 @Composable
-fun DetailsScreenError(message: String, modifier: Modifier = Modifier) {
+fun DetailsScreenError(
+    message: String,
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(16.dp),
     ) {
         Text(
             text = message,
@@ -131,14 +139,17 @@ private fun DetailsContent(
             selectedItem = uiModel.selectedMarketData,
             itemTitle = { it.currencyTitle },
             onItemSelected = { onCurrencySelected(it.currency) },
-            modifier = Modifier.padding(horizontal = 8.dp)
+            modifier = Modifier.padding(horizontal = 8.dp),
         )
         MarketDataContent(uiModel.selectedMarketData)
     }
 }
 
 @Composable
-private fun DetailsHeader(uiModel: CoinDetailsUiModel, modifier: Modifier = Modifier) {
+private fun DetailsHeader(
+    uiModel: CoinDetailsUiModel,
+    modifier: Modifier = Modifier,
+) {
     Column(modifier = modifier.padding(16.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
             ArcCryptoIcon(imageUrl = uiModel.imageUrl)
@@ -148,9 +159,10 @@ private fun DetailsHeader(uiModel: CoinDetailsUiModel, modifier: Modifier = Modi
                 color = colorScheme.onBackground,
                 fontWeight = Bold,
                 textAlign = TextAlign.End,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 4.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(start = 4.dp),
             )
         }
         Row(modifier = Modifier.padding(top = 8.dp)) {
@@ -159,16 +171,18 @@ private fun DetailsHeader(uiModel: CoinDetailsUiModel, modifier: Modifier = Modi
                 style = typography.titleLarge,
                 fontWeight = Bold,
                 color = colorScheme.onBackground,
-                modifier = Modifier
-                    .alignByBaseline()
+                modifier =
+                    Modifier
+                        .alignByBaseline(),
             )
             Text(
                 text = "(${uiModel.symbol})",
                 style = typography.labelSmall,
                 color = colorScheme.onBackground,
-                modifier = Modifier
-                    .padding(start = 4.dp)
-                    .alignByBaseline(),
+                modifier =
+                    Modifier
+                        .padding(start = 4.dp)
+                        .alignByBaseline(),
             )
         }
         Text(
@@ -226,48 +240,52 @@ fun MarketDataContent(uiModel: MarketDataUiModel) {
 @Composable
 fun DetailsScreenPreview() {
     ArcytoTheme {
-        val list = listOf(
-            MarketDataUiModel(
-                currency = Currency.USD,
-                currencyTitle = "USD",
-                currentPrice = "$130,000",
-                marketCap = "$2.6bn",
-                totalVolume = "$1.2bn",
-            ),
-            MarketDataUiModel(
-                currency = Currency.EUR,
-                currencyTitle = "EUR",
-                currentPrice = "EUR 110,000",
-                marketCap = "$2.2bn",
-                totalVolume = "$1.1bn",
-            ),
-            MarketDataUiModel(
-                currency = Currency.GBP,
-                currencyTitle = "GBP",
-                currentPrice = "GBP 90,000",
-                marketCap = "$1.8bn",
-                totalVolume = "$0.9bn",
-            ),
-        )
-        DetailsScreen(
-            uiState = DetailsUiState.Success(
-                coinDetails = CoinDetails(
-                    id = "btc",
-                    name = "Bitcoin",
-                    symbol = "BTC",
-                    imageUrl = "https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png",
-                    marketDataList = emptyList(),
+        val list =
+            listOf(
+                MarketDataUiModel(
+                    currency = Currency.USD,
+                    currencyTitle = "USD",
+                    currentPrice = "$130,000",
+                    marketCap = "$2.6bn",
+                    totalVolume = "$1.2bn",
                 ),
-                detailsUiModel = CoinDetailsUiModel(
-                    name = "Bitcoin",
-                    symbol = "BTC",
-                    date = "27 Jan 2021",
-                    currentPriceDefault = "$130,000",
-                    imageUrl = "https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png",
-                    marketDataList = list,
-                    selectedMarketData = list.first(),
-                )
-            ),
+                MarketDataUiModel(
+                    currency = Currency.EUR,
+                    currencyTitle = "EUR",
+                    currentPrice = "EUR 110,000",
+                    marketCap = "$2.2bn",
+                    totalVolume = "$1.1bn",
+                ),
+                MarketDataUiModel(
+                    currency = Currency.GBP,
+                    currencyTitle = "GBP",
+                    currentPrice = "GBP 90,000",
+                    marketCap = "$1.8bn",
+                    totalVolume = "$0.9bn",
+                ),
+            )
+        DetailsScreen(
+            uiState =
+                DetailsUiState.Success(
+                    coinDetails =
+                        CoinDetails(
+                            id = "btc",
+                            name = "Bitcoin",
+                            symbol = "BTC",
+                            imageUrl = "https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png",
+                            marketDataList = emptyList(),
+                        ),
+                    detailsUiModel =
+                        CoinDetailsUiModel(
+                            name = "Bitcoin",
+                            symbol = "BTC",
+                            date = "27 Jan 2021",
+                            currentPriceDefault = "$130,000",
+                            imageUrl = "https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png",
+                            marketDataList = list,
+                            selectedMarketData = list.first(),
+                        ),
+                ),
             onNavigateBack = {},
             onCurrencySelected = {},
         )

@@ -11,9 +11,6 @@ import retrofit2.create
 @Module
 @ContributesTo(AppScope::class)
 class HistoryModule {
-
     @Provides
-    fun provideHistoricalRemoteDataSource(retrofit: Retrofit): HistoricalRemoteDataSource {
-        return retrofit.create()
-    }
+    fun provideHistoricalRemoteDataSource(retrofit: Retrofit): HistoricalRemoteDataSource = retrofit.create()
 }

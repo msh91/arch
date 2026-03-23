@@ -24,37 +24,42 @@ class CoinDetailsRepositoryImplTest {
     }
 
     @Test
-    fun `should get coin details`() = runTest {
-        // GIVEN
-        val request = CoinDetailsRequest("id", "date", false)
-        coEvery { dataSource.getCoinDetails("id", "date", false) } returns Result.success(detailsApiModel)
+    fun `should get coin details`() =
+        runTest {
+            // GIVEN
+            val request = CoinDetailsRequest("id", "date", false)
+            coEvery { dataSource.getCoinDetails("id", "date", false) } returns Result.success(detailsApiModel)
 
-        // WHEN
-        val result = sut.getCoinDetails(request)
+            // WHEN
+            val result = sut.getCoinDetails(request)
 
-        // THEN
-        assertThat(result).isEqualTo(Result.success(coinDetails))
-    }
+            // THEN
+            assertThat(result).isEqualTo(Result.success(coinDetails))
+        }
 
-    private val detailsApiModel = CoinDetailsApiModel(
-        id = "bitcoin",
-        name = "Bitcoin",
-        symbol = "btc",
-        marketDataApiModel = MarketDataApiModel(
-            currentPrice = mapOf("eur" to 1.0, "usd" to 2.0, "gbp" to 3.0),
-            marketCap = mapOf("eur" to 10.0, "usd" to 20.0, "gbp" to 30.0),
-            totalVolume = mapOf("eur" to 100.0, "usd" to 200.0, "gbp" to 300.0),
-        ),
-    )
-    private val coinDetails = CoinDetails(
-        id = "bitcoin",
-        name = "Bitcoin",
-        symbol = "btc",
-        marketDataList = listOf(
-            MarketData(Currency.EUR, 1.0, 10.0, 100.0),
-            MarketData(Currency.USD, 2.0, 20.0, 200.0),
-            MarketData(Currency.GBP, 3.0, 30.0, 300.0),
-        ),
-        imageUrl = null,
-    )
+    private val detailsApiModel =
+        CoinDetailsApiModel(
+            id = "bitcoin",
+            name = "Bitcoin",
+            symbol = "btc",
+            marketDataApiModel =
+                MarketDataApiModel(
+                    currentPrice = mapOf("eur" to 1.0, "usd" to 2.0, "gbp" to 3.0),
+                    marketCap = mapOf("eur" to 10.0, "usd" to 20.0, "gbp" to 30.0),
+                    totalVolume = mapOf("eur" to 100.0, "usd" to 200.0, "gbp" to 300.0),
+                ),
+        )
+    private val coinDetails =
+        CoinDetails(
+            id = "bitcoin",
+            name = "Bitcoin",
+            symbol = "btc",
+            marketDataList =
+                listOf(
+                    MarketData(Currency.EUR, 1.0, 10.0, 100.0),
+                    MarketData(Currency.USD, 2.0, 20.0, 200.0),
+                    MarketData(Currency.GBP, 3.0, 30.0, 300.0),
+                ),
+            imageUrl = null,
+        )
 }

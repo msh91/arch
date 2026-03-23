@@ -17,7 +17,10 @@ import androidx.compose.ui.unit.dp
 import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
 
 @Composable
-fun ArcHistoricalListLoading(modifier: Modifier = Modifier, count: Int = 8) {
+fun ArcHistoricalListLoading(
+    modifier: Modifier = Modifier,
+    count: Int = 8,
+) {
     LazyVerticalGrid(columns = GridCells.Fixed(2), modifier = modifier) {
         items(count, key = { it }) {
             LoadingItem()
@@ -26,19 +29,19 @@ fun ArcHistoricalListLoading(modifier: Modifier = Modifier, count: Int = 8) {
 }
 
 @Composable
-private fun LoadingItem(
-    modifier: Modifier = Modifier,
-) {
+private fun LoadingItem(modifier: Modifier = Modifier) {
     Card(
         elevation = cardElevation(defaultElevation = 4.dp, pressedElevation = 8.dp),
         colors = cardColors(containerColor = colorScheme.background),
-        modifier = modifier
-            .padding(vertical = 8.dp, horizontal = 8.dp),
+        modifier =
+            modifier
+                .padding(vertical = 8.dp, horizontal = 8.dp),
     ) {
         ShimmerEffect(
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f),
         )
     }
 }

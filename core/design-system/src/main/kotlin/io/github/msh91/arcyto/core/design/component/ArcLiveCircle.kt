@@ -2,7 +2,13 @@ package io.github.msh91.arcyto.core.design.component
 
 import android.content.res.Configuration
 import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -23,32 +29,38 @@ fun ArcLiveCircle(modifier: Modifier = Modifier) {
     val circleRadius by infiniteTransition.animateFloat(
         initialValue = 2f,
         targetValue = 24f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 800, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Restart
-        )
+        animationSpec =
+            infiniteRepeatable(
+                animation = tween(durationMillis = 800, easing = FastOutSlowInEasing),
+                repeatMode = RepeatMode.Restart,
+            ),
     )
 
     val color by infiniteTransition.animateColor(
         initialValue = colorScheme.secondary.copy(alpha = 0.1f),
         targetValue = colorScheme.secondary,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 800, easing = LinearEasing),
-            repeatMode = RepeatMode.Restart
-        )
+        animationSpec =
+            infiniteRepeatable(
+                animation = tween(durationMillis = 800, easing = LinearEasing),
+                repeatMode = RepeatMode.Restart,
+            ),
     )
 
     CircleAnimation(circleRadius, color, modifier)
 }
 
 @Composable
-fun CircleAnimation(circleRadius: Float, color: Color, modifier: Modifier = Modifier) {
+fun CircleAnimation(
+    circleRadius: Float,
+    color: Color,
+    modifier: Modifier = Modifier,
+) {
     Box(modifier = modifier) {
         Canvas(modifier = Modifier.size(24.dp)) {
             drawCircle(
                 color = color,
                 radius = circleRadius,
-                center = Offset(size.width / 2, size.height / 2)
+                center = Offset(size.width / 2, size.height / 2),
             )
         }
     }

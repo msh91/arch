@@ -3,11 +3,11 @@ package io.github.msh91.arcyto.di
 import android.content.Context
 import com.squareup.anvil.annotations.ContributesSubcomponent
 import com.squareup.anvil.annotations.ContributesTo
-import io.github.msh91.arcyto.ui.MainActivity
 import io.github.msh91.arcyto.core.di.component.AppComponentProvider
 import io.github.msh91.arcyto.core.di.scope.AppScope
 import io.github.msh91.arcyto.core.di.scope.MainScreenScope
 import io.github.msh91.arcyto.core.di.scope.SingleIn
+import io.github.msh91.arcyto.ui.MainActivity
 
 @SingleIn(MainScreenScope::class)
 @ContributesSubcomponent(

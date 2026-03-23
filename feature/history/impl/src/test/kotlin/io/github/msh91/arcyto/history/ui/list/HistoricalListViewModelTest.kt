@@ -15,8 +15,10 @@ import io.github.msh91.arcyto.history.domain.model.LatestPrice
 import io.github.msh91.arcyto.history.domain.model.LatestPriceRequest
 import io.github.msh91.arcyto.history.domain.usecase.GetHistoricalChartUseCase
 import io.github.msh91.arcyto.history.domain.usecase.GetLatestPriceUseCase
-import io.github.msh91.arcyto.history.ui.list.HistoricalListUiEvent.*
-import io.github.msh91.arcyto.history.ui.list.HistoryUiState.*
+import io.github.msh91.arcyto.history.ui.list.HistoricalListUiEvent.NavigateToDetails
+import io.github.msh91.arcyto.history.ui.list.HistoricalListUiEvent.ShowSnackbar
+import io.github.msh91.arcyto.history.ui.list.HistoryUiState.Loading
+import io.github.msh91.arcyto.history.ui.list.HistoryUiState.Success
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -41,25 +43,28 @@ class HistoricalListViewModelTest {
     private val getHistoricalChartUseCase: GetHistoricalChartUseCase = mockk()
     private val getLatestPriceUseCase: GetLatestPriceUseCase = mockk()
     private val errorMapper: CompositeErrorMapper = mockk()
-    private val formatDateUseCase: FormatDateUseCase = mockk {
-        every { this@mockk.invoke(100, DateFormat.MONTH_DAY, true) } returns "100"
-        every { this@mockk.invoke(200, DateFormat.MONTH_DAY, true) } returns "200"
-        every { this@mockk.invoke(300, DateFormat.MONTH_DAY, true) } returns "300"
-        every { this@mockk.invoke(400, DateFormat.MONTH_DAY, true) } returns "400"
-        every { this@mockk.invoke(500, DateFormat.MONTH_DAY, true) } returns "500"
-        every { this@mockk.invoke(600, DateFormat.MONTH_DAY, true) } returns "600"
-    }
-    private val formatPriceUseCase: FormatPriceUseCase = mockk {
-        every { this@mockk.invoke(1000.0, "eur") } returns "1000.00"
-        every { this@mockk.invoke(2000.0, "eur") } returns "2000.00"
-        every { this@mockk.invoke(3000.0, "eur") } returns "3000.00"
-        every { this@mockk.invoke(4000.0, "eur") } returns "4000.00"
-        every { this@mockk.invoke(5000.0, "eur") } returns "5000.00"
-        every { this@mockk.invoke(6000.0, "eur") } returns "6000.00"
-    }
-    private val dateProvider: DateProvider = mockk {
-        every { getCurrentDate() } returns 100
-    }
+    private val formatDateUseCase: FormatDateUseCase =
+        mockk {
+            every { this@mockk.invoke(100, DateFormat.MONTH_DAY, true) } returns "100"
+            every { this@mockk.invoke(200, DateFormat.MONTH_DAY, true) } returns "200"
+            every { this@mockk.invoke(300, DateFormat.MONTH_DAY, true) } returns "300"
+            every { this@mockk.invoke(400, DateFormat.MONTH_DAY, true) } returns "400"
+            every { this@mockk.invoke(500, DateFormat.MONTH_DAY, true) } returns "500"
+            every { this@mockk.invoke(600, DateFormat.MONTH_DAY, true) } returns "600"
+        }
+    private val formatPriceUseCase: FormatPriceUseCase =
+        mockk {
+            every { this@mockk.invoke(1000.0, "eur") } returns "1000.00"
+            every { this@mockk.invoke(2000.0, "eur") } returns "2000.00"
+            every { this@mockk.invoke(3000.0, "eur") } returns "3000.00"
+            every { this@mockk.invoke(4000.0, "eur") } returns "4000.00"
+            every { this@mockk.invoke(5000.0, "eur") } returns "5000.00"
+            every { this@mockk.invoke(6000.0, "eur") } returns "6000.00"
+        }
+    private val dateProvider: DateProvider =
+        mockk {
+            every { getCurrentDate() } returns 100
+        }
     private lateinit var sut: HistoricalListViewModel
 
     private val testDispatcher = UnconfinedTestDispatcher()
@@ -82,178 +87,185 @@ class HistoricalListViewModelTest {
     }
 
     @Test
-    fun `verify initial state is Loading`() = runTest {
-        // Given
-        setupSuccessResponse()
+    fun `verify initial state is Loading`() =
+        runTest {
+            // Given
+            setupSuccessResponse()
 
-        // When
-        sut = createViewModel()
+            // When
+            sut = createViewModel()
 
-        // Then
-        assertThat(sut.uiState.value).isEqualTo(Loading)
-    }
+            // Then
+            assertThat(sut.uiState.value).isEqualTo(Loading)
+        }
 
     @Test
-    fun `verify state is Success with data when both sources succeed`() = runTest {
-        // Given
-        setupSuccessResponse()
+    fun `verify state is Success with data when both sources succeed`() =
+        runTest {
+            // Given
+            setupSuccessResponse()
 
-        // When
-        sut = createViewModel()
+            // When
+            sut = createViewModel()
 
-        // Then
-        sut.uiState.test {
-            // Skip Loading state
-            if (awaitItem() is Loading) {
-                val successState = awaitItem() as Success
+            // Then
+            sut.uiState.test {
+                // Skip Loading state
+                if (awaitItem() is Loading) {
+                    val successState = awaitItem() as Success
 
-                // Verify current price
-                assertThat(successState.currentPriceUiModel?.value).isEqualTo("€1,000.00")
-                assertThat(successState.currentPriceUiModel?.date).isEqualTo(1672531200000)
+                    // Verify current price
+                    assertThat(successState.currentPriceUiModel?.value).isEqualTo("€1,000.00")
+                    assertThat(successState.currentPriceUiModel?.date).isEqualTo(1672531200000)
 
-                // Verify historical list
-                assertThat(successState.historicalValueUiModels.size).isEqualTo(2)
-                assertThat(successState.historicalValueUiModels[0].value).isEqualTo("€1,000.00")
+                    // Verify historical list
+                    assertThat(successState.historicalValueUiModels.size).isEqualTo(2)
+                    assertThat(successState.historicalValueUiModels[0].value).isEqualTo("€1,000.00")
+                }
+
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    @Test
+    fun `verify performance value is correctly mapped`() =
+        runTest {
+            // Given
+            setupSuccessResponse()
+
+            // When
+            sut = createViewModel()
+
+            // Then
+            sut.uiState.test {
+                // Skip Loading state
+                if (awaitItem() is Loading) {
+                    val successState = awaitItem() as Success
+
+                    // Verify positive performance
+                    val performanceValue = successState.currentPriceUiModel?.performanceValue
+                    assertThat(performanceValue?.text).isEqualTo("5.20%")
+                    assertThat(performanceValue?.isPositive).isTrue()
+
+                    // Verify negative performance
+                    val negativePerformance = successState.historicalValueUiModels[1].performanceValue
+                    assertThat(negativePerformance?.text).isEqualTo("3.10%")
+                    assertThat(negativePerformance?.isPositive).isFalse()
+                }
+
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    @Test
+    fun `verify error handling when historical data fails`() =
+        runTest {
+            // Given
+            val error = IOException("Network error")
+            setupHistoricalErrorResponse(error)
+            setupLatestPriceSuccessResponse()
+
+            // When
+            sut = createViewModel()
+
+            // Then
+            sut.uiState.test {
+                // Skip Loading state
+                if (awaitItem() is Loading) {
+                    val successState = awaitItem() as Success
+
+                    // Verify we still have latest price
+                    assertThat(successState.currentPriceUiModel?.value).isEqualTo("€1,000.00")
+
+                    // Verify historical list is empty
+                    assertThat(successState.historicalValueUiModels.size).isEqualTo(0)
+                }
+
+                cancelAndIgnoreRemainingEvents()
             }
 
+            sut.events.test {
+                assertThat(awaitItem()).isEqualTo(ShowSnackbar("Error message"))
 
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    @Test
-    fun `verify performance value is correctly mapped`() = runTest {
-        // Given
-        setupSuccessResponse()
-
-        // When
-        sut = createViewModel()
-
-        // Then
-        sut.uiState.test {
-            // Skip Loading state
-            if (awaitItem() is Loading) {
-                val successState = awaitItem() as Success
-
-                // Verify positive performance
-                val performanceValue = successState.currentPriceUiModel?.performanceValue
-                assertThat(performanceValue?.text).isEqualTo("5.20%")
-                assertThat(performanceValue?.isPositive).isTrue()
-
-                // Verify negative performance
-                val negativePerformance = successState.historicalValueUiModels[1].performanceValue
-                assertThat(negativePerformance?.text).isEqualTo("3.10%")
-                assertThat(negativePerformance?.isPositive).isFalse()
+                cancelAndIgnoreRemainingEvents()
             }
 
-            cancelAndIgnoreRemainingEvents()
+            verify { errorMapper.getErrorMessage(error) }
         }
-    }
 
     @Test
-    fun `verify error handling when historical data fails`() = runTest {
-        // Given
-        val error = IOException("Network error")
-        setupHistoricalErrorResponse(error)
-        setupLatestPriceSuccessResponse()
+    fun `verify error handling when latest price fails`() =
+        runTest {
+            // Given
+            val error = IOException("Network error")
+            setupHistoricalSuccessResponse()
+            setupLatestPriceErrorResponse(error)
 
-        // When
-        sut = createViewModel()
+            // When
+            sut = createViewModel()
 
-        // Then
-        sut.uiState.test {
-            // Skip Loading state
-            if (awaitItem() is Loading) {
-                val successState = awaitItem() as Success
+            // Then
+            sut.uiState.test {
+                // Skip Loading state
+                if (awaitItem() is Loading) {
+                    val successState = awaitItem() as Success
 
-                // Verify we still have latest price
-                assertThat(successState.currentPriceUiModel?.value).isEqualTo("€1,000.00")
+                    // Verify latest price is null
+                    assertThat(successState.currentPriceUiModel).isNull()
 
-                // Verify historical list is empty
-                assertThat(successState.historicalValueUiModels.size).isEqualTo(0)
+                    // Verify historical list is present
+                    assertThat(successState.historicalValueUiModels.size).isEqualTo(2)
+                }
+
+                cancelAndIgnoreRemainingEvents()
             }
 
-            cancelAndIgnoreRemainingEvents()
-        }
+            sut.events.test {
+                assertThat(awaitItem()).isEqualTo(ShowSnackbar("Error message"))
 
-        sut.events.test {
-            assertThat(awaitItem()).isEqualTo(ShowSnackbar("Error message"))
-
-            cancelAndIgnoreRemainingEvents()
-        }
-
-        verify { errorMapper.getErrorMessage(error) }
-    }
-
-    @Test
-    fun `verify error handling when latest price fails`() = runTest {
-        // Given
-        val error = IOException("Network error")
-        setupHistoricalSuccessResponse()
-        setupLatestPriceErrorResponse(error)
-
-        // When
-        sut = createViewModel()
-
-        // Then
-        sut.uiState.test {
-            // Skip Loading state
-            if (awaitItem() is Loading) {
-                val successState = awaitItem() as Success
-
-                // Verify latest price is null
-                assertThat(successState.currentPriceUiModel).isNull()
-
-                // Verify historical list is present
-                assertThat(successState.historicalValueUiModels.size).isEqualTo(2)
+                cancelAndIgnoreRemainingEvents()
             }
 
-            cancelAndIgnoreRemainingEvents()
+            verify { errorMapper.getErrorMessage(error) }
         }
-
-        sut.events.test {
-            assertThat(awaitItem()).isEqualTo(ShowSnackbar("Error message"))
-
-            cancelAndIgnoreRemainingEvents()
-        }
-
-        verify { errorMapper.getErrorMessage(error) }
-    }
 
     @Test
-    fun `verify navigation event on item click`() = runTest {
-        // Given
-        setupSuccessResponse()
-        sut = createViewModel()
+    fun `verify navigation event on item click`() =
+        runTest {
+            // Given
+            setupSuccessResponse()
+            sut = createViewModel()
 
-        val item = PriceValueUiModel(
-            date = 1640995200000, // 2022-01-01
-            formattedDate = "Jan 1",
-            value = "€1,000.00",
-            performanceValue = PerformanceValue("5.20%", true)
+            val item =
+                PriceValueUiModel(
+                    date = 1640995200000, // 2022-01-01
+                    formattedDate = "Jan 1",
+                    value = "€1,000.00",
+                    performanceValue = PerformanceValue("5.20%", true),
+                )
+
+            // When
+            sut.onItemClick(item)
+
+            // Then
+            sut.events.test {
+                val event = awaitItem() as NavigateToDetails
+                assertThat(event.detailsRouteRequest.coinId).isEqualTo(config.coinId)
+                assertThat(event.detailsRouteRequest.date).isEqualTo(1640995200000)
+
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    private fun createViewModel(): HistoricalListViewModel =
+        HistoricalListViewModel(
+            getHistoricalChartUseCase = getHistoricalChartUseCase,
+            getLatestPriceUseCase = getLatestPriceUseCase,
+            errorMapper = errorMapper,
+            formatDateUseCase = formatDateUseCase,
+            formatPriceUseCase = formatPriceUseCase,
+            dateProvider = dateProvider,
         )
-
-        // When
-        sut.onItemClick(item)
-
-        // Then
-        sut.events.test {
-            val event = awaitItem() as NavigateToDetails
-            assertThat(event.detailsRouteRequest.coinId).isEqualTo(config.coinId)
-            assertThat(event.detailsRouteRequest.date).isEqualTo(1640995200000)
-
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    private fun createViewModel(): HistoricalListViewModel = HistoricalListViewModel(
-        getHistoricalChartUseCase = getHistoricalChartUseCase,
-        getLatestPriceUseCase = getLatestPriceUseCase,
-        errorMapper = errorMapper,
-        formatDateUseCase = formatDateUseCase,
-        formatPriceUseCase = formatPriceUseCase,
-        dateProvider = dateProvider
-    )
 
     private fun setupSuccessResponse() {
         setupHistoricalSuccessResponse()
@@ -261,27 +273,28 @@ class HistoricalListViewModelTest {
     }
 
     private fun setupHistoricalSuccessResponse() {
-        val historicalPrices = listOf(
-            HistoricalPrice(
-                date = 1640908800000, // 2021-12-31
-                value = 1000.0,
-                changePercentage = 5.2
-            ),
-            HistoricalPrice(
-                date = 1640822400000, // 2021-12-30
-                value = 950.0,
-                changePercentage = -3.1
+        val historicalPrices =
+            listOf(
+                HistoricalPrice(
+                    date = 1640908800000, // 2021-12-31
+                    value = 1000.0,
+                    changePercentage = 5.2,
+                ),
+                HistoricalPrice(
+                    date = 1640822400000, // 2021-12-30
+                    value = 950.0,
+                    changePercentage = -3.1,
+                ),
             )
-        )
 
         coEvery {
             getHistoricalChartUseCase.invoke(
                 match<HistoricalChartRequest> {
                     it.id == config.coinId &&
-                            it.currency == config.currency &&
-                            it.days == config.historicalDays &&
-                            it.interval == config.historicalInterval
-                }
+                        it.currency == config.currency &&
+                        it.days == config.historicalDays &&
+                        it.interval == config.historicalInterval
+                },
             )
         } returns Result.success(historicalPrices)
     }
@@ -293,19 +306,20 @@ class HistoricalListViewModelTest {
     }
 
     private fun setupLatestPriceSuccessResponse() {
-        val latestPrice = LatestPrice(
-            coinId = "btc",
-            price = 1000.0,
-            changePercentage = 5.2,
-            lastUpdated = 0,
-        )
+        val latestPrice =
+            LatestPrice(
+                coinId = "btc",
+                price = 1000.0,
+                changePercentage = 5.2,
+                lastUpdated = 0,
+            )
 
         every {
             getLatestPriceUseCase.invoke(
                 match<LatestPriceRequest> {
                     it.coinId == config.coinId &&
-                            it.currency == config.currency
-                }
+                        it.currency == config.currency
+                },
             )
         } returns flowOf(Result.success(latestPrice))
     }
@@ -316,4 +330,3 @@ class HistoricalListViewModelTest {
         } returns flowOf(Result.failure(error))
     }
 }
-

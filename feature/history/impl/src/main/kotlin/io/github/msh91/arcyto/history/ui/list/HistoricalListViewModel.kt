@@ -55,109 +55,114 @@ data class HistoricalListConfig(
  */
 @ContributesMultibinding(
     scope = MainScreenScope::class,
-    boundType = ViewModel::class
+    boundType = ViewModel::class,
 )
 @ViewModelKey(HistoricalListViewModel::class)
-class HistoricalListViewModel @Inject constructor(
-    private val getHistoricalChartUseCase: GetHistoricalChartUseCase,
-    private val getLatestPriceUseCase: GetLatestPriceUseCase,
-    private val errorMapper: CompositeErrorMapper,
-    private val formatDateUseCase: FormatDateUseCase,
-    private val formatPriceUseCase: FormatPriceUseCase,
-    private val dateProvider: DateProvider,
-) : ViewModel() {
+class HistoricalListViewModel
+    @Inject
+    constructor(
+        private val getHistoricalChartUseCase: GetHistoricalChartUseCase,
+        private val getLatestPriceUseCase: GetLatestPriceUseCase,
+        private val errorMapper: CompositeErrorMapper,
+        private val formatDateUseCase: FormatDateUseCase,
+        private val formatPriceUseCase: FormatPriceUseCase,
+        private val dateProvider: DateProvider,
+    ) : ViewModel() {
+        private val config = HistoricalListConfig()
 
-    private val config = HistoricalListConfig()
+        val uiState: StateFlow<HistoryUiState>
 
-    val uiState: StateFlow<HistoryUiState>
+        private val _events = viewModelScope.eventsFlow<HistoricalListUiEvent>()
+        val events: Flow<HistoricalListUiEvent> = _events
 
-    private val _events = viewModelScope.eventsFlow<HistoricalListUiEvent>()
-    val events: Flow<HistoricalListUiEvent> = _events
-
-    init {
-        uiState = combine(
-            getHistoricalListFlow(),
-            getLatestPriceFlow()
-        ) { historicalList, latestPrice ->
-            HistoryUiState.Success(latestPrice, historicalList)
-        }
-            .stateIn(
-                viewModelScope,
-                SharingStarted.WhileSubscribed(5000),
-                HistoryUiState.Loading,
-            )
-    }
-
-    private fun getHistoricalListFlow() = flowOf(Unit)
-        .map {
-            getHistoricalChartUseCase
-                .invoke(
-                    request = HistoricalChartRequest(
-                        id = config.coinId,
-                        currency = config.currency,
-                        days = config.historicalDays,
-                        interval = config.historicalInterval,
-                        precision = config.pricePrecision
-                    )
+        init {
+            uiState =
+                combine(
+                    getHistoricalListFlow(),
+                    getLatestPriceFlow(),
+                ) { historicalList, latestPrice ->
+                    HistoryUiState.Success(latestPrice, historicalList)
+                }.stateIn(
+                    viewModelScope,
+                    SharingStarted.WhileSubscribed(5000),
+                    HistoryUiState.Loading,
                 )
-                .getOrElse { throwable ->
-                    handleError(throwable)
-                    emptyList()
+        }
+
+        private fun getHistoricalListFlow() =
+            flowOf(Unit)
+                .map {
+                    getHistoricalChartUseCase
+                        .invoke(
+                            request =
+                                HistoricalChartRequest(
+                                    id = config.coinId,
+                                    currency = config.currency,
+                                    days = config.historicalDays,
+                                    interval = config.historicalInterval,
+                                    precision = config.pricePrecision,
+                                ),
+                        ).getOrElse { throwable ->
+                            handleError(throwable)
+                            emptyList()
+                        }
+                }.map { historicalPrices -> historicalPrices.toUiModel() }
+
+        private fun getLatestPriceFlow(): Flow<PriceValueUiModel?> =
+            getLatestPriceUseCase
+                .invoke(
+                    request =
+                        LatestPriceRequest(
+                            coinId = config.coinId,
+                            currency = config.currency,
+                            precision = config.pricePrecision,
+                            intervalMs = config.priceUpdateIntervalMs,
+                        ),
+                ).map { result ->
+                    result
+                        .map { latestPrice -> latestPrice.toUiModel() }
+                        .getOrElse { throwable ->
+                            handleError(throwable)
+                            (uiState.value as? HistoryUiState.Success)?.currentPriceUiModel
+                        }
                 }
-        }
-        .map { historicalPrices -> historicalPrices.toUiModel() }
 
-    private fun getLatestPriceFlow(): Flow<PriceValueUiModel?> = getLatestPriceUseCase
-        .invoke(
-            request = LatestPriceRequest(
-                coinId = config.coinId,
-                currency = config.currency,
-                precision = config.pricePrecision,
-                intervalMs = config.priceUpdateIntervalMs,
+        private fun LatestPrice.toUiModel(): PriceValueUiModel =
+            createPriceValueUiModel(dateProvider.getCurrentDate(), price, changePercentage)
+
+        private fun List<HistoricalPrice>.toUiModel(): List<PriceValueUiModel> =
+            this
+                // remove today price from the list as it will be displayed separately via latest price component
+                .filterNot { it.date.isToday() }
+                .map { createPriceValueUiModel(it.date, it.value, it.changePercentage) }
+
+        private fun createPriceValueUiModel(
+            date: Long,
+            value: Double,
+            changePercentage: Double?,
+        ): PriceValueUiModel =
+            PriceValueUiModel(
+                date = date,
+                formattedDate = formatDateUseCase(date, DateFormat.MONTH_DAY, true),
+                value = formatPriceUseCase(value, config.currency),
+                performanceValue =
+                    changePercentage?.let { percentage ->
+                        PerformanceValue(
+                            text = "%.2f%%".format(abs(percentage)),
+                            isPositive = percentage > 0,
+                        )
+                    },
             )
-        )
-        .map { result ->
-            result
-                .map { latestPrice -> latestPrice.toUiModel() }
-                .getOrElse { throwable ->
-                    handleError(throwable)
-                    (uiState.value as? HistoryUiState.Success)?.currentPriceUiModel
-                }
+
+        private fun handleError(throwable: Throwable) {
+            viewModelScope.launch {
+                _events.emit(HistoricalListUiEvent.ShowSnackbar(errorMapper.getErrorMessage(throwable)))
+            }
         }
 
-    private fun LatestPrice.toUiModel(): PriceValueUiModel =
-        createPriceValueUiModel(dateProvider.getCurrentDate(), price, changePercentage)
-
-    private fun List<HistoricalPrice>.toUiModel(): List<PriceValueUiModel> = this
-        // remove today price from the list as it will be displayed separately via latest price component
-        .filterNot { it.date.isToday() }
-        .map { createPriceValueUiModel(it.date, it.value, it.changePercentage) }
-
-    private fun createPriceValueUiModel(
-        date: Long,
-        value: Double,
-        changePercentage: Double?,
-    ): PriceValueUiModel = PriceValueUiModel(
-        date = date,
-        formattedDate = formatDateUseCase(date, DateFormat.MONTH_DAY, true),
-        value = formatPriceUseCase(value, config.currency),
-        performanceValue = changePercentage?.let { percentage ->
-            PerformanceValue(
-                text = "%.2f%%".format(abs(percentage)),
-                isPositive = percentage > 0
-            )
-        }
-    )
-
-    private fun handleError(throwable: Throwable) {
-        viewModelScope.launch {
-            _events.emit(HistoricalListUiEvent.ShowSnackbar(errorMapper.getErrorMessage(throwable)))
+        fun onItemClick(item: PriceValueUiModel) {
+            viewModelScope.launch {
+                _events.emit(HistoricalListUiEvent.NavigateToDetails(DetailsRouteRequest(config.coinId, item.date)))
+            }
         }
     }
-
-    fun onItemClick(item: PriceValueUiModel) {
-        viewModelScope.launch {
-            _events.emit(HistoricalListUiEvent.NavigateToDetails(DetailsRouteRequest(config.coinId, item.date)))
-        }
-    }
-}

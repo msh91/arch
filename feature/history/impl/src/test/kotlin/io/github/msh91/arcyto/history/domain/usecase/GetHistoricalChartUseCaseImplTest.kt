@@ -22,33 +22,38 @@ class GetHistoricalChartUseCaseImplTest {
     }
 
     @Test
-    fun `invoke should return list of prices sorted by date descending`() = runTest {
-        // GIVEN
-        val historicalChart = HistoricalChart(
-            chartPrices = listOf(
-                ChartPrice(date = 2, value = 1000.0),
-                ChartPrice(date = 1, value = 2000.0),
-                ChartPrice(date = 3, value = 1500.0),
-            )
-        )
-        val request = HistoricalChartRequest(
-            id = "bitcoin",
-            currency = "EUR",
-            days = 30,
-            interval = "daily",
-            precision = 2
-        )
-        coEvery { repository.getHistoricalChart(request) } returns Result.success(historicalChart)
+    fun `invoke should return list of prices sorted by date descending`() =
+        runTest {
+            // GIVEN
+            val historicalChart =
+                HistoricalChart(
+                    chartPrices =
+                        listOf(
+                            ChartPrice(date = 2, value = 1000.0),
+                            ChartPrice(date = 1, value = 2000.0),
+                            ChartPrice(date = 3, value = 1500.0),
+                        ),
+                )
+            val request =
+                HistoricalChartRequest(
+                    id = "bitcoin",
+                    currency = "EUR",
+                    days = 30,
+                    interval = "daily",
+                    precision = 2,
+                )
+            coEvery { repository.getHistoricalChart(request) } returns Result.success(historicalChart)
 
-        // WHEN
-        val result = sut.invoke(request)
+            // WHEN
+            val result = sut.invoke(request)
 
-        // THEN
-        val expected = listOf(
-            HistoricalPrice(date = 3, value = 1500.0, changePercentage = 50.0),
-            HistoricalPrice(date = 2, value = 1000.0, changePercentage = -50.0),
-            HistoricalPrice(date = 1, value = 2000.0, changePercentage = null),
-        )
-        assertThat(result).isEqualTo(Result.success(expected))
-    }
+            // THEN
+            val expected =
+                listOf(
+                    HistoricalPrice(date = 3, value = 1500.0, changePercentage = 50.0),
+                    HistoricalPrice(date = 2, value = 1000.0, changePercentage = -50.0),
+                    HistoricalPrice(date = 1, value = 2000.0, changePercentage = null),
+                )
+            assertThat(result).isEqualTo(Result.success(expected))
+        }
 }

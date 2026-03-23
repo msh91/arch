@@ -23,75 +23,77 @@ import javax.inject.Inject
 
 @ContributesMultibinding(
     scope = MainScreenScope::class,
-    boundType = ViewModel::class
+    boundType = ViewModel::class,
 )
 @ViewModelKey(DetailsViewModel::class)
-class DetailsViewModel @Inject constructor(
-    private val detailsRepository: CoinDetailsRepository,
-    private val formatPriceUseCase: FormatPriceUseCase,
-    private val formatDateUseCase: FormatDateUseCase,
-    private val errorMapper: CompositeErrorMapper,
-) : ViewModel() {
+class DetailsViewModel
+    @Inject
+    constructor(
+        private val detailsRepository: CoinDetailsRepository,
+        private val formatPriceUseCase: FormatPriceUseCase,
+        private val formatDateUseCase: FormatDateUseCase,
+        private val errorMapper: CompositeErrorMapper,
+    ) : ViewModel() {
+        private val _uiState = MutableStateFlow<DetailsUiState>(DetailsUiState.Loading)
+        val uiState = _uiState.asStateFlow()
 
-    private val _uiState = MutableStateFlow<DetailsUiState>(DetailsUiState.Loading)
-    val uiState = _uiState.asStateFlow()
+        private lateinit var request: DetailsRouteRequest
 
-    private lateinit var request: DetailsRouteRequest
-
-    fun fetchCoinDetails(request: DetailsRouteRequest) {
-        this.request = request
-        viewModelScope.launch {
-            val date = formatDateUseCase(request.date, DateFormat.DAY_MONTH_YEAR, false)
-            detailsRepository
-                .getCoinDetails(CoinDetailsRequest(request.coinId, date, false))
-                .fold(onSuccess = ::onCoinDetailsReceived, onFailure = ::onErrorReceived)
-        }
-    }
-
-    private fun onCoinDetailsReceived(coinDetails: CoinDetails) {
-        _uiState.update { coinDetails.toUiState() }
-    }
-
-    private fun onErrorReceived(throwable: Throwable) {
-        _uiState.update { DetailsUiState.Error(errorMapper.getErrorMessage(throwable)) }
-    }
-
-    fun onCurrencySelected(currency: Currency) {
-        (_uiState.value as? DetailsUiState.Success)?.let { currentState ->
-            val selectedMarketData = currentState.coinDetails.marketDataList.first { it.currency == currency }
-            _uiState.update {
-                currentState.copy(
-                    detailsUiModel = currentState.detailsUiModel.copy(
-                        selectedMarketData = selectedMarketData.toUiModel()
-                    )
-                )
+        fun fetchCoinDetails(request: DetailsRouteRequest) {
+            this.request = request
+            viewModelScope.launch {
+                val date = formatDateUseCase(request.date, DateFormat.DAY_MONTH_YEAR, false)
+                detailsRepository
+                    .getCoinDetails(CoinDetailsRequest(request.coinId, date, false))
+                    .fold(onSuccess = ::onCoinDetailsReceived, onFailure = ::onErrorReceived)
             }
         }
-    }
 
-    private fun CoinDetails.toUiState(): DetailsUiState {
-        val defaultData = marketDataList.first().toUiModel()
-        return DetailsUiState.Success(
-            coinDetails = this, // Store the CoinDetails in the Success state
-            detailsUiModel = CoinDetailsUiModel(
-                name = name,
-                symbol = symbol,
-                date = formatDateUseCase(request.date, DateFormat.MONTH_DAY, true),
-                currentPriceDefault = defaultData.currentPrice,
-                imageUrl = imageUrl,
-                marketDataList = marketDataList.map { it.toUiModel() },
-                selectedMarketData = defaultData,
+        private fun onCoinDetailsReceived(coinDetails: CoinDetails) {
+            _uiState.update { coinDetails.toUiState() }
+        }
+
+        private fun onErrorReceived(throwable: Throwable) {
+            _uiState.update { DetailsUiState.Error(errorMapper.getErrorMessage(throwable)) }
+        }
+
+        fun onCurrencySelected(currency: Currency) {
+            (_uiState.value as? DetailsUiState.Success)?.let { currentState ->
+                val selectedMarketData = currentState.coinDetails.marketDataList.first { it.currency == currency }
+                _uiState.update {
+                    currentState.copy(
+                        detailsUiModel =
+                            currentState.detailsUiModel.copy(
+                                selectedMarketData = selectedMarketData.toUiModel(),
+                            ),
+                    )
+                }
+            }
+        }
+
+        private fun CoinDetails.toUiState(): DetailsUiState {
+            val defaultData = marketDataList.first().toUiModel()
+            return DetailsUiState.Success(
+                coinDetails = this, // Store the CoinDetails in the Success state
+                detailsUiModel =
+                    CoinDetailsUiModel(
+                        name = name,
+                        symbol = symbol,
+                        date = formatDateUseCase(request.date, DateFormat.MONTH_DAY, true),
+                        currentPriceDefault = defaultData.currentPrice,
+                        imageUrl = imageUrl,
+                        marketDataList = marketDataList.map { it.toUiModel() },
+                        selectedMarketData = defaultData,
+                    ),
             )
-        )
-    }
+        }
 
-    private fun MarketData.toUiModel(): MarketDataUiModel {
-        return MarketDataUiModel(
-            currency = currency,
-            currencyTitle = currency.key.uppercase(),
-            currentPrice = formatPriceUseCase(currentPrice, currency.key),
-            marketCap = formatPriceUseCase(marketCap, currency.key),
-            totalVolume = formatPriceUseCase(totalVolume, currency.key),
-        )
+        private fun MarketData.toUiModel(): MarketDataUiModel =
+            MarketDataUiModel(
+                currency = currency,
+                currencyTitle = currency.key.uppercase(),
+                currentPrice = formatPriceUseCase(currentPrice, currency.key),
+                marketCap = formatPriceUseCase(marketCap, currency.key),
+                totalVolume = formatPriceUseCase(totalVolume, currency.key),
+            )
     }
-}

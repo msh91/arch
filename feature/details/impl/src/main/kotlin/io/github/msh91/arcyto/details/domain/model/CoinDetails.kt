@@ -7,4 +7,3 @@ data class CoinDetails(
     val imageUrl: String?,
     val marketDataList: List<MarketData>,
 )
-

@@ -5,15 +5,17 @@ plugins {
     id("arcyto.android.library")
     id("arcyto.anvil.library")
 }
-val localProperties = Properties().apply {
-    val localPropertiesFile = rootProject.file("local.properties")
-    if (localPropertiesFile.exists()) {
-        load(localPropertiesFile.inputStream())
+val localProperties =
+    Properties().apply {
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            load(localPropertiesFile.inputStream())
+        }
     }
-}
-val apiKey = System.getenv("API_KEY")
-    ?: localProperties.getProperty("API_KEY")
-    ?: "API KEY Not Found!"
+val apiKey =
+    System.getenv("API_KEY")
+        ?: localProperties.getProperty("API_KEY")
+        ?: "API KEY Not Found!"
 
 android {
     buildFeatures.buildConfig = true

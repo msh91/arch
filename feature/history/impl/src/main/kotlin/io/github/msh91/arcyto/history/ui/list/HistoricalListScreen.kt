@@ -54,7 +54,10 @@ fun HistoricalListRoute(
                 navigateToDetails((event as HistoricalListUiEvent.NavigateToDetails).detailsRouteRequest)
             }
 
-            is ShowSnackbar -> onShowSnackbar((event as ShowSnackbar).message, null)
+            is ShowSnackbar -> {
+                onShowSnackbar((event as ShowSnackbar).message, null)
+            }
+
             null -> {}
         }
     }
@@ -70,9 +73,10 @@ internal fun HistoricalListScreen(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(colorScheme.background)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(colorScheme.background),
     ) {
         when (uiState) {
             HistoryUiState.Loading -> LoadingState(modifier)
@@ -123,18 +127,21 @@ private fun Price(
         elevation = cardElevation(defaultElevation = 4.dp, pressedElevation = 8.dp),
         colors = cardColors(containerColor = colorScheme.surface),
         onClick = { onItemClick(priceValueUiModel) },
-        modifier = modifier
-            .padding(vertical = 8.dp, horizontal = 8.dp),
+        modifier =
+            modifier
+                .padding(vertical = 8.dp, horizontal = 8.dp),
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f),
         ) {
             ArcBitcoinIcon(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(8.dp)
+                modifier =
+                    Modifier
+                        .align(Alignment.TopStart)
+                        .padding(8.dp),
             )
             Text(
                 text = priceValueUiModel.formattedDate,
@@ -142,21 +149,22 @@ private fun Price(
                 color = colorScheme.onSurface,
                 maxLines = 1,
                 textAlign = TextAlign.Start,
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(all = 12.dp),
+                modifier =
+                    Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(all = 12.dp),
             )
             Column(modifier = Modifier.align(Alignment.BottomStart)) {
                 priceValueUiModel.performanceValue?.let {
                     ArcPerformance(
                         value = it,
-                        modifier = Modifier.padding(start = 8.dp)
+                        modifier = Modifier.padding(start = 8.dp),
                     )
                 }
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp)
+                    modifier = Modifier.padding(bottom = 8.dp, start = 8.dp, end = 8.dp),
                 ) {
                     Text(
                         text = priceValueUiModel.value,
@@ -180,34 +188,37 @@ private fun Price(
 fun HistoricalListScreenPreview() {
     ArcytoTheme {
         HistoricalListScreen(
-            uiState = HistoryUiState.Success(
-                currentPriceUiModel = PriceValueUiModel(
-                    date = 1,
-                    formattedDate = "Today",
-                    value = "99,000 $",
-                    performanceValue = PerformanceValue("4000", true),
+            uiState =
+                HistoryUiState.Success(
+                    currentPriceUiModel =
+                        PriceValueUiModel(
+                            date = 1,
+                            formattedDate = "Today",
+                            value = "99,000 $",
+                            performanceValue = PerformanceValue("4000", true),
+                        ),
+                    historicalValueUiModels =
+                        listOf(
+                            PriceValueUiModel(
+                                date = 2,
+                                formattedDate = "Yesterday",
+                                value = "95000 $",
+                                performanceValue = PerformanceValue("5000", false),
+                            ),
+                            PriceValueUiModel(
+                                date = 3,
+                                formattedDate = "Friday",
+                                value = "100000 $",
+                                performanceValue = PerformanceValue("1000", true),
+                            ),
+                            PriceValueUiModel(
+                                date = 4,
+                                formattedDate = "Friday",
+                                value = "100000 $",
+                                performanceValue = null,
+                            ),
+                        ),
                 ),
-                historicalValueUiModels = listOf(
-                    PriceValueUiModel(
-                        date = 2,
-                        formattedDate = "Yesterday",
-                        value = "95000 $",
-                        performanceValue = PerformanceValue("5000", false),
-                    ),
-                    PriceValueUiModel(
-                        date = 3,
-                        formattedDate = "Friday",
-                        value = "100000 $",
-                        performanceValue = PerformanceValue("1000", true),
-                    ),
-                    PriceValueUiModel(
-                        date = 4,
-                        formattedDate = "Friday",
-                        value = "100000 $",
-                        performanceValue = null,
-                    ),
-                )
-            ),
             onItemClick = { },
             modifier = Modifier,
         )

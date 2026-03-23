@@ -23,8 +23,8 @@ class FormatPriceUseCaseImplTest {
     }
 
     @Parameterized.Parameters
-    private fun testParams(): List<Triple<Double, String, String>> {
-        return listOf(
+    private fun testParams(): List<Triple<Double, String, String>> =
+        listOf(
             Triple(1.0, "usd", "$1.00"),
             Triple(1.0, "eur", "€1.00"),
             Triple(1.0, "gbp", "£1.00"),
@@ -38,5 +38,4 @@ class FormatPriceUseCaseImplTest {
             Triple(1000000000.0, "eur", "€1,000,000,000.00"),
             Triple(1000000000.0, "gbp", "£1,000,000,000.00"),
         )
-    }
 }
