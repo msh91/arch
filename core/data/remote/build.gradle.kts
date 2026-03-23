@@ -11,7 +11,9 @@ val localProperties = Properties().apply {
         load(localPropertiesFile.inputStream())
     }
 }
-val apiKey = localProperties.getProperty("API_KEY") ?: "API KEY Not Found!" // Default if not found
+val apiKey = System.getenv("API_KEY")
+    ?: localProperties.getProperty("API_KEY")
+    ?: "API KEY Not Found!"
 
 android {
     buildFeatures.buildConfig = true
