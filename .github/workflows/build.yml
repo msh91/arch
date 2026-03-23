@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'amazon-corretto'
+          distribution: 'corretto'
           cache: gradle
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -34,7 +34,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'amazon-corretto'
+          distribution: 'corretto'
           cache: gradle
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
