@@ -23,9 +23,10 @@ fun ArcBitcoinIcon(modifier: Modifier = Modifier) {
             painter = painterResource(id = R.drawable.ic_currency_bitcoin),
             colorFilter = tint(White),
             contentDescription = "Bitcoin Icon",
-            modifier = Modifier
-                .background(color = colorScheme.primary, shape = CircleShape)
-                .padding(4.dp)
+            modifier =
+                Modifier
+                    .background(color = colorScheme.primary, shape = CircleShape)
+                    .padding(4.dp),
         )
     }
 }

@@ -50,9 +50,10 @@ class RemoteErrorMapperTest {
     @Test
     fun `should return server error message`() {
         // GIVEN
-        val exception = mockk<HttpException>().apply {
-            every { code() } returns 500
-        }
+        val exception =
+            mockk<HttpException>().apply {
+                every { code() } returns 500
+            }
         val message = "server error"
         every { stringProvider.getString(R.string.error_server_error) } returns message
 
@@ -66,9 +67,10 @@ class RemoteErrorMapperTest {
     @Test
     fun `should return resource not found error message`() {
         // GIVEN
-        val exception = mockk<HttpException>().apply {
-            every { code() } returns 404
-        }
+        val exception =
+            mockk<HttpException>().apply {
+                every { code() } returns 404
+            }
         val message = "resource not found error"
         every { stringProvider.getString(R.string.error_resource_not_found) } returns message
 
@@ -82,9 +84,10 @@ class RemoteErrorMapperTest {
     @Test
     fun `should return server unknown error message`() {
         // GIVEN
-        val exception = mockk<HttpException>().apply {
-            every { code() } returns 0
-        }
+        val exception =
+            mockk<HttpException>().apply {
+                every { code() } returns 0
+            }
         val message = "server unknown error"
         every { stringProvider.getString(R.string.error_server_unknown, exception.code()) } returns message
 

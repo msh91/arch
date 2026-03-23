@@ -29,15 +29,18 @@ fun ArcCryptoIcon(
 ) {
     Box(modifier = modifier) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(imageUrl)
-                .crossfade(true)
-                .build(),
+            model =
+                ImageRequest
+                    .Builder(LocalContext.current)
+                    .data(imageUrl)
+                    .crossfade(true)
+                    .build(),
             contentDescription = contentDescription,
             contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .size(56.dp)
-                .background(color = colorScheme.primary, shape = CircleShape),
+            modifier =
+                Modifier
+                    .size(56.dp)
+                    .background(color = colorScheme.primary, shape = CircleShape),
             error = rememberDefaultCryptoIcon(),
             fallback = rememberDefaultCryptoIcon(),
         )

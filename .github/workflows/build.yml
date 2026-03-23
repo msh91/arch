@@ -5,6 +5,16 @@ on:
     branches: [ main ]
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ktlint
+        run: ./scripts/install-ktlint.sh
+      - name: Run ktlint
+        run: ktlint
+
   build-apk:
     name: Build APK
     runs-on: ubuntu-latest

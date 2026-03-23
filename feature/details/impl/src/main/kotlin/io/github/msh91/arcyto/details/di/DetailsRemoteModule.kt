@@ -12,7 +12,5 @@ import retrofit2.create
 @ContributesTo(AppScope::class)
 class DetailsRemoteModule {
     @Provides
-    fun provideDetailsRemoteDataSource(retrofit: Retrofit): CoinDetailsDataSource {
-        return retrofit.create()
-    }
+    fun provideDetailsRemoteDataSource(retrofit: Retrofit): CoinDetailsDataSource = retrofit.create()
 }

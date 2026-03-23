@@ -10,13 +10,13 @@ import io.github.msh91.arcyto.di.getMainScreenComponentFactory
 import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
-
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        applicationContext.getMainScreenComponentFactory()
+        applicationContext
+            .getMainScreenComponentFactory()
             .create()
             .inject(this)
         enableEdgeToEdge()

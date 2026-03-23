@@ -7,7 +7,6 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
 class AndroidAppConventionPlugin : Plugin<Project> {
-
     override fun apply(target: Project) {
         with(target) {
             with(pluginManager) {
@@ -33,7 +32,7 @@ class AndroidAppConventionPlugin : Plugin<Project> {
                             isMinifyEnabled = true
                             proguardFiles(
                                 getDefaultProguardFile("proguard-android.txt"),
-                                "proguard-rules.pro"
+                                "proguard-rules.pro",
                             )
                         }
                         getByName("debug") {

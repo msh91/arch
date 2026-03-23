@@ -20,23 +20,24 @@ interface GetLatestPriceUseCase {
  * This implementation tries to fetch the latest price every 60 seconds and publish the result via a shared flow
  */
 @ContributesBinding(AppScope::class)
-class GetLatestPriceUseCaseImpl @Inject constructor(
-    private val historicalChartRepository: HistoricalChartRepository,
-) : GetLatestPriceUseCase {
-
-    override fun invoke(request: LatestPriceRequest): Flow<Result<LatestPrice>> {
-        // Fetch the latest price in an interval provided by the request
-        return flow {
-            while (currentCoroutineContext().isActive) {
-                emit(
-                    historicalChartRepository.getLatestCoinPrice(
-                        coinId = request.coinId,
-                        currency = request.currency,
-                        precision = request.precision
+class GetLatestPriceUseCaseImpl
+    @Inject
+    constructor(
+        private val historicalChartRepository: HistoricalChartRepository,
+    ) : GetLatestPriceUseCase {
+        override fun invoke(request: LatestPriceRequest): Flow<Result<LatestPrice>> {
+            // Fetch the latest price in an interval provided by the request
+            return flow {
+                while (currentCoroutineContext().isActive) {
+                    emit(
+                        historicalChartRepository.getLatestCoinPrice(
+                            coinId = request.coinId,
+                            currency = request.currency,
+                            precision = request.precision,
+                        ),
                     )
-                )
-                delay(request.intervalMs)
+                    delay(request.intervalMs)
+                }
             }
         }
     }
-}

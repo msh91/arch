@@ -9,13 +9,13 @@ interface ErrorMapper {
     fun getErrorMessage(exception: Throwable): String?
 }
 
-
-class CompositeErrorMapper @Inject constructor(
-    private val mappers: Set<@JvmSuppressWildcards ErrorMapper>,
-) {
-    fun getErrorMessage(exception: Throwable): String {
-        return mappers
-            .firstNotNullOfOrNull { it.getErrorMessage(exception) }
-            ?: exception.localizedMessage.orEmpty()
+class CompositeErrorMapper
+    @Inject
+    constructor(
+        private val mappers: Set<@JvmSuppressWildcards ErrorMapper>,
+    ) {
+        fun getErrorMessage(exception: Throwable): String =
+            mappers
+                .firstNotNullOfOrNull { it.getErrorMessage(exception) }
+                ?: exception.localizedMessage.orEmpty()
     }
-}
