@@ -261,3 +261,18 @@ guidelines, patterns, and run commands.
 - Use `internal` visibility for implementation details that shouldn't leak outside the module.
 - Prefer named arguments for functions with multiple parameters of the same type.
 - Use `@Immutable` on all `UiState` and `UiModel` classes used in Compose.
+
+## 11. Technology Stack
+
+| Category      | Technology                                     |
+|---------------|------------------------------------------------|
+| Language      | Kotlin 2.0, JVM 17                             |
+| UI            | Jetpack Compose, Material3                     |
+| DI            | Dagger + Anvil                                 |
+| Networking    | Retrofit + OkHttp                              |
+| Serialization | Kotlinx Serialization                          |
+| Local storage | DataStore                                      |
+| Async         | Coroutines, Flow                               |
+| Image loading | Coil 2.6.0                                     |
+| Testing       | JUnit4, MockK, Truth, Turbine, Coroutines Test |
+
