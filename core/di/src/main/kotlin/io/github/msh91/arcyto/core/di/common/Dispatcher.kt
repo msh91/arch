@@ -4,7 +4,9 @@ import javax.inject.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Dispatcher(val type: DispatcherType)
+annotation class Dispatcher(
+    val type: DispatcherType,
+)
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)

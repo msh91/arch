@@ -7,7 +7,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface HistoricalRemoteDataSource {
-
     @GET("coins/{id}/market_chart")
     suspend fun getHistoricalChart(
         @Path("id") id: String,

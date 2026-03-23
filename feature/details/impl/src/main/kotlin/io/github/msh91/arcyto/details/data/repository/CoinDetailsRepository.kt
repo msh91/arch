@@ -13,12 +13,13 @@ interface CoinDetailsRepository {
 }
 
 @ContributesBinding(AppScope::class)
-class CoinDetailsRepositoryImpl @Inject constructor(
-    private val coinDetailsDataSource: CoinDetailsDataSource,
-) : CoinDetailsRepository {
-
-    override suspend fun getCoinDetails(request: CoinDetailsRequest): Result<CoinDetails> =
-        coinDetailsDataSource
-            .getCoinDetails(request.id, request.date, request.localization)
-            .map { it.toDomainModel() }
-}
+class CoinDetailsRepositoryImpl
+    @Inject
+    constructor(
+        private val coinDetailsDataSource: CoinDetailsDataSource,
+    ) : CoinDetailsRepository {
+        override suspend fun getCoinDetails(request: CoinDetailsRequest): Result<CoinDetails> =
+            coinDetailsDataSource
+                .getCoinDetails(request.id, request.date, request.localization)
+                .map { it.toDomainModel() }
+    }

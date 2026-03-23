@@ -7,13 +7,15 @@ import javax.inject.Inject
 
 interface DateProvider {
     fun getCurrentDate(): Long
+
     fun getCurrentCalendarDate(): Calendar
 }
 
 @ContributesBinding(AppScope::class)
-class DateProviderImpl @Inject constructor() : DateProvider {
+class DateProviderImpl
+    @Inject
+    constructor() : DateProvider {
+        override fun getCurrentDate(): Long = getCurrentCalendarDate().timeInMillis
 
-    override fun getCurrentDate(): Long = getCurrentCalendarDate().timeInMillis
-
-    override fun getCurrentCalendarDate(): Calendar = Calendar.getInstance()
-}
+        override fun getCurrentCalendarDate(): Calendar = Calendar.getInstance()
+    }

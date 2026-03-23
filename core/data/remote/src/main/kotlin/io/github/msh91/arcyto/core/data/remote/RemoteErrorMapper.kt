@@ -10,23 +10,31 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 @ContributesMultibinding(AppScope::class)
-class RemoteErrorMapper @Inject constructor(
-    private val stringProvider: StringProvider,
-) : ErrorMapper {
+class RemoteErrorMapper
+    @Inject
+    constructor(
+        private val stringProvider: StringProvider,
+    ) : ErrorMapper {
+        override fun getErrorMessage(exception: Throwable): String? =
+            when (exception) {
+                is SocketTimeoutException -> {
+                    stringProvider.getString(R.string.error_request_timed_out)
+                }
 
-    override fun getErrorMessage(exception: Throwable): String? {
-        return when (exception) {
-            is SocketTimeoutException -> stringProvider.getString(R.string.error_request_timed_out)
-            is UnknownHostException -> stringProvider.getString(R.string.error_no_internet_connection)
-            is HttpException -> {
-                when (exception.code()) {
-                    500 -> stringProvider.getString(R.string.error_server_error)
-                    404 -> stringProvider.getString(R.string.error_resource_not_found)
-                    else -> stringProvider.getString(R.string.error_server_unknown, exception.code())
+                is UnknownHostException -> {
+                    stringProvider.getString(R.string.error_no_internet_connection)
+                }
+
+                is HttpException -> {
+                    when (exception.code()) {
+                        500 -> stringProvider.getString(R.string.error_server_error)
+                        404 -> stringProvider.getString(R.string.error_resource_not_found)
+                        else -> stringProvider.getString(R.string.error_server_unknown, exception.code())
+                    }
+                }
+
+                else -> {
+                    null
                 }
             }
-
-            else -> null
-        }
     }
-}

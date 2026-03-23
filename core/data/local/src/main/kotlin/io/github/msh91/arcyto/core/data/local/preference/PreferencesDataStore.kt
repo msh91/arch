@@ -9,11 +9,13 @@ import kotlinx.coroutines.flow.map
 interface PreferencesDataStore {
     val dataStore: DataStore<Preferences>
 
-    fun getStringsSet(key: Preferences.Key<Set<String>>): Flow<Set<String>> {
-        return dataStore.data.map { it[key] ?: emptySet() }
-    }
+    fun getStringsSet(key: Preferences.Key<Set<String>>): Flow<Set<String>> =
+        dataStore.data.map { it[key] ?: emptySet() }
 
-    suspend fun updateStringsSet(key: Preferences.Key<Set<String>>, set: Set<String>) {
+    suspend fun updateStringsSet(
+        key: Preferences.Key<Set<String>>,
+        set: Set<String>,
+    ) {
         dataStore.edit { it[key] = set }
     }
 }

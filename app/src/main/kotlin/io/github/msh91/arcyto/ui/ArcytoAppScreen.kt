@@ -26,14 +26,16 @@ data class AppState(
 )
 
 @Composable
-fun rememberAppState(navController: NavHostController = rememberNavController()): AppState {
-    return remember(navController) {
+fun rememberAppState(navController: NavHostController = rememberNavController()): AppState =
+    remember(navController) {
         AppState(navController)
     }
-}
 
 @Composable
-fun ArcytoAppScreen(factory: ViewModelProvider.Factory, modifier: Modifier = Modifier) {
+fun ArcytoAppScreen(
+    factory: ViewModelProvider.Factory,
+    modifier: Modifier = Modifier,
+) {
     val appState = rememberAppState()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -46,9 +48,10 @@ fun ArcytoAppScreen(factory: ViewModelProvider.Factory, modifier: Modifier = Mod
             snackbarHost = { SnackbarHost(snackbarHostState) },
         ) { padding ->
             Box(
-                modifier = Modifier
-                    .padding(padding)
-                    .statusBarsPadding(),
+                modifier =
+                    Modifier
+                        .padding(padding)
+                        .statusBarsPadding(),
             ) {
                 ArcytoNavHost(
                     appState = appState,
@@ -64,7 +67,6 @@ fun ArcytoAppScreen(factory: ViewModelProvider.Factory, modifier: Modifier = Mod
             }
         }
     }
-
 }
 
 @Composable

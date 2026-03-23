@@ -6,9 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-val LocalViewModelProviderFactory = compositionLocalOf<ViewModelProvider.Factory> {
-    error("ViewModelProviderFactory not found")
-}
+val LocalViewModelProviderFactory =
+    compositionLocalOf<ViewModelProvider.Factory> {
+        error("ViewModelProviderFactory not found")
+    }
 
 @Composable
 inline fun <reified VM : ViewModel> arcytoViewModel(): VM = viewModel(factory = LocalViewModelProviderFactory.current)

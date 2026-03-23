@@ -15,9 +15,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 /**
  * Configure base Kotlin with Android options
  */
-internal fun Project.configureKotlinAndroid(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
-) {
+internal fun Project.configureKotlinAndroid(commonExtension: CommonExtension<*, *, *, *, *, *>) {
     commonExtension.apply {
         compileSdk = AppConfig.COMPILE_SDK_VERSION
 
@@ -49,17 +47,18 @@ internal fun Project.configureKotlinJvm() {
 /**
  * Configure base Kotlin options
  */
-private inline fun <reified T : KotlinTopLevelExtension> Project.configureKotlin() = configure<T> {
-    when (this) {
-        is KotlinAndroidProjectExtension -> compilerOptions
-        is KotlinJvmProjectExtension -> compilerOptions
-        else -> TODO("Unsupported project extension $this ${T::class}")
-    }.apply {
-        jvmTarget = JvmTarget.JVM_17
-        freeCompilerArgs.add(
-            // Enable experimental coroutines APIs, including Flow
-            "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-        )
-        languageVersion.set(KotlinVersion.KOTLIN_1_9)
+private inline fun <reified T : KotlinTopLevelExtension> Project.configureKotlin() =
+    configure<T> {
+        when (this) {
+            is KotlinAndroidProjectExtension -> compilerOptions
+            is KotlinJvmProjectExtension -> compilerOptions
+            else -> TODO("Unsupported project extension $this ${T::class}")
+        }.apply {
+            jvmTarget = JvmTarget.JVM_17
+            freeCompilerArgs.add(
+                // Enable experimental coroutines APIs, including Flow
+                "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            )
+            languageVersion.set(KotlinVersion.KOTLIN_1_9)
+        }
     }
-}
