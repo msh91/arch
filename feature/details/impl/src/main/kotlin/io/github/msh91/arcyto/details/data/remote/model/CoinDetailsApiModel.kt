@@ -24,6 +24,7 @@ data class MarketDataApiModel(
     @SerialName("market_cap") val marketCap: PriceApiModel,
     @SerialName("total_volume") val totalVolume: PriceApiModel,
 )
+
 /**
  * A map of currency to price
  */

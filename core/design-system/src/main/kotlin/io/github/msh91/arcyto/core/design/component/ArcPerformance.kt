@@ -21,20 +21,24 @@ data class PerformanceValue(
 )
 
 @Composable
-fun ArcPerformance(value: PerformanceValue, modifier: Modifier = Modifier) {
-    val (color, icon) = when {
-        value.isPositive -> Color.Green to R.drawable.ic_arrow_upward
-        else -> Color.Red to R.drawable.ic_arrow_downward
-    }
+fun ArcPerformance(
+    value: PerformanceValue,
+    modifier: Modifier = Modifier,
+) {
+    val (color, icon) =
+        when {
+            value.isPositive -> Color.Green to R.drawable.ic_arrow_upward
+            else -> Color.Red to R.drawable.ic_arrow_downward
+        }
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             painter = painterResource(id = icon),
             tint = color,
             contentDescription = "Performance icon",
-            modifier = Modifier.size(16.dp)
+            modifier = Modifier.size(16.dp),
         )
         Text(
             text = value.text,

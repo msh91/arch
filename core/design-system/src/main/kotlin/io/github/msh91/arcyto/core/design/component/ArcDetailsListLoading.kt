@@ -21,42 +21,45 @@ import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
 fun ArcDetailsListLoading(modifier: Modifier = Modifier) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = modifier.fillMaxSize().padding(all = 16.dp)
+        modifier = modifier.fillMaxSize().padding(all = 16.dp),
     ) {
-
         Card(
             elevation = cardElevation(defaultElevation = 0.dp),
             colors = cardColors(containerColor = colorScheme.background),
-            modifier = modifier
-                .width(100.dp)
-                .height(34.dp),
+            modifier =
+                modifier
+                    .width(100.dp)
+                    .height(34.dp),
         ) {
             ShimmerEffect(modifier = Modifier.fillMaxSize())
         }
         Card(
             elevation = cardElevation(defaultElevation = 0.dp),
             colors = cardColors(containerColor = colorScheme.background),
-            modifier = modifier
-                .width(120.dp)
-                .height(34.dp),
+            modifier =
+                modifier
+                    .width(120.dp)
+                    .height(34.dp),
         ) {
             ShimmerEffect(modifier = Modifier.fillMaxSize())
         }
         Card(
             elevation = cardElevation(defaultElevation = 0.dp),
             colors = cardColors(containerColor = colorScheme.background),
-            modifier = modifier
-                .fillMaxWidth()
-                .height(34.dp),
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .height(34.dp),
         ) {
             ShimmerEffect(modifier = Modifier.fillMaxSize())
         }
         Card(
             elevation = cardElevation(defaultElevation = 0.dp),
             colors = cardColors(containerColor = colorScheme.background),
-            modifier = modifier
-                .width(150.dp)
-                .height(200.dp),
+            modifier =
+                modifier
+                    .width(150.dp)
+                    .height(200.dp),
         ) {
             ShimmerEffect(modifier = Modifier.fillMaxSize())
         }

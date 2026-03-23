@@ -14,26 +14,30 @@ class FormatDateUseCaseImplTest {
     private val dateProvider = mockk<DateProvider>()
 
     private lateinit var sut: FormatDateUseCaseImpl
-    private val today = Calendar.getInstance().apply {
-        // set the date to Jan 30, 2025
-        timeInMillis = 1738250334000
-    }
+    private val today =
+        Calendar.getInstance().apply {
+            // set the date to Jan 30, 2025
+            timeInMillis = 1738250334000
+        }
 
-    private val yesterday = Calendar.getInstance().apply {
-        // set the date to Jan 29, 2025
-        timeInMillis = 1738163934000
-    }
+    private val yesterday =
+        Calendar.getInstance().apply {
+            // set the date to Jan 29, 2025
+            timeInMillis = 1738163934000
+        }
 
     @Before
     fun setUp() {
         every { dateProvider.getCurrentCalendarDate() } answers {
-            Calendar.getInstance()
+            Calendar
+                .getInstance()
                 .apply { timeInMillis = today.timeInMillis }
         }
-        sut = FormatDateUseCaseImpl(
-            stringProvider = stringProvider,
-            dateProvider = dateProvider
-        )
+        sut =
+            FormatDateUseCaseImpl(
+                stringProvider = stringProvider,
+                dateProvider = dateProvider,
+            )
     }
 
     @Test
@@ -71,10 +75,11 @@ class FormatDateUseCaseImplTest {
         every { stringProvider.getString(R.string.title_date_yesterday) } returns formattedDate
 
         // WHEN
-        val date = Calendar.getInstance().apply {
-            // set the date to Jan 27, 2025
-            timeInMillis = 1737951334000
-        }
+        val date =
+            Calendar.getInstance().apply {
+                // set the date to Jan 27, 2025
+                timeInMillis = 1737951334000
+            }
         val actual = sut.invoke(date.timeInMillis, DateFormat.MONTH_DAY, true)
 
         // THEN

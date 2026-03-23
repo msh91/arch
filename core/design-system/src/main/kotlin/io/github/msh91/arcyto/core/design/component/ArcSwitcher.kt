@@ -49,25 +49,27 @@ private fun <T : Any> HorizontalSwitcher(
 
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp, horizontal = 8.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp, horizontal = 8.dp),
     ) {
         items.forEach { item ->
             val isSelected = item == selectedItem
             Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(if (isSelected) colorScheme.primary else colorScheme.secondary)
-                    .clickable { onItemSelected(item) }
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(if (isSelected) colorScheme.primary else colorScheme.secondary)
+                        .clickable { onItemSelected(item) }
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = itemTitle(item),
                     color = if (isSelected) Color.White else Color.Black,
-                    style = typography.bodySmall
+                    style = typography.bodySmall,
                 )
             }
         }

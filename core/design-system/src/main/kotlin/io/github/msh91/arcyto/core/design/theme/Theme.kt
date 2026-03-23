@@ -12,19 +12,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Orange80,
-    secondary = Orange20,
-    tertiary = Pink80,
-    background = Black,
-)
+private val DarkColorScheme =
+    darkColorScheme(
+        primary = Orange80,
+        secondary = Orange20,
+        tertiary = Pink80,
+        background = Black,
+    )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Orange,
-    secondary = Orange20,
-    tertiary = Pink40,
-    background = White,
-)
+private val LightColorScheme =
+    lightColorScheme(
+        primary = Orange,
+        secondary = Orange20,
+        tertiary = Pink40,
+        background = White,
+    )
 
 val ColorScheme.shimmering: Color
     @Composable
@@ -37,19 +39,25 @@ fun ArcytoTheme(
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit,
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+    val colorScheme =
+        when {
+            dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+                val context = LocalContext.current
+                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
+            darkTheme -> {
+                DarkColorScheme
+            }
+
+            else -> {
+                LightColorScheme
+            }
+        }
 
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
-        content = content
+        content = content,
     )
 }

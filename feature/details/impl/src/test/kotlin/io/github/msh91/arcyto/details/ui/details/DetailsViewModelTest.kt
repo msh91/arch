@@ -31,158 +31,165 @@ class DetailsViewModelTest {
     private val detailsRepository = mockk<CoinDetailsRepository>()
     private val date = 1738250334000
     private val formattedDate = "30-01-2025"
-    private val formatDateUseCase = mockk<FormatDateUseCase> {
-        every { this@mockk.invoke(date, DateFormat.DAY_MONTH_YEAR, false) } returns formattedDate
-        every { this@mockk.invoke(date, DateFormat.MONTH_DAY, true) } returns "Today"
-    }
-    private val formatPriceUseCase = mockk<FormatPriceUseCase> {
-        every { this@mockk.invoke(1.00, "eur") } returns "€1.00"
-        every { this@mockk.invoke(100.00, "eur") } returns "€100.00"
-        every { this@mockk.invoke(1000.00, "eur") } returns "€1,000.00"
+    private val formatDateUseCase =
+        mockk<FormatDateUseCase> {
+            every { this@mockk.invoke(date, DateFormat.DAY_MONTH_YEAR, false) } returns formattedDate
+            every { this@mockk.invoke(date, DateFormat.MONTH_DAY, true) } returns "Today"
+        }
+    private val formatPriceUseCase =
+        mockk<FormatPriceUseCase> {
+            every { this@mockk.invoke(1.00, "eur") } returns "€1.00"
+            every { this@mockk.invoke(100.00, "eur") } returns "€100.00"
+            every { this@mockk.invoke(1000.00, "eur") } returns "€1,000.00"
 
-        every { this@mockk.invoke(2.00, "usd") } returns "$2.00"
-        every { this@mockk.invoke(200.00, "usd") } returns "$200.00"
-        every { this@mockk.invoke(2000.00, "usd") } returns "$2,000.00"
+            every { this@mockk.invoke(2.00, "usd") } returns "$2.00"
+            every { this@mockk.invoke(200.00, "usd") } returns "$200.00"
+            every { this@mockk.invoke(2000.00, "usd") } returns "$2,000.00"
 
-        every { this@mockk.invoke(3.00, "gbp") } returns "£3.00"
-        every { this@mockk.invoke(300.00, "gbp") } returns "£300.00"
-        every { this@mockk.invoke(3000.00, "gbp") } returns "£3,000.00"
-    }
+            every { this@mockk.invoke(3.00, "gbp") } returns "£3.00"
+            every { this@mockk.invoke(300.00, "gbp") } returns "£300.00"
+            every { this@mockk.invoke(3000.00, "gbp") } returns "£3,000.00"
+        }
     private val errorMapper = mockk<CompositeErrorMapper>()
 
     @Before
     fun setUp() {
-
-        sut = DetailsViewModel(
-            detailsRepository = detailsRepository,
-            formatPriceUseCase = formatPriceUseCase,
-            formatDateUseCase = formatDateUseCase,
-            errorMapper = errorMapper,
-        )
+        sut =
+            DetailsViewModel(
+                detailsRepository = detailsRepository,
+                formatPriceUseCase = formatPriceUseCase,
+                formatDateUseCase = formatDateUseCase,
+                errorMapper = errorMapper,
+            )
     }
 
     @Test
-    fun `when viewModel is created then the initial uiState is loading`() = runTest {
-        // THEN
-        sut.uiState.test {
-            assertThat(awaitItem()).isEqualTo(Loading)
-        }
-    }
-
-    @Test
-    fun `fetchCoinDetails - should update the uiState to success`() = runTest {
-        // GIVEN
-
-        val coinDetails = getCoinDetails()
-        val request = CoinDetailsRequest("bitcoin", formattedDate, false)
-        coEvery { detailsRepository.getCoinDetails(request) } returns Result.success(coinDetails)
-
-        sut.uiState.test {
-            assertThat(awaitItem()).isEqualTo(Loading)
-
-            // WHEN
-            sut.fetchCoinDetails(DetailsRouteRequest("bitcoin", date))
-
+    fun `when viewModel is created then the initial uiState is loading`() =
+        runTest {
             // THEN
-            assertThat(awaitItem()).isEqualTo(Success(coinDetails, getUiModel()))
-        }
-    }
-
-    @Test
-    fun `fetchCoinDetails - should update the uiState to error`() = runTest {
-        // GIVEN
-        val request = CoinDetailsRequest("bitcoin", formattedDate, false)
-        val error = mockk<Throwable>()
-        val errorMessage = "Something went wrong"
-        coEvery { detailsRepository.getCoinDetails(request) } returns Result.failure(error)
-        every { errorMapper.getErrorMessage(error) } returns errorMessage
-
-        sut.uiState.test {
-            assertThat(awaitItem()).isEqualTo(Loading)
-
-            // WHEN
-            sut.fetchCoinDetails(DetailsRouteRequest("bitcoin", date))
-
-            // THEN
-            assertThat(awaitItem()).isEqualTo(Error(errorMessage))
-        }
-    }
-
-    @Test
-    fun `onCurrencySelected - selected market data should be updated according to currency`() = runTest {
-        // GIVEN
-        val coinDetails = getCoinDetails()
-        val request = CoinDetailsRequest("bitcoin", formattedDate, false)
-        coEvery { detailsRepository.getCoinDetails(request) } returns Result.success(coinDetails)
-
-        sut.uiState.test {
-            assertThat(awaitItem()).isEqualTo(Loading)
-            sut.fetchCoinDetails(DetailsRouteRequest("bitcoin", date))
-            assertThat(awaitItem()).isEqualTo(Success(coinDetails, getUiModel()))
-
-            Currency.entries.asReversed().forEach { currency ->
-                // WHEN
-                sut.onCurrencySelected(currency)
-
-                // THEN
-                assertThat(awaitItem()).isEqualTo(Success(coinDetails, getUiModel(currency)))
+            sut.uiState.test {
+                assertThat(awaitItem()).isEqualTo(Loading)
             }
         }
-    }
 
-    private fun getCoinDetails(): CoinDetails {
-        return CoinDetails(
+    @Test
+    fun `fetchCoinDetails - should update the uiState to success`() =
+        runTest {
+            // GIVEN
+
+            val coinDetails = getCoinDetails()
+            val request = CoinDetailsRequest("bitcoin", formattedDate, false)
+            coEvery { detailsRepository.getCoinDetails(request) } returns Result.success(coinDetails)
+
+            sut.uiState.test {
+                assertThat(awaitItem()).isEqualTo(Loading)
+
+                // WHEN
+                sut.fetchCoinDetails(DetailsRouteRequest("bitcoin", date))
+
+                // THEN
+                assertThat(awaitItem()).isEqualTo(Success(coinDetails, getUiModel()))
+            }
+        }
+
+    @Test
+    fun `fetchCoinDetails - should update the uiState to error`() =
+        runTest {
+            // GIVEN
+            val request = CoinDetailsRequest("bitcoin", formattedDate, false)
+            val error = mockk<Throwable>()
+            val errorMessage = "Something went wrong"
+            coEvery { detailsRepository.getCoinDetails(request) } returns Result.failure(error)
+            every { errorMapper.getErrorMessage(error) } returns errorMessage
+
+            sut.uiState.test {
+                assertThat(awaitItem()).isEqualTo(Loading)
+
+                // WHEN
+                sut.fetchCoinDetails(DetailsRouteRequest("bitcoin", date))
+
+                // THEN
+                assertThat(awaitItem()).isEqualTo(Error(errorMessage))
+            }
+        }
+
+    @Test
+    fun `onCurrencySelected - selected market data should be updated according to currency`() =
+        runTest {
+            // GIVEN
+            val coinDetails = getCoinDetails()
+            val request = CoinDetailsRequest("bitcoin", formattedDate, false)
+            coEvery { detailsRepository.getCoinDetails(request) } returns Result.success(coinDetails)
+
+            sut.uiState.test {
+                assertThat(awaitItem()).isEqualTo(Loading)
+                sut.fetchCoinDetails(DetailsRouteRequest("bitcoin", date))
+                assertThat(awaitItem()).isEqualTo(Success(coinDetails, getUiModel()))
+
+                Currency.entries.asReversed().forEach { currency ->
+                    // WHEN
+                    sut.onCurrencySelected(currency)
+
+                    // THEN
+                    assertThat(awaitItem()).isEqualTo(Success(coinDetails, getUiModel(currency)))
+                }
+            }
+        }
+
+    private fun getCoinDetails(): CoinDetails =
+        CoinDetails(
             id = "bitcoin",
             name = "Bitcoin",
             symbol = "btc",
             imageUrl = "url",
-            marketDataList = listOf(
-                MarketData(
-                    currency = Currency.EUR,
-                    currentPrice = 1.00,
-                    marketCap = 100.00,
-                    totalVolume = 1000.00,
+            marketDataList =
+                listOf(
+                    MarketData(
+                        currency = Currency.EUR,
+                        currentPrice = 1.00,
+                        marketCap = 100.00,
+                        totalVolume = 1000.00,
+                    ),
+                    MarketData(
+                        currency = Currency.USD,
+                        currentPrice = 2.00,
+                        marketCap = 200.00,
+                        totalVolume = 2000.00,
+                    ),
+                    MarketData(
+                        currency = Currency.GBP,
+                        currentPrice = 3.00,
+                        marketCap = 300.00,
+                        totalVolume = 3000.00,
+                    ),
                 ),
-                MarketData(
-                    currency = Currency.USD,
-                    currentPrice = 2.00,
-                    marketCap = 200.00,
-                    totalVolume = 2000.00,
-                ),
-                MarketData(
-                    currency = Currency.GBP,
-                    currentPrice = 3.00,
-                    marketCap = 300.00,
-                    totalVolume = 3000.00,
-                ),
-            )
         )
-    }
 
     private fun getUiModel(defaultCurrency: Currency = Currency.EUR): CoinDetailsUiModel {
-        val marketDateList = listOf(
-            MarketDataUiModel(
-                currency = Currency.EUR,
-                currencyTitle = "EUR",
-                currentPrice = "€1.00",
-                marketCap = "€100.00",
-                totalVolume = "€1,000.00",
-            ),
-            MarketDataUiModel(
-                currency = Currency.USD,
-                currencyTitle = "USD",
-                currentPrice = "$2.00",
-                marketCap = "$200.00",
-                totalVolume = "$2,000.00",
-            ),
-            MarketDataUiModel(
-                currency = Currency.GBP,
-                currencyTitle = "GBP",
-                currentPrice = "£3.00",
-                marketCap = "£300.00",
-                totalVolume = "£3,000.00",
-            ),
-        )
+        val marketDateList =
+            listOf(
+                MarketDataUiModel(
+                    currency = Currency.EUR,
+                    currencyTitle = "EUR",
+                    currentPrice = "€1.00",
+                    marketCap = "€100.00",
+                    totalVolume = "€1,000.00",
+                ),
+                MarketDataUiModel(
+                    currency = Currency.USD,
+                    currencyTitle = "USD",
+                    currentPrice = "$2.00",
+                    marketCap = "$200.00",
+                    totalVolume = "$2,000.00",
+                ),
+                MarketDataUiModel(
+                    currency = Currency.GBP,
+                    currencyTitle = "GBP",
+                    currentPrice = "£3.00",
+                    marketCap = "£300.00",
+                    totalVolume = "£3,000.00",
+                ),
+            )
         return CoinDetailsUiModel(
             name = "Bitcoin",
             symbol = "btc",

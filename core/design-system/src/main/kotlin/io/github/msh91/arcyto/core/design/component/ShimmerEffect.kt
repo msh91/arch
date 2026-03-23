@@ -33,48 +33,57 @@ fun ShimmerEffect(
     durationMillis: Int = 1000,
 ) {
     val color = colorScheme.shimmering
-    val shimmerColors = remember {
-        listOf(
-            color.copy(alpha = 0.1f),
-            color.copy(alpha = 0.2f),
-            color.copy(alpha = 0.3f),
-            color.copy(alpha = 0.2f),
-            color.copy(alpha = 0.1f),
-        )
-    }
+    val shimmerColors =
+        remember {
+            listOf(
+                color.copy(alpha = 0.1f),
+                color.copy(alpha = 0.2f),
+                color.copy(alpha = 0.3f),
+                color.copy(alpha = 0.2f),
+                color.copy(alpha = 0.1f),
+            )
+        }
 
     val transition = rememberInfiniteTransition(label = "")
 
-    val translateAnimation = transition.animateFloat(
-        initialValue = 0f,
-        targetValue = (durationMillis + widthOfShadowBrush).toFloat(),
-        animationSpec = infiniteRepeatable(
-            animation = tween(
-                durationMillis = durationMillis,
-                easing = LinearEasing,
-            ),
-            repeatMode = RepeatMode.Restart,
-        ),
-        label = "Loading animation",
-    )
+    val translateAnimation =
+        transition.animateFloat(
+            initialValue = 0f,
+            targetValue = (durationMillis + widthOfShadowBrush).toFloat(),
+            animationSpec =
+                infiniteRepeatable(
+                    animation =
+                        tween(
+                            durationMillis = durationMillis,
+                            easing = LinearEasing,
+                        ),
+                    repeatMode = RepeatMode.Restart,
+                ),
+            label = "Loading animation",
+        )
 
-    val brush = Brush.linearGradient(
-        colors = shimmerColors,
-        start = Offset(x = translateAnimation.value - widthOfShadowBrush, y = 0.0f),
-        end = Offset(x = translateAnimation.value, y = angleOfAxisY),
-    )
+    val brush =
+        Brush.linearGradient(
+            colors = shimmerColors,
+            start = Offset(x = translateAnimation.value - widthOfShadowBrush, y = 0.0f),
+            end = Offset(x = translateAnimation.value, y = angleOfAxisY),
+        )
 
     ShimmerEffectContent(brush = brush, modifier = modifier)
 }
 
 @Composable
-fun ShimmerEffectContent(brush: Brush, modifier: Modifier) {
+fun ShimmerEffectContent(
+    brush: Brush,
+    modifier: Modifier,
+) {
     Box(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Canvas(
-            modifier = Modifier
-                .matchParentSize()
+            modifier =
+                Modifier
+                    .matchParentSize(),
         ) {
             drawRect(brush = brush)
         }
@@ -87,11 +96,12 @@ fun ShimmerEffectContent(brush: Brush, modifier: Modifier) {
 fun ShimmerEffectPreview() {
     ArcytoTheme {
         ShimmerEffect(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-                .height(60.dp)
-                .background(colorScheme.background, shape = RoundedCornerShape(12.dp))
+            modifier =
+                Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .background(colorScheme.background, shape = RoundedCornerShape(12.dp)),
         )
     }
 }
