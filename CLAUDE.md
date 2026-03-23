@@ -140,7 +140,7 @@ The `API_KEY` is not required in CI — the remote module's `build.gradle.kts` u
 
 1. Create `feature/<name>/api/` module with navigation contracts.
 2. Create `feature/<name>/impl/` module with UI/domain/data layers.
-3. Add both modules to `settings.gradle.kts`.
+3. **No changes to `settings.gradle.kts` needed** — it auto-discovers any directory under `core/` or `feature/` that contains a `build.gradle.kts` (up to depth 3).
 4. Apply `arcyto.android.library` (and `arcyto.anvil.library` if using DI) in each module's `build.gradle.kts`.
 5. Register navigation route in `ArcytoNavHost.kt`.
 6. Wire DI using Anvil annotations — no manual component wiring needed.
