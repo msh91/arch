@@ -1,6 +1,6 @@
-# CLAUDE.md — Arcyto Android Project
+# CLAUDE.md
 
-This file provides guidance for AI assistants working on the Arcyto codebase.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
@@ -17,10 +17,11 @@ This is consumed at compile time by `core/data/remote/build.gradle.kts` to gener
 ## Build & Run Commands
 
 ```bash
-./gradlew build           # Full build + tests
-./gradlew test            # Unit tests only
-./gradlew assembleDebug   # Debug APK
-./gradlew assembleRelease # Release APK (minified)
+./gradlew build                        # Full build + tests
+./gradlew test                         # Unit tests only
+./gradlew assembleDebug                # Debug APK
+./gradlew assembleRelease              # Release APK (minified)
+./gradlew :feature:history:impl:test   # Run tests for a single module
 ```
 
 ## Module Structure
