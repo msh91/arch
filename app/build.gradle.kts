@@ -1,6 +1,6 @@
 plugins {
     id("arcyto.android.app")
-    kotlin("kapt")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -18,7 +18,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.navigation.compose)
 
-    kapt(libs.dagger.compiler)
+    ksp(libs.dagger.compiler)
 
     implementation(projects.core.data.local)
     implementation(projects.core.data.remote)
