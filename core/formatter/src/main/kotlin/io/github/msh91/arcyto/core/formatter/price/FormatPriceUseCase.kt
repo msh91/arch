@@ -1,9 +1,9 @@
 package io.github.msh91.arcyto.core.formatter.price
 
-import com.squareup.anvil.annotations.ContributesBinding
-import io.github.msh91.arcyto.core.di.scope.AppScope
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import java.text.NumberFormat
-import javax.inject.Inject
 import java.util.Currency as JavaCurrency
 
 interface FormatPriceUseCase {
@@ -16,16 +16,15 @@ interface FormatPriceUseCase {
     ): String
 }
 
+@Inject
 @ContributesBinding(AppScope::class)
-class FormatPriceUseCaseImpl
-    @Inject
-    constructor() : FormatPriceUseCase {
-        override fun invoke(
-            price: Double,
-            currency: String,
-        ): String {
-            val formatter = NumberFormat.getCurrencyInstance()
-            formatter.currency = JavaCurrency.getInstance(currency.uppercase())
-            return formatter.format(price)
-        }
+class FormatPriceUseCaseImpl : FormatPriceUseCase {
+    override fun invoke(
+        price: Double,
+        currency: String,
+    ): String {
+        val formatter = NumberFormat.getCurrencyInstance()
+        formatter.currency = JavaCurrency.getInstance(currency.uppercase())
+        return formatter.format(price)
     }
+}

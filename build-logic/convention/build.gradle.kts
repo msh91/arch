@@ -22,7 +22,7 @@ kotlin {
 dependencies {
     compileOnly(libs.android.gradle.plugin)
     compileOnly(libs.android.tools.common)
-    compileOnly(libs.anvil.gradle.plugin)
+    compileOnly(libs.metro.gradle.plugin)
     compileOnly(libs.kotlin.compose.gradle.plugin)
     compileOnly(libs.kotlin.gradle.plugin)
 }
@@ -40,9 +40,9 @@ gradlePlugin {
             id = "arcyto.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
-        register("anvilLibrary") {
-            id = "arcyto.anvil.library"
-            implementationClass = "AnvilLibraryConventionPlugin"
+        register("metroLibrary") {
+            id = "arcyto.metro.library"
+            implementationClass = "MetroLibraryConventionPlugin"
         }
         register("androidApplication") {
             id = "arcyto.android.app"

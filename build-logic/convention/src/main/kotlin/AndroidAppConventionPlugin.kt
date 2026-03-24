@@ -1,5 +1,4 @@
 import com.android.build.api.dsl.ApplicationExtension
-import com.squareup.anvil.plugin.AnvilExtension
 import io.github.msh91.arcyto.buildlogic.AppConfig
 import io.github.msh91.arcyto.buildlogic.configureKotlinAndroid
 import org.gradle.api.Plugin
@@ -13,7 +12,7 @@ class AndroidAppConventionPlugin : Plugin<Project> {
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.android")
                 apply("org.jetbrains.kotlin.plugin.compose")
-                apply("com.squareup.anvil")
+                apply("dev.zacsweers.metro")
             }
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
@@ -43,9 +42,6 @@ class AndroidAppConventionPlugin : Plugin<Project> {
                 }
                 buildFeatures.compose = true
                 buildFeatures.buildConfig = true
-            }
-            extensions.configure<AnvilExtension> {
-                generateDaggerFactories.set(true)
             }
         }
     }

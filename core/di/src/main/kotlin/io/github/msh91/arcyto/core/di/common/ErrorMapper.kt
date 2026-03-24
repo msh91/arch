@@ -1,6 +1,6 @@
 package io.github.msh91.arcyto.core.di.common
 
-import javax.inject.Inject
+import dev.zacsweers.metro.Inject
 
 interface ErrorMapper {
     /**
@@ -9,13 +9,12 @@ interface ErrorMapper {
     fun getErrorMessage(exception: Throwable): String?
 }
 
-class CompositeErrorMapper
-    @Inject
-    constructor(
-        private val mappers: Set<@JvmSuppressWildcards ErrorMapper>,
-    ) {
-        fun getErrorMessage(exception: Throwable): String =
-            mappers
-                .firstNotNullOfOrNull { it.getErrorMessage(exception) }
-                ?: exception.localizedMessage.orEmpty()
-    }
+@Inject
+class CompositeErrorMapper(
+    private val mappers: Set<@JvmSuppressWildcards ErrorMapper>,
+) {
+    fun getErrorMessage(exception: Throwable): String =
+        mappers
+            .firstNotNullOfOrNull { it.getErrorMessage(exception) }
+            ?: exception.localizedMessage.orEmpty()
+}

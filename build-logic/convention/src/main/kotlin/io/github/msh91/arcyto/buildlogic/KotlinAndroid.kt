@@ -59,6 +59,6 @@ private inline fun <reified T : KotlinTopLevelExtension> Project.configureKotlin
                 // Enable experimental coroutines APIs, including Flow
                 "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
             )
-            languageVersion.set(KotlinVersion.KOTLIN_1_9)
+            languageVersion.set(KotlinVersion.KOTLIN_2_2)
         }
     }
