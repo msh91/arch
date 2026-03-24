@@ -13,7 +13,7 @@ mandatory and override any default behavior.
 
 ## 1. General Kotlin Principles
 
-- **Language level:** Kotlin 2.0.21, JVM target 17.
+- **Language level:** Kotlin 2.2, JVM target 17.
 - Prefer `val` over `var`. Favor immutability everywhere.
 - Use expression bodies for single-expression functions.
 - Use extension functions for transformations and mappings — not utility classes.
@@ -31,8 +31,8 @@ Every feature `impl` module must have three layers. Never skip or merge layers.
 
 ### 2.1 Data Layer
 
-- **Repository:** Interface + Impl. Impl annotated with `@ContributesBinding(AppScope::class)` and `@Singleton`.
-- **Remote Data Source:** Retrofit interface provided via `@Module` + `@Provides` + `@ContributesTo(AppScope::class)`.
+- **Repository:** Interface + Impl. Impl annotated with `@ContributesBinding(AppScope::class)` and `@SingleIn(AppScope::class)`.
+- **Remote Data Source:** Retrofit interface provided via `@ContributesTo(AppScope::class)` interface with `@Provides`.
 - **Mappers:** Top-level extension functions (not classes) in a `mapper/` package. Naming: `toDomain()` or
   `toDomainModel()`.
 - **API Models:** Annotated with `@Serializable` (Kotlinx Serialization). Suffix: `*ApiModel`.
@@ -59,12 +59,10 @@ Every feature `impl` module must have three layers. Never skip or merge layers.
 ## 3. ViewModel Pattern
 
 ```kotlin
-@ContributesMultibinding(
-    scope = MainScreenScope::class,
-    boundType = ViewModel::class,
-)
+@Inject
+@ContributesIntoMap(AppScope::class)
 @ViewModelKey(MyFeatureViewModel::class)
-class MyFeatureViewModel @Inject constructor(
+class MyFeatureViewModel(
     private val myUseCase: MyUseCase,
 ) : ViewModel() {
 
@@ -84,9 +82,9 @@ class MyFeatureViewModel @Inject constructor(
 
 **Rules:**
 
-- ALWAYS use `@ContributesMultibinding(scope = MainScreenScope::class, boundType = ViewModel::class)`.
-- ALWAYS add `@ViewModelKey(YourViewModel::class)`.
-- NEVER manually wire ViewModels into Dagger components.
+- ALWAYS use `@Inject` on the class (not constructor) and `@ContributesIntoMap(AppScope::class)`.
+- ALWAYS add `@ViewModelKey(YourViewModel::class)` from MetroX.
+- NEVER manually wire ViewModels into DI graphs — Metro handles contribution merging.
 - Use `StateFlow` for persistent state, `eventsFlow<T>()` for one-time events.
 - Use `combine()` + `stateIn()` when merging multiple data sources.
 - Public functions for UI actions should not be suspending — launch coroutines internally.
@@ -105,7 +103,7 @@ fun MyFeatureRoute(
     onShowSnackbar: suspend (String, String?) -> Boolean,
     navigateToSomewhere: (RouteRequest) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: MyFeatureViewModel = arcytoViewModel(),
+    viewModel: MyFeatureViewModel = metroViewModel(),
 ) {
     val event by viewModel.events.collectAsStateWithLifecycle(initialValue = null)
     LaunchedEffect(event) {
@@ -141,7 +139,7 @@ internal fun MyFeatureScreen(
 
 **Rules:**
 
-- Route handles ViewModel injection via `arcytoViewModel()`.
+- Route handles ViewModel injection via `metroViewModel()`.
 - Route handles events via `LaunchedEffect`.
 - Use `collectAsStateWithLifecycle()` — never plain `collectAsState()`.
 - Screen composable is `internal`, stateless, and testable.
@@ -150,22 +148,23 @@ internal fun MyFeatureScreen(
 
 ---
 
-## 5. Dependency Injection (Dagger + Anvil)
+## 5. Dependency Injection (Metro + MetroX)
 
-| What                   | Annotation                                                                                         |
-|------------------------|----------------------------------------------------------------------------------------------------|
-| Bind interface to impl | `@ContributesBinding(AppScope::class)` on impl class                                               |
-| Register ViewModel     | `@ContributesMultibinding(MainScreenScope::class, boundType = ViewModel::class)` + `@ViewModelKey` |
-| Provide via factory    | `@Module` + `@ContributesTo(AppScope::class)` + `@Provides`                                        |
-| Singleton              | `@Singleton` on class or `@Provides` method                                                        |
-| Qualify dispatchers    | `@Dispatcher(IO)`, `@Dispatcher(Main)`, `@Dispatcher(Default)`                                     |
+| What                   | Annotation                                                                        |
+|------------------------|-----------------------------------------------------------------------------------|
+| Bind interface to impl | `@ContributesBinding(AppScope::class)` on impl class                              |
+| Register ViewModel     | `@ContributesIntoMap(AppScope::class)` + `@ViewModelKey(VM::class)` + `@Inject`   |
+| Provide via factory    | `@ContributesTo(AppScope::class)` interface with `@Provides` methods              |
+| Singleton              | `@SingleIn(AppScope::class)` on class or `@Provides` method                       |
+| Qualify dispatchers    | `@Dispatcher(IO)`, `@Dispatcher(Main)`, `@Dispatcher(Default)`                    |
 
 **Rules:**
 
-- NEVER create manual Dagger `@Component` or `@Subcomponent` for features — Anvil handles component merging.
-- Available scopes: `AppScope` (singleton) and `MainScreenScope` (per-screen).
-- Use `class` for modules that need constructor params; `object` for stateless modules.
+- NEVER create manual `@DependencyGraph` for features — Metro handles contribution merging.
+- Single scope: `AppScope` (from `dev.zacsweers.metro.AppScope`).
+- DI modules are `interface` (not `class` or `object`) with `@ContributesTo`.
 - Retrofit interfaces are provided via `retrofit.create()` in a `@Provides` method.
+- Use `@Inject` on the class level (not constructor) — Metro style.
 
 ---
 
@@ -183,7 +182,7 @@ internal fun MyFeatureScreen(
 ```kotlin
 plugins {
     id("arcyto.android.library")
-    id("arcyto.anvil.library")
+    id("arcyto.metro.library")
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)  // only if needed
 }
@@ -266,9 +265,9 @@ guidelines, patterns, and run commands.
 
 | Category      | Technology                                     |
 |---------------|------------------------------------------------|
-| Language      | Kotlin 2.0, JVM 17                             |
+| Language      | Kotlin 2.2, JVM 17                             |
 | UI            | Jetpack Compose, Material3                     |
-| DI            | Dagger + Anvil                                 |
+| DI            | Metro + MetroX                                 |
 | Networking    | Retrofit + OkHttp                              |
 | Serialization | Kotlinx Serialization                          |
 | Local storage | DataStore                                      |
