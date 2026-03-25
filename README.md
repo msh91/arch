@@ -38,12 +38,11 @@ This approach has multiple benefits:
 - `build-logic`: The build logic for the project. This includes plugins and configurations for the project. This module is the place for all common build logic configuration for the project. It is used by all modules in the project and provides a common configuration for all build types. The build logic plugins are used to configure the build process. Currently, the following plugins are used:
     - `arcyto.android.app`: The plugin providing common configuration for the Android application (app module)
     - `arcyto.android.library`: The plugin providing common configuration for the Android libraries (`core` and`feature` modules).
-    - `arcyto.anvil.library`: The plugin providing common configuration for the libraries using Anvil for dependency injection.
+    - `arcyto.metro.library`: The plugin providing common configuration for the libraries using Metro for dependency injection.
 - `core`: The core libraries providing the core functionality.
     - `core:data:local`: The module providing local data storage using DataStore and local resources.
     - `core:data:remote`: The module providing remote data access using Retrofit and OkHttp. This module provides a common interface for accessing remote data and a default implementation using Retrofit and OkHttp. The default implementation will be used if no other implementation is provided.
-    - `core:di`: The module providing dependency injection using Dagger and Anvil. This module provides the standard Android components for injection and adds custom components for the application (e.g. `AppComponent` for the application itself). The module also provides a set of utilities for injecting common types (e.g.
-      `@Inject val context: Context`).
+    - `core:di`: The module providing dependency injection using Metro and MetroX. This module provides common DI modules (dispatchers, error mappers) and the ViewModel factory for the application.
     - `core:design-system`: The module providing the common design system for the application. The module provides the standard Android components for the design system (e.g. `MaterialTheme`, `LightTheme`, `DarkTheme`, `Typography`, etc.) and customized composable components to be used in the feature modules.
     - `core:formatter`: The module providing the common formatter for the application, including price and date formatting.
     - `core:tooling`: The module providing tools for the application.

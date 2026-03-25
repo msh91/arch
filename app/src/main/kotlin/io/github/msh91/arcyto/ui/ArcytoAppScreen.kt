@@ -15,10 +15,10 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import io.github.msh91.arcyto.core.di.viewmodel.LocalViewModelProviderFactory
+import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
+import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
 
 @Stable
 data class AppState(
@@ -33,13 +33,13 @@ fun rememberAppState(navController: NavHostController = rememberNavController())
 
 @Composable
 fun ArcytoAppScreen(
-    factory: ViewModelProvider.Factory,
+    factory: MetroViewModelFactory,
     modifier: Modifier = Modifier,
 ) {
     val appState = rememberAppState()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    WithDependencies(factory) {
+    CompositionLocalProvider(LocalMetroViewModelFactory provides factory) {
         Scaffold(
             modifier = modifier,
             containerColor = colorScheme.background,
@@ -66,16 +66,5 @@ fun ArcytoAppScreen(
                 )
             }
         }
-    }
-}
-
-@Composable
-internal fun WithDependencies(
-    viewModelProviderFactory: ViewModelProvider.Factory,
-    content: @Composable () -> Unit,
-) {
-    val factory = remember { viewModelProviderFactory }
-    CompositionLocalProvider(LocalViewModelProviderFactory provides factory) {
-        content()
     }
 }

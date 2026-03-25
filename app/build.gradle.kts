@@ -1,6 +1,5 @@
 plugins {
     id("arcyto.android.app")
-    kotlin("kapt")
 }
 
 android {
@@ -17,8 +16,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.navigation.compose)
-
-    kapt(libs.dagger.compiler)
 
     implementation(projects.core.data.local)
     implementation(projects.core.data.remote)

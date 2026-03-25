@@ -1,9 +1,9 @@
 package io.github.msh91.arcyto.core.data.remote
 
-import com.squareup.anvil.annotations.ContributesTo
-import dagger.Module
-import dagger.Provides
-import io.github.msh91.arcyto.core.di.scope.AppScope
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -13,12 +13,10 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
-@Module
 @ContributesTo(AppScope::class)
-class RemoteModule {
-    @Singleton
+interface RemoteModule {
+    @SingleIn(AppScope::class)
     @Provides
     fun provideDefaultHeaderInterceptor(): Interceptor =
         Interceptor { chain ->
@@ -32,7 +30,7 @@ class RemoteModule {
             chain.proceed(request)
         }
 
-    @Singleton
+    @SingleIn(AppScope::class)
     @Provides
     fun provideOkHttpClientBuilder(
         httpLoggingInterceptor: HttpLoggingInterceptor,
@@ -47,7 +45,7 @@ class RemoteModule {
             .addInterceptor(httpLoggingInterceptor)
 
     @Provides
-    @Singleton
+    @SingleIn(AppScope::class)
     fun provideJsonConverterFactory(): Converter.Factory {
         val jsonFormat =
             Json {
@@ -57,7 +55,7 @@ class RemoteModule {
         return jsonFormat.asConverterFactory("application/json; charset=UTF8".toMediaType())
     }
 
-    @Singleton
+    @SingleIn(AppScope::class)
     @Provides
     fun provideRetrofitBuilder(
         jsonConverterFactory: Converter.Factory,
@@ -69,7 +67,7 @@ class RemoteModule {
             .baseUrl(BASE_URL)
             .addCallAdapterFactory(errorHandlerCallAdapterFactory)
 
-    @Singleton
+    @SingleIn(AppScope::class)
     @Provides
     fun provideRetrofit(
         retrofitBuilder: Retrofit.Builder,
@@ -79,7 +77,7 @@ class RemoteModule {
             .client(okHttpClientBuilder.build())
             .build()
 
-    @Singleton
+    @SingleIn(AppScope::class)
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor().apply {

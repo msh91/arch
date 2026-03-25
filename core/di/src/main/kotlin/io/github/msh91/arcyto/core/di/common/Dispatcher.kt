@@ -1,6 +1,6 @@
 package io.github.msh91.arcyto.core.di.common
 
-import javax.inject.Qualifier
+import dev.zacsweers.metro.Qualifier
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)

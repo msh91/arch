@@ -1,5 +1,6 @@
 package io.github.msh91.arcyto.core.data.remote
 
+import dev.zacsweers.metro.Inject
 import okhttp3.Request
 import okio.Timeout
 import retrofit2.Call
@@ -10,36 +11,34 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
-import javax.inject.Inject
 
 /**
  * A [CallAdapter.Factory] that supports Kotlin.Result as api return type
  */
-class ErrorHandlerCallAdapterFactory
-    @Inject
-    constructor() : CallAdapter.Factory() {
-        override fun get(
-            returnType: Type,
-            annotations: Array<out Annotation?>,
-            retrofit: Retrofit,
-        ): CallAdapter<*, *>? {
-            if (Call::class.java != getRawType(returnType) || returnType !is ParameterizedType) {
-                return null
-            }
-            val upperBound = getParameterUpperBound(0, returnType)
+@Inject
+class ErrorHandlerCallAdapterFactory : CallAdapter.Factory() {
+    override fun get(
+        returnType: Type,
+        annotations: Array<out Annotation?>,
+        retrofit: Retrofit,
+    ): CallAdapter<*, *>? {
+        if (Call::class.java != getRawType(returnType) || returnType !is ParameterizedType) {
+            return null
+        }
+        val upperBound = getParameterUpperBound(0, returnType)
 
-            return if (upperBound is ParameterizedType && upperBound.rawType == Result::class.java) {
-                object : CallAdapter<Any, Call<Result<*>>> {
-                    override fun responseType(): Type = getParameterUpperBound(0, upperBound)
+        return if (upperBound is ParameterizedType && upperBound.rawType == Result::class.java) {
+            object : CallAdapter<Any, Call<Result<*>>> {
+                override fun responseType(): Type = getParameterUpperBound(0, upperBound)
 
-                    @Suppress("UNCHECKED_CAST")
-                    override fun adapt(call: Call<Any>): Call<Result<*>> = ResultCall(call) as Call<Result<*>>
-                }
-            } else {
-                null
+                @Suppress("UNCHECKED_CAST")
+                override fun adapt(call: Call<Any>): Call<Result<*>> = ResultCall(call) as Call<Result<*>>
             }
+        } else {
+            null
         }
     }
+}
 
 private class ResultCall<T>(
     val delegate: Call<T>,

@@ -1,6 +1,6 @@
 plugins {
     id("arcyto.android.library")
-    id("arcyto.anvil.library")
+    id("arcyto.metro.library")
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -9,7 +9,9 @@ android {
 }
 
 dependencies {
-    api(libs.dagger)
+    api(libs.metro.runtime)
+    api(libs.metrox.viewmodel)
+    api(libs.metrox.viewmodel.compose)
     implementation(libs.androidx.lifecycle.viewmodel)
     testImplementation(libs.junit)
 }

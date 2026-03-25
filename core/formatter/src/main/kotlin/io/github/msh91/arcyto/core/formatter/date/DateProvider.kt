@@ -1,9 +1,9 @@
 package io.github.msh91.arcyto.core.formatter.date
 
-import com.squareup.anvil.annotations.ContributesBinding
-import io.github.msh91.arcyto.core.di.scope.AppScope
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import java.util.Calendar
-import javax.inject.Inject
 
 interface DateProvider {
     fun getCurrentDate(): Long
@@ -11,11 +11,10 @@ interface DateProvider {
     fun getCurrentCalendarDate(): Calendar
 }
 
+@Inject
 @ContributesBinding(AppScope::class)
-class DateProviderImpl
-    @Inject
-    constructor() : DateProvider {
-        override fun getCurrentDate(): Long = getCurrentCalendarDate().timeInMillis
+class DateProviderImpl : DateProvider {
+    override fun getCurrentDate(): Long = getCurrentCalendarDate().timeInMillis
 
-        override fun getCurrentCalendarDate(): Calendar = Calendar.getInstance()
-    }
+    override fun getCurrentCalendarDate(): Calendar = Calendar.getInstance()
+}
