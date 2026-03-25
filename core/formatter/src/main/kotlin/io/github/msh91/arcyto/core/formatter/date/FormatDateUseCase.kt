@@ -1,14 +1,14 @@
 package io.github.msh91.arcyto.core.formatter.date
 
-import com.squareup.anvil.annotations.ContributesBinding
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import io.github.msh91.arcyto.core.data.local.resource.StringProvider
-import io.github.msh91.arcyto.core.di.scope.AppScope
 import io.github.msh91.arcyto.core.formatter.R
 import io.github.msh91.arcyto.core.tooling.extension.isSameDayAs
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import javax.inject.Inject
 
 interface FormatDateUseCase {
     /**
@@ -59,37 +59,36 @@ enum class DateFormat(
  * If the date is yesterday then it returns "Yesterday",
  * otherwise it returns the date in the format "MMM dd" (For example: "Jan 27").
  */
+@Inject
 @ContributesBinding(AppScope::class)
-class FormatDateUseCaseImpl
-    @Inject
-    constructor(
-        private val stringProvider: StringProvider,
-        private val dateProvider: DateProvider,
-    ) : FormatDateUseCase {
-        override fun invoke(
-            date: Long,
-            format: DateFormat,
-            simplified: Boolean,
-        ): String = invoke(date, format.value, simplified)
+class FormatDateUseCaseImpl(
+    private val stringProvider: StringProvider,
+    private val dateProvider: DateProvider,
+) : FormatDateUseCase {
+    override fun invoke(
+        date: Long,
+        format: DateFormat,
+        simplified: Boolean,
+    ): String = invoke(date, format.value, simplified)
 
-        override fun invoke(
-            date: Long,
-            format: String,
-            simplified: Boolean,
-        ): String {
-            val calendarDate = dateProvider.getCurrentCalendarDate().apply { timeInMillis = date }
-            val today = dateProvider.getCurrentCalendarDate()
-            val yesterday = dateProvider.getCurrentCalendarDate().apply { add(Calendar.DAY_OF_YEAR, -1) }
-            return when {
-                simplified && calendarDate.isSameDayAs(today) -> stringProvider.getString(R.string.title_date_today)
+    override fun invoke(
+        date: Long,
+        format: String,
+        simplified: Boolean,
+    ): String {
+        val calendarDate = dateProvider.getCurrentCalendarDate().apply { timeInMillis = date }
+        val today = dateProvider.getCurrentCalendarDate()
+        val yesterday = dateProvider.getCurrentCalendarDate().apply { add(Calendar.DAY_OF_YEAR, -1) }
+        return when {
+            simplified && calendarDate.isSameDayAs(today) -> stringProvider.getString(R.string.title_date_today)
 
-                simplified &&
-                    calendarDate.isSameDayAs(
-                        yesterday,
-                    )
-                -> stringProvider.getString(R.string.title_date_yesterday)
+            simplified &&
+                calendarDate.isSameDayAs(
+                    yesterday,
+                )
+            -> stringProvider.getString(R.string.title_date_yesterday)
 
-                else -> SimpleDateFormat(format, Locale.getDefault()).format(date)
-            }
+            else -> SimpleDateFormat(format, Locale.getDefault()).format(date)
         }
     }
+}

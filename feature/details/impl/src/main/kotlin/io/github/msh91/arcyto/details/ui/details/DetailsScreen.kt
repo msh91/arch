@@ -27,11 +27,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import io.github.msh91.arcyto.core.design.component.ArcCryptoIcon
 import io.github.msh91.arcyto.core.design.component.ArcDetailsListLoading
 import io.github.msh91.arcyto.core.design.component.ArcSwitcher
 import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
-import io.github.msh91.arcyto.core.di.viewmodel.arcytoViewModel
 import io.github.msh91.arcyto.details.api.navigation.DetailsRouteRequest
 import io.github.msh91.arcyto.details.domain.model.CoinDetails
 import io.github.msh91.arcyto.details.domain.model.Currency
@@ -43,7 +43,7 @@ fun DetailsRoute(
     detailsRouteRequest: DetailsRouteRequest,
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: DetailsViewModel = arcytoViewModel(),
+    viewModel: DetailsViewModel = metroViewModel(),
 ) {
     LaunchedEffect(detailsRouteRequest) {
         viewModel.fetchCoinDetails(detailsRouteRequest)

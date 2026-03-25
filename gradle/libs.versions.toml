@@ -4,21 +4,20 @@ androidTools = "31.8.2"
 androidxTest = "1.6.1"
 androidxTestExt = "1.2.1"
 agp = "8.11.0"
-anvil = "2.5.0-beta11"
 coil = "2.6.0"
 composeBom = "2025.02.00"
 coreKtx = "1.15.0"
 coroutines = "1.9.0"
-dagger = "2.52"
 dataStore = "1.1.3"
 espressoCore = "3.6.1"
 googleTruth = "1.2.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
-kotlin = "2.0.21"
+kotlin = "2.2.21"
 kotlinxSerialization = "1.7.3"
 lifecycle = "2.8.7"
 loggingInterceptor = "4.12.0"
+metro = "0.11.4"
 mockk = "1.13.8"
 navigation = "2.8.8"
 retrofit = "2.11.0"
@@ -47,8 +46,9 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+metro-runtime = { module = "dev.zacsweers.metro:runtime", version.ref = "metro" }
+metrox-viewmodel = { module = "dev.zacsweers.metro:metrox-viewmodel", version.ref = "metro" }
+metrox-viewmodel-compose = { module = "dev.zacsweers.metro:metrox-viewmodel-compose", version.ref = "metro" }
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
 google-truth = { group = "com.google.truth", name = "truth", version.ref = "googleTruth" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
@@ -63,9 +63,9 @@ turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine
 # Dependencies of the included build-logic
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
-anvil-gradle-plugin = { group = "com.squareup.anvil", name = "gradle-plugin", version.ref = "anvil" }
 kotlin-compose-gradle-plugin = { group = "org.jetbrains.kotlin", name = "compose-compiler-gradle-plugin", version.ref = "kotlin" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+metro-gradle-plugin = { group = "dev.zacsweers.metro", name = "gradle-plugin", version.ref = "metro" }
 
 [bundles]
 coroutines = [
@@ -89,5 +89,5 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-squareup-anvil = { id = "com.squareup.anvil", version.ref = "anvil" }
+metro = { id = "dev.zacsweers.metro", version.ref = "metro" }
 

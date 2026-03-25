@@ -1,6 +1,6 @@
 plugins {
     id("arcyto.android.library")
-    id("arcyto.anvil.library")
+    id("arcyto.metro.library")
 }
 
 android {

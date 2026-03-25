@@ -30,13 +30,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import io.github.msh91.arcyto.core.design.component.ArcBitcoinIcon
 import io.github.msh91.arcyto.core.design.component.ArcHistoricalListLoading
 import io.github.msh91.arcyto.core.design.component.ArcLiveCircle
 import io.github.msh91.arcyto.core.design.component.ArcPerformance
 import io.github.msh91.arcyto.core.design.component.PerformanceValue
 import io.github.msh91.arcyto.core.design.theme.ArcytoTheme
-import io.github.msh91.arcyto.core.di.viewmodel.arcytoViewModel
 import io.github.msh91.arcyto.details.api.navigation.DetailsRouteRequest
 import io.github.msh91.arcyto.history.ui.list.HistoricalListUiEvent.ShowSnackbar
 
@@ -45,7 +45,7 @@ fun HistoricalListRoute(
     onShowSnackbar: suspend (String, String?) -> Boolean,
     navigateToDetails: (DetailsRouteRequest) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: HistoricalListViewModel = arcytoViewModel(),
+    viewModel: HistoricalListViewModel = metroViewModel(),
 ) {
     val event by viewModel.events.collectAsStateWithLifecycle(initialValue = null)
     LaunchedEffect(event) {

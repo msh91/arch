@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Arcyto is a modular Android demo app that showcases cryptocurrency data via the CoinGecko API. It uses Jetpack Compose for UI, Dagger/Anvil for DI, and Kotlin Coroutines/Flow for async operations.
+Arcyto is a modular Android demo app that showcases cryptocurrency data via the CoinGecko API. It uses Jetpack Compose for UI, Metro + MetroX for DI, and Kotlin Coroutines/Flow for async operations.
 
 ## Development Workflow
 
@@ -24,7 +24,7 @@ core/
   data/local/                 # DataStore preferences
   data/remote/                # Retrofit/OkHttp API layer + API key
   design-system/              # Compose UI components & Material3 theme
-  di/                         # Dagger/Anvil scopes, ViewModel base, dispatchers
+  di/                         # Metro DI modules, ViewModel factory, dispatchers
   formatter/                  # Price and date formatting use cases
   tooling/extension/          # Kotlin extension utilities
   tooling/test/               # Shared test dependencies (re-exported)
@@ -47,7 +47,7 @@ Convention plugins in `build-logic/convention/` are applied per-module:
 
 - `arcyto.android.app` — for the `app` module
 - `arcyto.android.library` — for Android library modules
-- `arcyto.anvil.library` — for modules using Anvil DI
+- `arcyto.metro.library` — for modules using Metro DI
 
 ## Naming Conventions
 

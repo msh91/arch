@@ -1,21 +1,19 @@
 package io.github.msh91.arcyto.core.di.common
 
-import com.squareup.anvil.annotations.ContributesTo
-import dagger.Module
-import dagger.Provides
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import io.github.msh91.arcyto.core.di.common.DispatcherType.Default
 import io.github.msh91.arcyto.core.di.common.DispatcherType.IO
 import io.github.msh91.arcyto.core.di.common.DispatcherType.Main
-import io.github.msh91.arcyto.core.di.scope.AppScope
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import javax.inject.Singleton
 
-@Module
 @ContributesTo(AppScope::class)
-object CoroutinesModule {
+interface CoroutinesModule {
     @Provides
     @Dispatcher(IO)
     fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.IO
@@ -29,7 +27,7 @@ object CoroutinesModule {
     fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
     @Provides
-    @Singleton
+    @SingleIn(AppScope::class)
     @ApplicationScope
     fun providesCoroutineScope(
         @Dispatcher(Default) dispatcher: CoroutineDispatcher,
