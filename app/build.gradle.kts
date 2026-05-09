@@ -15,7 +15,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.navigation.compose)
+    implementation(libs.navigation3.ui)
 
     implementation(projects.core.data.local)
     implementation(projects.core.data.remote)

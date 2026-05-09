@@ -19,7 +19,7 @@ dependencies {
 
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.remote.provider)
-    implementation(libs.navigation.compose)
+    implementation(libs.navigation3.ui)
 
     api(projects.feature.history.api)
 

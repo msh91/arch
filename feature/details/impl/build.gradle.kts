@@ -22,7 +22,7 @@ dependencies {
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.remote.provider)
     implementation(libs.coil.compose)
-    implementation(libs.navigation.compose)
+    implementation(libs.navigation3.ui)
 
     testImplementation(projects.core.tooling.test)
 }
