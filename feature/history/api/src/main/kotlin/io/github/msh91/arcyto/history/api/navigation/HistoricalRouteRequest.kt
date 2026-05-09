@@ -1,4 +1,7 @@
 package io.github.msh91.arcyto.history.api.navigation
 
-@kotlinx.serialization.Serializable
-object HistoricalRouteRequest
+import androidx.navigation3.runtime.NavKey
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object HistoricalRouteRequest : NavKey

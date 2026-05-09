@@ -13,23 +13,25 @@ import androidx.compose.material3.SnackbarResult.ActionPerformed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation3.runtime.NavKey
 import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 import dev.zacsweers.metrox.viewmodel.MetroViewModelFactory
+import io.github.msh91.arcyto.history.api.navigation.HistoricalRouteRequest
 
 @Stable
 data class AppState(
-    val navController: NavHostController,
+    val backStack: SnapshotStateList<NavKey>,
 )
 
 @Composable
-fun rememberAppState(navController: NavHostController = rememberNavController()): AppState =
-    remember(navController) {
-        AppState(navController)
-    }
+fun rememberAppState(): AppState {
+    val backStack = remember { mutableStateListOf<NavKey>(HistoricalRouteRequest) }
+    return remember(backStack) { AppState(backStack) }
+}
 
 @Composable
 fun ArcytoAppScreen(
@@ -53,7 +55,7 @@ fun ArcytoAppScreen(
                         .padding(padding)
                         .statusBarsPadding(),
             ) {
-                ArcytoNavHost(
+                ArcytoNavDisplay(
                     appState = appState,
                     modifier = modifier.padding(padding),
                     onShowSnackbar = { message, action ->

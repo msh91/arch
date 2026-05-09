@@ -1,12 +1,12 @@
 [versions]
-activityCompose = "1.10.1"
+activityCompose = "1.13.0"
 androidTools = "31.8.2"
 androidxTest = "1.6.1"
 androidxTestExt = "1.2.1"
 agp = "8.11.0"
 coil = "2.6.0"
-composeBom = "2025.02.00"
-coreKtx = "1.15.0"
+composeBom = "2026.03.00"
+coreKtx = "1.18.0"
 coroutines = "1.9.0"
 dataStore = "1.1.3"
 espressoCore = "3.6.1"
@@ -14,12 +14,12 @@ googleTruth = "1.2.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 kotlin = "2.2.21"
-kotlinxSerialization = "1.7.3"
-lifecycle = "2.8.7"
+kotlinxSerialization = "1.9.0"
+lifecycle = "2.10.0"
 loggingInterceptor = "4.12.0"
 metro = "0.11.4"
 mockk = "1.13.8"
-navigation = "2.8.8"
+navigation3 = "1.0.1"
 retrofit = "2.11.0"
 turbine = "1.2.0"
 
@@ -54,7 +54,8 @@ google-truth = { group = "com.google.truth", name = "truth", version.ref = "goog
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+navigation3-runtime = { group = "androidx.navigation3", name = "navigation3-runtime", version.ref = "navigation3" }
+navigation3-ui = { group = "androidx.navigation3", name = "navigation3-ui", version.ref = "navigation3" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInterceptor" }
 retrofit2-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit2-coverter-kotlinx-serialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
